@@ -7,9 +7,10 @@ import htsjdk.variant.variantcontext.VariantContext;
 import htsjdk.variant.variantcontext.writer.VariantContextWriter;
 import htsjdk.variant.vcf.VCFFileReader;
 import htsjdk.variant.vcf.VCFHeaderLine;
+import htsjdk.variant.vcf.VCFHeaderLineType;
+import htsjdk.variant.vcf.VCFInfoHeaderLine;
 
 import java.io.File;
-import java.util.Collection;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
@@ -25,6 +26,11 @@ import de.charite.compbio.jannovar.htsjdk.VariantContextWriterConstructionHelper
 import de.charite.compbio.jannovar.io.JannovarData;
 import de.charite.compbio.jannovar.io.JannovarDataSerializer;
 import de.charite.compbio.jannovar.io.SerializationException;
+import de.charite.compbio.jannovar.reference.GenomeChange;
+import de.charite.compbio.jannovar.splicing.MatrixData;
+import de.charite.compbio.jannovar.splicing.SchneiderSplicingAcceptorMatrix;
+import de.charite.compbio.jannovar.splicing.SchneiderSplicingDonorMatrix;
+import de.charite.compbio.jannovar.splicing.SplicingScore;
 
 public class Splicing {
 	public static void main(String[] args) {
@@ -75,7 +81,9 @@ public class Splicing {
 		System.err.println("Opening output file...");
 		final InfoFields fields = InfoFields.build(true, false);
 		ImmutableSet<VCFHeaderLine> additionalLines = ImmutableSet.of(new VCFHeaderLine("jannovarVersion",
-				JannovarOptions.JANNOVAR_VERSION), new VCFHeaderLine("jannovarCommand", Joiner.on(' ').join(args)));
+				JannovarOptions.JANNOVAR_VERSION), new VCFHeaderLine("jannovarCommand", Joiner.on(' ').join(args)),
+				new VCFInfoHeaderLine("SPLICING_SCORE", 2, VCFHeaderLineType.Float,
+						"Splicing score for donor/acceptor motif"));
 		VariantContextWriter writer = VariantContextWriterConstructionHelper.openVariantContextWriter(
 				reader.getFileHeader(), pathOutVCF, fields, additionalLines);
 
@@ -87,10 +95,18 @@ public class Splicing {
 		for (VariantContext vc : reader) {
 			try {
 				ImmutableList<AnnotationList> lst = annotator.buildAnnotationList(vc);
-				if (containsSplicing(lst)) {
-					System.err.println("Found putative splicing variant: " + vc);
-					System.err.println("\t" + lst);
-					++count;
+				for (int alleleID = 0; alleleID < lst.size(); ++alleleID) {
+					AnnotationList annos = lst.get(alleleID);
+					if (containsSplicing(annos)) {
+						System.err.println("Found putative splicing variant: " + vc);
+						System.err.println("\t" + lst);
+						++count;
+
+						SplicingScore score = computeScore(rsf, vc, annos.getChange());
+						vc.getCommonInfo().putAttribute("SPLICING_SCORE",
+								Joiner.on(',').join(score.getDonorScore(), score.getAcceptorScore()));
+						System.err.println("\tScore = " + score);
+					}
 				}
 				annotator.applyAnnotations(vc, lst);
 			} catch (InvalidCoordinatesException e) {
@@ -108,19 +124,54 @@ public class Splicing {
 		System.err.println("All done. Have a nice day...");
 	}
 
+	// TODO(holtgrew): We must shift the whole matrix over the position instead of considering it to be on the center
+	// only.
+
+	private static SplicingScore computeScore(ReferenceSequenceFile rsf, VariantContext vc, GenomeChange change) {
+		SchneiderSplicingAcceptorMatrix matrixAcceptor = new SchneiderSplicingAcceptorMatrix();
+		SchneiderSplicingDonorMatrix matrixDonor = new SchneiderSplicingDonorMatrix();
+
+		int delta = change.ref.length() - change.alt.length();
+		int beginPos = change.getPos() + matrixAcceptor.getMinOffset();
+		int endPos = beginPos + delta + matrixAcceptor.length();
+
+		int refBeginPos = beginPos;
+		int refEndPos = beginPos + matrixAcceptor.length();
+
+		String refSeq = new String(rsf.getSubsequenceAt(vc.getChr(), refBeginPos + 1, refEndPos).getBases());
+		String altRawSeq = new String(rsf.getSubsequenceAt(vc.getChr(), beginPos + 1, endPos).getBases());
+		StringBuilder altBuilder = new StringBuilder(altRawSeq);
+		int start = change.getPos() - beginPos;
+		int end = start + change.ref.length();
+		System.err.println("start=" + start + ", end=" + end);
+		altBuilder.delete(start, end);
+		altBuilder.insert(start, change.alt);
+		String altSeq = altBuilder.toString();
+
+		System.err.println("GENOME CHANGE\t" + change);
+		System.err.println("REF SEQ      \t" + refSeq);
+		System.err.println("ALT RAW SEQ  \t" + altRawSeq);
+		System.err.println("ALT SEQ      \t" + altSeq);
+
+		return new SplicingScore(computeOneScore(refSeq, matrixDonor), computeOneScore(altSeq, matrixAcceptor),
+				computeOneScore(altSeq, matrixDonor), computeOneScore(altSeq, matrixAcceptor));
+	}
+
+	private static double computeOneScore(String seq, MatrixData matrix) {
+		return matrix.getScore(seq);
+	}
+
 	/**
 	 * @param lst
-	 *            list of {@link AnnotationList} objects with annotations for a variant
+	 *            {@link AnnotationList} object with annotations for a variant
 	 * @return <code>true</code> if <code>lst</code> contains a splicing annotation
 	 */
-	private static boolean containsSplicing(Collection<AnnotationList> lst) {
-		for (AnnotationList annos : lst) {
-			for (Annotation anno : annos) {
-				if (anno.effects.contains(VariantEffect.SPLICE_ACCEPTOR_VARIANT)
-						|| anno.effects.contains(VariantEffect.SPLICE_DONOR_VARIANT)
-						|| anno.effects.contains(VariantEffect.SPLICE_REGION_VARIANT))
-					return true;
-			}
+	private static boolean containsSplicing(AnnotationList annos) {
+		for (Annotation anno : annos) {
+			if (anno.effects.contains(VariantEffect.SPLICE_ACCEPTOR_VARIANT)
+					|| anno.effects.contains(VariantEffect.SPLICE_DONOR_VARIANT)
+					|| anno.effects.contains(VariantEffect.SPLICE_REGION_VARIANT))
+				return true;
 		}
 		return false;
 	}
