@@ -1,39 +1,54 @@
 package de.charite.compbio.jannovar.splicing;
 
-public class SplicingScore {
+/**
+ * Comparison is done based on the score when compared to the reference.
+ *
+ * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
+ */
+public class SplicingScore implements Comparable<SplicingScore> {
 
-	private final double origDonorScore;
-	private final double origAcceptorScor;
-	private final double donorScore;
-	private final double acceptorScore;
+	public enum ScoreType {
+		ACCEPTOR, DONOR
+	};
 
-	public SplicingScore(double origDonorScore, double origAcceptorScor, double donorScore, double acceptorScore) {
-		this.origDonorScore = origDonorScore;
-		this.origAcceptorScor = origAcceptorScor;
-		this.donorScore = donorScore;
-		this.acceptorScore = acceptorScore;
+	private ScoreType scoreType;
+	private final int pos;
+	private final int offset;
+	private final double refScore;
+	private final double altScore;
+
+	public SplicingScore(ScoreType scoreType, int pos, int offset, double refScore, double altScore) {
+		this.scoreType = scoreType;
+		this.pos = pos;
+		this.offset = offset;
+		this.refScore = refScore;
+		this.altScore = altScore;
 	}
 
-	public double getOrigDonorScore() {
-		return origDonorScore;
+	public ScoreType getScoreType() {
+		return scoreType;
 	}
 
-	public double getOrigAcceptorScor() {
-		return origAcceptorScor;
+	public int getPos() {
+		return pos;
 	}
 
-	public double getDonorScore() {
-		return donorScore;
+	public double getRefScore() {
+		return refScore;
 	}
 
-	public double getAcceptorScore() {
-		return acceptorScore;
+	public double getAltScore() {
+		return altScore;
 	}
 
 	@Override
 	public String toString() {
-		return "SplicingScore [origDonorScore=" + origDonorScore + ", origAcceptorScor=" + origAcceptorScor
-				+ ", donorScore=" + donorScore + ", acceptorScore=" + acceptorScore + "]";
+		return "SplicingScore [pos=" + pos + ", offset=" + offset + ", scoreType=" + scoreType + ", refScore="
+				+ refScore + ", altScore=" + altScore + "]";
+	}
+
+	public int compareTo(SplicingScore o) {
+		return (int) Math.round(getRefScore() - o.getRefScore());
 	}
 
 }

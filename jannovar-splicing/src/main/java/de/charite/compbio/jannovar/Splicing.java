@@ -28,8 +28,8 @@ import de.charite.compbio.jannovar.io.JannovarDataSerializer;
 import de.charite.compbio.jannovar.io.SerializationException;
 import de.charite.compbio.jannovar.reference.GenomeChange;
 import de.charite.compbio.jannovar.splicing.MatrixData;
-import de.charite.compbio.jannovar.splicing.SchneiderSplicingAcceptorMatrix;
-import de.charite.compbio.jannovar.splicing.SchneiderSplicingDonorMatrix;
+import de.charite.compbio.jannovar.splicing.Rogan2003SplicingAcceptorMatrix;
+import de.charite.compbio.jannovar.splicing.Rogan2003SplicingDonorMatrix;
 import de.charite.compbio.jannovar.splicing.SplicingScore;
 
 public class Splicing {
@@ -82,8 +82,9 @@ public class Splicing {
 		final InfoFields fields = InfoFields.build(true, false);
 		ImmutableSet<VCFHeaderLine> additionalLines = ImmutableSet.of(new VCFHeaderLine("jannovarVersion",
 				JannovarOptions.JANNOVAR_VERSION), new VCFHeaderLine("jannovarCommand", Joiner.on(' ').join(args)),
-				new VCFInfoHeaderLine("SPLICING_SCORE", 2, VCFHeaderLineType.Float,
-						"Splicing score for donor/acceptor motif"));
+				new VCFInfoHeaderLine("SPLICING_SCORE_REF", 2, VCFHeaderLineType.Float,
+						"REF splicing score for donor/acceptor motif"), new VCFInfoHeaderLine("SPLICING_SCORE_ALT", 2,
+						VCFHeaderLineType.Float, "ALT splicing score for donor/acceptor motif"));
 		VariantContextWriter writer = VariantContextWriterConstructionHelper.openVariantContextWriter(
 				reader.getFileHeader(), pathOutVCF, fields, additionalLines);
 
@@ -103,8 +104,8 @@ public class Splicing {
 						++count;
 
 						SplicingScore score = computeScore(rsf, vc, annos.getChange());
-						vc.getCommonInfo().putAttribute("SPLICING_SCORE",
-								Joiner.on(',').join(score.getDonorScore(), score.getAcceptorScore()));
+						vc.getCommonInfo().putAttribute("SPLICING_SCORE_REF", score.getRefScore());
+						vc.getCommonInfo().putAttribute("SPLICING_SCORE_ALT", score.getAltScore());
 						System.err.println("\tScore = " + score);
 					}
 				}
@@ -124,19 +125,18 @@ public class Splicing {
 		System.err.println("All done. Have a nice day...");
 	}
 
-	// TODO(holtgrew): We must shift the whole matrix over the position instead of considering it to be on the center
-	// only.
-
 	private static SplicingScore computeScore(ReferenceSequenceFile rsf, VariantContext vc, GenomeChange change) {
-		SchneiderSplicingAcceptorMatrix matrixAcceptor = new SchneiderSplicingAcceptorMatrix();
-		SchneiderSplicingDonorMatrix matrixDonor = new SchneiderSplicingDonorMatrix();
+		MatrixData matrixAcceptor = new Rogan2003SplicingAcceptorMatrix();
+		MatrixData matrixDonor = new Rogan2003SplicingDonorMatrix();
 
 		int delta = change.ref.length() - change.alt.length();
-		int beginPos = change.getPos() + matrixAcceptor.getMinOffset();
-		int endPos = beginPos + delta + matrixAcceptor.length();
+		int beginPos = change.getPos() - matrixAcceptor.length() + 1;
+		int endPos = beginPos + delta + 2 * matrixAcceptor.length() - 1;
+		System.err.println("delta=" + delta + ", beginPos=" + beginPos + ", endPos=" + endPos);
 
-		int refBeginPos = beginPos;
-		int refEndPos = beginPos + matrixAcceptor.length();
+		int refBeginPos = change.getPos() - matrixAcceptor.length() + 1;
+		int refEndPos = beginPos + 2 * matrixAcceptor.length() - 1;
+		System.err.println("refBeginPos=" + refBeginPos + ", refEndPos=" + refEndPos);
 
 		String refSeq = new String(rsf.getSubsequenceAt(vc.getChr(), refBeginPos + 1, refEndPos).getBases());
 		String altRawSeq = new String(rsf.getSubsequenceAt(vc.getChr(), beginPos + 1, endPos).getBases());
@@ -153,12 +153,37 @@ public class Splicing {
 		System.err.println("ALT RAW SEQ  \t" + altRawSeq);
 		System.err.println("ALT SEQ      \t" + altSeq);
 
-		return new SplicingScore(computeOneScore(refSeq, matrixDonor), computeOneScore(altSeq, matrixAcceptor),
-				computeOneScore(altSeq, matrixDonor), computeOneScore(altSeq, matrixAcceptor));
+		// shift matrix over sequence and get best score
+		SplicingScore bestAcceptorScore = null;
+		SplicingScore bestDonorScore = null;
+		for (int offset = 0; offset < matrixAcceptor.length(); ++offset) {
+			SplicingScore acceptorScore = new SplicingScore(SplicingScore.ScoreType.ACCEPTOR, change.getPos(), offset,
+					computeOneScore(refSeq, matrixAcceptor, offset), computeOneScore(altSeq, matrixAcceptor, offset));
+			if (bestAcceptorScore == null || bestAcceptorScore.compareTo(acceptorScore) < 0) {
+				bestAcceptorScore = acceptorScore;
+				System.err.println("BETTER ACCEPTOR SCORE:\t" + bestAcceptorScore);
+				System.err.println("ACCEPTOR SEQ:\t" + altSeq.substring(offset, offset + matrixAcceptor.length()));
+			}
+
+			SplicingScore donorScore = new SplicingScore(SplicingScore.ScoreType.DONOR, change.getPos(), offset,
+					computeOneScore(refSeq, matrixDonor, offset), computeOneScore(altSeq, matrixDonor, offset));
+			if (bestDonorScore == null || bestDonorScore.compareTo(donorScore) < 0) {
+				bestDonorScore = donorScore;
+				System.err.println("BETTER DONOR SCORE:\t" + bestDonorScore);
+				System.err.println("DONOR SEQ:\t" + altSeq.substring(offset, offset + matrixDonor.length()));
+			}
+		}
+
+		System.err.println("BEST ACCEPTOR SCORE\t" + bestAcceptorScore);
+		System.err.println("ALT ACCEPTOR SEQ   \t" + altSeq.charAt(bestAcceptorScore.getPos() - change.getPos()));
+		System.err.println("BEST DONOR SCORE   \t" + bestDonorScore);
+		System.err.println("ALT DONOR SEQ      \t" + altSeq.charAt(bestDonorScore.getPos() - change.getPos()));
+
+		return bestDonorScore.compareTo(bestAcceptorScore) < 0 ? bestAcceptorScore : bestDonorScore;
 	}
 
-	private static double computeOneScore(String seq, MatrixData matrix) {
-		return matrix.getScore(seq);
+	private static double computeOneScore(String seq, MatrixData matrix, int offset) {
+		return matrix.getScore(seq, offset);
 	}
 
 	/**

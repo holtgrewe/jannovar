@@ -12,14 +12,16 @@ public abstract class MatrixData {
 		return getWeights(pos)[idx];
 	}
 
-	/** @return dot-product of matrix with the given sequence */
-	public double getScore(String seq) {
-		int expectedLength = getMaxOffset() - getMinOffset() + 1;
-		if (seq.length() != expectedLength)
-			throw new RuntimeException("Invalid length of seq, must be " + expectedLength);
-
+	/**
+	 * @param seq
+	 *            sequence to shift matrix over
+	 * @param offset
+	 *            offset in sequence to let matrix start at
+	 * @return dot-product of matrix with the given sequence
+	 */
+	public double getScore(String seq, int offset) {
 		double sum = 0;
-		for (int pos = 0, i = getMinOffset(); i <= getMaxOffset(); ++i, ++pos)
+		for (int pos = offset, i = getMinOffset(); i <= getMaxOffset(); ++i, ++pos)
 			sum += getWeight(i, seq.charAt(pos));
 		return sum;
 	}
