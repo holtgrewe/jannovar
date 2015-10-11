@@ -53,12 +53,12 @@ public abstract class LinearStructuralVariant extends StructuralVariant {
 		this.ciPosEndHi = ciPosEndHi;
 	}
 
-	/** @return end position of the linear structural variant */
+	@Override
 	public GenomePosition getGenomePosEnd() {
 		return this.pos.shifted(length);
 	}
 
-	/** @return inner affected interval, using confidence intervals */
+	@Override
 	public GenomeInterval getAffectedRangeInner() {
 		if (length >= length - ciPosHi - ciPosEndLo)
 			return new GenomeInterval(pos.shifted(ciPosHi), length - ciPosHi - ciPosEndLo);
@@ -66,7 +66,7 @@ public abstract class LinearStructuralVariant extends StructuralVariant {
 			return new GenomeInterval(pos, 0);
 	}
 
-	/** @return inner affected interval, using confidence intervals */
+	@Override
 	public GenomeInterval getAffectedRangeOuter() {
 		return new GenomeInterval(pos.shifted(-ciPosLo), ciPosLo + length + ciPosEndHi);
 	}

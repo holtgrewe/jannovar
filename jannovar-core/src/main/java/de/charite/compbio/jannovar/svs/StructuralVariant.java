@@ -1,5 +1,6 @@
 package de.charite.compbio.jannovar.svs;
 
+import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
 
 //TODO(holtgrewe): Test me!
@@ -28,6 +29,15 @@ public abstract class StructuralVariant {
 	 * @return {@link SVType} with the type of the structural variant
 	 */
 	public abstract SVType getType();
+	
+	/** @return end position of the linear structural variant */
+	public abstract GenomePosition getGenomePosEnd();
+
+	/** @return inner affected interval, using confidence intervals */
+	public abstract GenomeInterval getAffectedRangeInner();
+
+	/** @return inner affected interval, using confidence intervals */
+	public abstract GenomeInterval getAffectedRangeOuter();
 	
 	/**
 	 * Initialize object

@@ -17,10 +17,11 @@ public class SVInsertion extends LinearStructuralVariant {
 	 * Construct with the given parameters, see
 	 * {@link LinearStructuralVariant#LinearStructuralVariant(GenomePosition, String, String, int, int, int, int, int, String)}
 	 * for details.
+	 * 
+	 * The parameters length, ciPosEndLo, and ciPosEndHi are set to 0.
 	 */
-	public SVInsertion(GenomePosition pos, String ref, String alt, int ciPosLo, int ciPosHi, int length,
-			int ciPosEndLo, int ciPosEndHi, String subType) {
-		super(pos, ref, alt, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi, subType);
+	public SVInsertion(GenomePosition pos, String ref, String alt, int ciPosLo, int ciPosHi, String subType) {
+		super(pos, ref, alt, ciPosLo, ciPosHi, 0, 0, 0, subType);
 	}
 
 	public SVType getType() {
