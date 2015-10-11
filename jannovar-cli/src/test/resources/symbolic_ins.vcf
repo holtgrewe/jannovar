@@ -2,9 +2,15 @@
 ##ALT=<ID=INS,Description="Insertion of novel sequence relative to the reference">
 ##ALT=<ID=INS:ME:ALU,Description="Insertion of ALU element">
 ##ALT=<ID=INS:ME:L1,Description="Insertion of L1 element">
+##INFO=<ID=BPKPTID,Number=.,Type=String,Description="ID of the assembled alternate allele in the assembly file">
+##INFO=<ID=CIEND,Number=2,Type=Integer,Description="Confidence interval around END for imprecise variants">
+##INFO=<ID=CIPOS,Number=2,Type=Integer,Description="Confidence interval around POS for imprecise variants">
+##INFO=<ID=HOMLEN,Number=.,Type=Integer,Description="Length of base pair identical micro-homology at event breakpoints">
+##INFO=<ID=HOMSEQ,Number=.,Type=String,Description="Sequence of base pair identical micro-homology at event breakpoints">
 ##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
 ##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Difference between REF and ALT in this record">
+##INFO=<ID=IMPRECISE,Number=0,Type=Flag,Description="Imprecise structural variation">
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	individual
-NC_000001.10	321052	.	C	<INS>	.	.	SVLEN=11	GT:AD:DP:GQ:PL	0/1:14,7:21:99:181,0,367
-NC_000001.10	321052	.	C	<INS:ME:ALU>	.	.	SVLEN=11	GT:AD:DP:GQ:PL	0/1:14,7:21:99:181,0,367
-NC_000001.10	321052	.	C	<INS:ME:L1>	.	.	SVLEN=11	GT:AD:DP:GQ:PL	0/1:14,7:21:99:181,0,367
+NC_000001.10	321052	.	C	<INS>	.	.	SVLEN=11;CIPOS=-2,2;CIEND=-2,2;HOMLEN=2;HOMSEQ=CA	GT:AD:DP:GQ:PL	0/1:14,7:21:99:181,0,367
+NC_000001.10	321052	.	C	<INS:ME:ALU>	.	.	SVLEN=11;CIPOS=-2,2;CIEND=-2,2;HOMLEN=2;HOMSEQ=CA	GT:AD:DP:GQ:PL	0/1:14,7:21:99:181,0,367
+NC_000001.10	321052	.	C	<INS:ME:L1>	.	.	SVLEN=11;CIPOS=-2,2;CIEND=-2,2;HOMLEN=2;HOMSEQ=CA	GT:AD:DP:GQ:PL	0/1:14,7:21:99:181,0,367
