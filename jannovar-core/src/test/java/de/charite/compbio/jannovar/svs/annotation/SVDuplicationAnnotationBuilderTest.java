@@ -21,9 +21,9 @@ import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptModelBuilder;
 import de.charite.compbio.jannovar.reference.TranscriptModelFactory;
 import de.charite.compbio.jannovar.svs.SVDeletion;
-import de.charite.compbio.jannovar.svs.annotation.SVDeletionAnnotationBuilder;
+import de.charite.compbio.jannovar.svs.annotation.SVDuplicationAnnotationBuilder;
 
-public class SVDeletionAnnotationBuilderTest {
+public class SVDuplicationAnnotationBuilderTest {
 
 	/** this test uses this static hg19 reference dictionary */
 	static final ReferenceDictionary refDict = HG19RefDictBuilder.build();
@@ -62,146 +62,146 @@ public class SVDeletionAnnotationBuilderTest {
 	}
 
 	@Test
-	public void testForwardTranscriptAblation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DEL>", -10, 10,
+	public void testForwardTranscriptAmplification() throws InvalidGenomeVariant {
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
 				20000, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoForward, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|transcript_ablation&copy_number_loss&copy_number_decrease&structural_variant&coding_transcript_variant|HIGH|ZBTB48||transcript|uc001anx.3|Coding||||||||",
+				"<DUP>|copy_number_gain&copy_number_increase&transcript_amplification&structural_variant&coding_transcript_variant|HIGH|ZBTB48||transcript|uc001anx.3|Coding||||||||",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testForwardExonDeletion() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DEL>", -10, 10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
 				200, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoForward, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|exon_loss_variant&copy_number_loss&copy_number_decrease&structural_variant&coding_transcript_variant|HIGH|ZBTB48||transcript|uc001anx.3|Coding||||||||",
+				"<DUP>|copy_number_gain&copy_number_increase&transcript_amplification&structural_variant&coding_transcript_variant|HIGH|ZBTB48||transcript|uc001anx.3|Coding||||||||",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testForwardFeatureTruncation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DEL>", -10, 10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
 				100, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoForward, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|feature_truncation&copy_number_loss&copy_number_decrease&structural_variant&coding_transcript_variant|HIGH|ZBTB48||transcript|uc001anx.3|Coding||||||||",
+				"<DUP>|copy_number_gain&copy_number_increase&transcript_amplification&structural_variant&coding_transcript_variant|HIGH|ZBTB48||transcript|uc001anx.3|Coding||||||||",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testForwardFeatureUpstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DEL>", -10, 10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
 				50, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoForward, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|copy_number_decrease&upstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZBTB48||transcript|uc001anx.3|Coding|||||||2|",
+				"<DUP>|copy_number_increase&upstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZBTB48||transcript|uc001anx.3|Coding|||||||2|",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testForwardFeatureDownstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6649341), "A", "<DEL>", -10, 10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6649341), "A", "<DUP>", -10, 10,
 				100, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoForward, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|copy_number_decrease&downstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZBTB48||transcript|uc001anx.3|Coding|||||||11|",
+				"<DUP>|copy_number_increase&downstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZBTB48||transcript|uc001anx.3|Coding|||||||11|",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testForwardFeatureIntergenic() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640340), "A", "<DEL>", -10, 10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6630340), "A", "<DUP>", -10, 10,
 				100, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoForward, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|copy_number_decrease&intergenic_variant&structural_variant&coding_transcript_variant|MODIFIER|ZBTB48||transcript|uc001anx.3|Coding|||||||-8990|",
+				"<DUP>|copy_number_increase&intergenic_variant&structural_variant&coding_transcript_variant|MODIFIER|ZBTB48||transcript|uc001anx.3|Coding|||||||9612|",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
-	public void testReverseTranscriptAblation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DEL>", -10,
+	public void testReverseTranscriptAmplification() throws InvalidGenomeVariant {
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DUP>", -10,
 				10, 20000, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoReverse, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|transcript_ablation&copy_number_loss&copy_number_decrease&structural_variant&coding_transcript_variant|HIGH|ZNF436||transcript|uc001bgu.3|Coding||||||||",
+				"<DUP>|copy_number_gain&copy_number_increase&transcript_amplification&structural_variant&coding_transcript_variant|HIGH|ZNF436||transcript|uc001bgu.3|Coding||||||||",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testReverseExonDeletion() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DEL>", -10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DUP>", -10,
 				10, 5000, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoReverse, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|exon_loss_variant&copy_number_loss&copy_number_decrease&structural_variant&coding_transcript_variant|HIGH|ZNF436||transcript|uc001bgu.3|Coding||||||||",
+				"<DUP>|copy_number_gain&copy_number_increase&transcript_amplification&structural_variant&coding_transcript_variant|HIGH|ZNF436||transcript|uc001bgu.3|Coding||||||||",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testReverseFeatureTruncation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685940), "A", "<DEL>", -10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685940), "A", "<DUP>", -10,
 				10, 200, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoReverse, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|feature_truncation&copy_number_loss&copy_number_decrease&structural_variant&coding_transcript_variant|HIGH|ZNF436||transcript|uc001bgu.3|Coding||||||||",
+				"<DUP>|copy_number_gain&copy_number_increase&transcript_amplification&structural_variant&coding_transcript_variant|HIGH|ZNF436||transcript|uc001bgu.3|Coding||||||||",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testReverseFeatureUpstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23696457), "A", "<DEL>", -10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23696457), "A", "<DUP>", -10,
 				10, 50, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoReverse, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|copy_number_decrease&upstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZNF436||transcript|uc001bgu.3|Coding|||||||10528|",
+				"<DUP>|copy_number_increase&upstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZNF436||transcript|uc001bgu.3|Coding|||||||10528|",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testReverseFeatureDownstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685540), "A", "<DEL>", -10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685540), "A", "<DUP>", -10,
 				10, 100, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoReverse, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|copy_number_decrease&downstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZNF436||transcript|uc001bgu.3|Coding|||||||-10706|",
+				"<DUP>|copy_number_increase&downstream_gene_variant&structural_variant&coding_transcript_variant|MODIFIER|ZNF436||transcript|uc001bgu.3|Coding|||||||-10706|",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 
 	@Test
 	public void testReverseFeatureIntergenic() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23680940), "A", "<DEL>", -10,
+		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23680940), "A", "<DUP>", -10,
 				10, 100, -10, 10, "");
-		SVDeletionAnnotationBuilder builder = new SVDeletionAnnotationBuilder(infoReverse, variant,
+		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
 		Assert.assertEquals(
-				"<DEL>|copy_number_decrease&intergenic_variant&structural_variant&coding_transcript_variant|MODIFIER|ZNF436||transcript|uc001bgu.3|Coding|||||||-15306|",
+				"<DUP>|copy_number_increase&intergenic_variant&structural_variant&coding_transcript_variant|MODIFIER|ZNF436||transcript|uc001bgu.3|Coding|||||||-15306|",
 				anno.toVCFAnnoString(variant.getAlt()));
 	}
 }

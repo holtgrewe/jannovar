@@ -36,14 +36,19 @@ public class SVDeletionAnnotationBuilder extends StructuralVariantAnnotationBuil
 		GenomeInterval affected = variant.getAffectedIntervalOuter().withStrand(Strand.FWD);
 
 		// Case of transcript or exon loss/truncation
-		if (variant.getAffectedIntervalOuter().contains(transcript.getTXRegion()))
+		if (variant.getAffectedIntervalOuter().contains(transcript.getTXRegion())) {
 			effects.add(VariantEffect.TRANSCRIPT_ABLATION);
+			effects.add(VariantEffect.COPY_NUMBER_LOSS);
+		}
 		if (effects.isEmpty()) {
 			for (GenomeInterval exon : transcript.getExonRegions())
-				if (affected.contains(exon))
+				if (affected.contains(exon)) {
 					effects.add(VariantEffect.EXON_LOSS_VARIANT);
-				else if (affected.overlapsWith(exon))
+					effects.add(VariantEffect.COPY_NUMBER_LOSS);
+				} else if (affected.overlapsWith(exon)) {
 					effects.add(VariantEffect.FEATURE_TRUNCATION);
+					effects.add(VariantEffect.COPY_NUMBER_LOSS);
+				}
 		}
 
 		// Case of upstream/downstream/intergenic
@@ -56,6 +61,7 @@ public class SVDeletionAnnotationBuilder extends StructuralVariantAnnotationBuil
 
 		// Variant is SV in any case and affects coding/non-coding tx
 		effects.add(VariantEffect.STRUCTURAL_VARIANT);
+		effects.add(VariantEffect.COPY_NUMBER_DECREASE);
 		if (transcript.isCoding())
 			effects.add(VariantEffect.CODING_TRANSCRIPT_VARIANT);
 		else

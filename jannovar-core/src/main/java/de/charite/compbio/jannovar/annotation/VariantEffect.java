@@ -76,6 +76,26 @@ public enum VariantEffect {
 	 * {@link #COMPLEX_SUBSTITUTION} that does not lead to a frameshift and decreases the transcript length.
 	 */
 	FEATURE_TRUNCATION,
+	// copy number changes
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001743">SO:0001743</a> A sequence
+	 * alteration whereby the copy number of a given region is less than the reference sequence. Used in Jannovar for
+	 * CNV losses affecting features.
+	 */
+	COPY_NUMBER_LOSS,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001742">SO:0001742</a> A sequence
+	 * alteration whereby the copy number of a given regions is greater than the reference sequence.Used in Jannovar for
+	 * CNV gains affecting features.
+	 */
+	COPY_NUMBER_GAIN,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001019">SO:0001019</a> A variation that
+	 * increases or decreases the copy number of a given region. Used for denoting &lt;CNV&gt (childen:
+	 * copy_number_increase, copy_number_decrease); value from VCF in Jannovar. Used in Jannovar for CNV variation
+	 * affecting features.
+	 */
+	COPY_NUMBER_VARIATION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002007">SO:0002007</a> An MNV is a multiple
 	 * nucleotide variant (substitution) in which the inserted sequence is the same length as the replaced sequence (is
@@ -128,24 +148,6 @@ public enum VariantEffect {
 	 * amino acid (children: selenocysteine_loss, pyrrolysine_loss). <b>Not</not> used in Jannovar annotations.
 	 */
 	RARE_AMINO_ACID_VARIANT,
-
-	// copy number changes
-	/**
-	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001911">SO:0001911</a> A sequence variant
-	 * where copies of a feature are increased relative to the reference..
-	 */
-	COPY_NUMBER_INCREASE,
-	/**
-	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001912">SO:0001912</a> A sequence variant
-	 * where copies of a feature are decreased relative to the reference.
-	 */
-	COPY_NUMBER_DECREASE,
-	/**
-	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001563">SO:0001563</a> A sequence variant
-	 * where copies of a feature (CNV) are either increased or decreased. Used for denoting &lt;CNV&gt (childen:
-	 * copy_number_increase, copy_number_decrease); value from VCF in Jannovar.
-	 */
-	COPY_NUMBER_CHANGE,
 
 	/**
 	 * Marker for smallest {@link VariantEffect} with {@link PutativeImpact#HIGH} impact.
@@ -300,6 +302,24 @@ public enum VariantEffect {
 	// TODO(holtgrem): use?
 	CUSTOM,
 
+	// copy number changes
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001911">SO:0001911</a> A sequence variant
+	 * where copies of a feature are increased relative to the reference.
+	 */
+	COPY_NUMBER_INCREASE,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001912">SO:0001912</a> A sequence variant
+	 * where copies of a feature are decreased relative to the reference.
+	 */
+	COPY_NUMBER_DECREASE,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001563">SO:0001563</a> A sequence variant
+	 * where copies of a feature (CNV) are either increased or decreased. Used for denoting &lt;CNV&gt (childen:
+	 * copy_number_increase, copy_number_decrease); value from VCF in Jannovar.
+	 */
+	COPY_NUMBER_CHANGE,
+
 	// variants with distances to genes/transcripts
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001631">SO:0001631</a> A sequence variant
@@ -353,6 +373,18 @@ public enum VariantEffect {
 
 	// general variant types
 	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001889">SO:0001889</a> A feature
+	 * amplification of a region containing a transcript.
+	 */
+	TRANSCRIPT_AMPLIFICATION,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001880">SO:0001880</a> A sequence variant,
+	 * caused by an alteration of the genomic sequence, where the structural change, an amplification of sequence, is
+	 * greater than the extent of the underlying genomic features. Used in Jannovar for amplification of whole exons if
+	 * not already {@link TRANSCRIPT_AMPLIFICATION}.
+	 */
+	FEATURE_AMPLIFICATION,
+	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001537">SO:0001537</a> A sequence variant
 	 * that changes one or more sequence features (is a: sequence variant).
 	 */
@@ -381,18 +413,6 @@ public enum VariantEffect {
 	 * that changes the process of splicing (is a: {@link #GENE_VARIANT}). <b>Not</not> used in Jannovar annotations.
 	 */
 	SPLICING_VARIANT,
-	/**
-	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001889">SO:0001889</a> A feature
-	 * amplification of a region containing a transcript.
-	 */
-	TRANSCRIPT_AMPLIFICATION,
-	/**
-	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001880">SO:0001880</a> A sequence variant,
-	 * caused by an alteration of the genomic sequence, where the structural change, an amplification of sequence, is
-	 * greater than the extent of the underlying genomic features. Used in Jannovar for amplification of whole exons if
-	 * not already {@link TRANSCRIPT_AMPLIFICATION}.
-	 */
-	FEATURE_AMPLIFICATION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0000276">SO:0000276</a> Variant affects a
 	 * miRNA (is a: miRNA_primary_transcript, small_regulatory_ncRNA). <b>Not</not> used in Jannovar annotations.
@@ -582,6 +602,9 @@ public enum VariantEffect {
 		case COPY_NUMBER_INCREASE:
 		case COPY_NUMBER_DECREASE:
 		case COPY_NUMBER_CHANGE:
+		case COPY_NUMBER_LOSS:
+		case COPY_NUMBER_GAIN:
+		case COPY_NUMBER_VARIATION:
 		case TRANSCRIPT_AMPLIFICATION:
 		case FEATURE_AMPLIFICATION:
 		case _SMALLEST_HIGH_IMPACT:
@@ -612,6 +635,12 @@ public enum VariantEffect {
 	 */
 	public String getSequenceOntologyTerm() {
 		switch (this) {
+		case COPY_NUMBER_LOSS:
+			return "copy_number_loss";
+		case COPY_NUMBER_GAIN:
+			return "copy_number_gain";
+		case COPY_NUMBER_VARIATION:
+			return "copy_number_variation";
 		case COPY_NUMBER_INCREASE:
 			return "copy_number_increase";
 		case COPY_NUMBER_DECREASE:
@@ -748,6 +777,12 @@ public enum VariantEffect {
 	 */
 	public String getSequenceOID() {
 		switch (this) {
+		case COPY_NUMBER_LOSS:
+			return "SO:0001743";
+		case COPY_NUMBER_GAIN:
+			return "SO:0001742";
+		case COPY_NUMBER_VARIATION:
+			return "SO:0001019";
 		case COPY_NUMBER_INCREASE:
 			return "SO:0001911";
 		case COPY_NUMBER_DECREASE:
@@ -892,6 +927,9 @@ public enum VariantEffect {
 	 */
 	public boolean isStructural() {
 		switch (this) {
+		case COPY_NUMBER_LOSS:
+		case COPY_NUMBER_GAIN:
+		case COPY_NUMBER_VARIATION:
 		case COPY_NUMBER_INCREASE:
 		case COPY_NUMBER_DECREASE:
 		case COPY_NUMBER_CHANGE:
@@ -964,7 +1002,6 @@ public enum VariantEffect {
 		case STOP_RETAINED_VARIANT:
 		case SYNONYMOUS_VARIANT:
 		case TRANSCRIPT_ABLATION:
-		case TRANSCRIPT_AMPLIFICATION:
 			return false;
 		default:
 			return true;

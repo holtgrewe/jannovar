@@ -25,6 +25,9 @@ HIGH             SO:0001910  frameshift_truncation
 HIGH             SO:0001589  frameshift_variant
 HIGH             SO:0001908  internal_feature_elongation
 HIGH             SO:0001906  feature_truncation
+HIGH             SO:0001743  copy_number_loss
+HIGH             SO:0001742  copy_number_gain
+HIGH             SO:0001019  copy_number_variation
 HIGH             SO:0001583  mnv
 HIGH             SO:1000005  complex_substitution
 HIGH             SO:0002012  stop_gained
@@ -33,9 +36,6 @@ HIGH             SO:0002012  start_lost
 HIGH             SO:0001619  splice_acceptor_variant
 HIGH             SO:0001575  splice_donor_variant
 HIGH             SO:0001619  rare_amino_acid_variant
-HIGH             SO:0001563  copy_number_change
-HIGH             SO:0001911  copy_number_increase
-HIGH             SO:0001912  copy_number_decrease
 MODERATE         SO:0001583  missense_variant
 MODERATE         SO:0001821  inframe_insertion
 MODERATE         SO:0001824  disruptive_inframe_insertion
@@ -53,6 +53,9 @@ LOW              SO:0001970  non_coding_transcript_intron_variant
 LOW              SO:0001983  5_prime_UTR_premature_start_codon_gain_variant
 LOW              SO:0001623  5_prime_utr_variant
 LOW              SO:0001624  3_prime_utr_variant
+MODIFIER         SO:0001563  copy_number_change
+MODIFIER         SO:0001911  copy_number_increase
+MODIFIER         SO:0001912  copy_number_decrease
 MODIFIER         SO:1000039  direct_tandem_duplication
 MODIFIER         <custom>    <custom>
 MODIFIER         SO:0001624  upstream_gene_variant
