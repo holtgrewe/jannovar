@@ -38,6 +38,9 @@ public final class GenomeVariant implements VariantDescription {
 	 *
 	 * On construction, pos, ref, and alt are automatically adjusted to the right/incremented by the length of the
 	 * longest common prefix and suffix of ref and alt.
+	 * 
+	 * An exception is if <code>ref</code> or <code>alt</code> encode a symbolic allele (start/end with <tt>'.'</tt>, or
+	 * contain <tt>'['</tt>/<tt>']'</tt>/<tt>'&lt;'</tt>/<tt>'&gt;'</tt>. In this case, no adjustment is performed.
 	 */
 	public GenomeVariant(GenomePosition pos, String ref, String alt) {
 		if (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt)) {
@@ -109,8 +112,7 @@ public final class GenomeVariant implements VariantDescription {
 			return false;
 		return (allele.charAt(0) == '<' || allele.charAt(allele.length() - 1) == '>') || // symbolic or large insertion
 				(allele.charAt(0) == '.' || allele.charAt(allele.length() - 1) == '.') || // single breakend
-				(allele.contains("[") || allele.contains("]")); // mated
-																// breakend
+				(allele.contains("[") || allele.contains("]")); // mated breakend
 	}
 
 	@Override
@@ -265,7 +267,7 @@ public final class GenomeVariant implements VariantDescription {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -282,7 +284,7 @@ public final class GenomeVariant implements VariantDescription {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

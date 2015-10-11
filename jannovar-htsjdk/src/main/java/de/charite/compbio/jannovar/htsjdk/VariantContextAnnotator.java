@@ -164,6 +164,8 @@ public final class VariantContextAnnotator {
 					AnnotationMessage.ERROR_CHROMOSOME_NOT_FOUND);
 		int chr = boxedInt.intValue();
 
+		// TODO(holtgrewe): This is where to look for symbolic allele integration
+
 		// Build the GenomeChange object.
 		final String ref = vc.getReference().getBaseString();
 		final Allele altAllele = vc.getAlternateAllele(alleleID);
