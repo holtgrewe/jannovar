@@ -6,6 +6,7 @@ import de.charite.compbio.jannovar.reference.GenomePosition;
 import de.charite.compbio.jannovar.reference.Strand;
 
 //TODO(holtgrewe): Test me!
+//TODO(holtgrewe): add support for Delly translocations
 
 /**
  * Base class for structural variants
