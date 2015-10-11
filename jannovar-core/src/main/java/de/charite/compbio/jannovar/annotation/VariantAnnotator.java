@@ -18,12 +18,15 @@ import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
 // TODO(holtgrem): We should directly pass in a JannovarData object after adding the interval trees to it. Then, this should be fine.
+// TODO(holtgrem): Merge SV and small variant class hierarchies, then merge with StructuralVariantAnnotator?
 
 /**
  * Main driver class for annotating variants.
  *
  * Given, a chromosome map, objects of this class can be used to annotate variants identified by a genomic position
  * (chr, pos), a reference, and an alternative nucleotide String.
+ *
+ * @see StructuralVariantAnnotator
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  * @author Marten Jaeger <marten.jaeger@charite.de>

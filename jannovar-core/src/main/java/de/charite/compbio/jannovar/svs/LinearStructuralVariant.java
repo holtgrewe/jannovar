@@ -2,15 +2,14 @@ package de.charite.compbio.jannovar.svs;
 
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
+import de.charite.compbio.jannovar.reference.Strand;
 
 //TODO(holtgrewe): Test me!
 
 /**
- * Linear structural variant
- * 
- * Linear structural variant affect an interval on the genome (possibly with a confidence interval around begin and end
- * position). There <em>is</em> an end position (different to novel insertions) and the variant is not complex and
- * called nested with other variants.
+ * Linear structural variant Linear structural variant affect an interval on the genome (possibly with a confidence
+ * interval around begin and end position). There <em>is</em> an end position (different to novel insertions) and the
+ * variant is not complex and called nested with other variants.
  * 
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */
@@ -22,6 +21,11 @@ public abstract class LinearStructuralVariant extends StructuralVariant {
 	protected final int ciPosEndLo;
 	/** Upper bound (inclusive) of confidence interval around POSEND */
 	protected final int ciPosEndHi;
+
+	/** @return confidence interval around POS */
+	public final GenomeInterval getCIEND() {
+		return new GenomeInterval(pos.withStrand(Strand.FWD).shifted(length + ciPosEndLo), -ciPosEndLo + ciPosEndHi);
+	}
 
 	/**
 	 * Initialize with the given values
@@ -59,16 +63,16 @@ public abstract class LinearStructuralVariant extends StructuralVariant {
 	}
 
 	@Override
-	public GenomeInterval getAffectedRangeInner() {
+	public GenomeInterval getAffectedIntervalInner() {
 		if (length >= length - ciPosHi - ciPosEndLo)
-			return new GenomeInterval(pos.shifted(ciPosHi), length - ciPosHi - ciPosEndLo);
+			return new GenomeInterval(pos.withStrand(Strand.FWD).shifted(ciPosHi), length - ciPosHi - ciPosEndLo);
 		else
 			return new GenomeInterval(pos, 0);
 	}
 
 	@Override
-	public GenomeInterval getAffectedRangeOuter() {
-		return new GenomeInterval(pos.shifted(-ciPosLo), ciPosLo + length + ciPosEndHi);
+	public GenomeInterval getAffectedIntervalOuter() {
+		return new GenomeInterval(pos.withStrand(Strand.FWD).shifted(-ciPosLo), ciPosLo + length + ciPosEndHi);
 	}
 
 	/** @return length of the linear structural variant */

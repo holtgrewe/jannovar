@@ -1,7 +1,9 @@
 package de.charite.compbio.jannovar.svs;
 
+import de.charite.compbio.jannovar.annotation.Annotation;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
+import de.charite.compbio.jannovar.reference.Strand;
 
 //TODO(holtgrewe): Test me!
 
@@ -10,8 +12,8 @@ import de.charite.compbio.jannovar.reference.GenomePosition;
  * 
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */
-public abstract class StructuralVariant {
-	
+public abstract class StructuralVariant implements Comparable<StructuralVariant> {
+
 	/** Subtype as in VCF, e.g. "ME:L1", or "TANDEM" */
 	protected final String subType;
 	/** Position of the starting point of the SV */
@@ -29,16 +31,21 @@ public abstract class StructuralVariant {
 	 * @return {@link SVType} with the type of the structural variant
 	 */
 	public abstract SVType getType();
-	
+
 	/** @return end position of the linear structural variant */
 	public abstract GenomePosition getGenomePosEnd();
 
 	/** @return inner affected interval, using confidence intervals */
-	public abstract GenomeInterval getAffectedRangeInner();
+	public abstract GenomeInterval getAffectedIntervalInner();
 
 	/** @return inner affected interval, using confidence intervals */
-	public abstract GenomeInterval getAffectedRangeOuter();
-	
+	public abstract GenomeInterval getAffectedIntervalOuter();
+
+	/** @return confidence interval around POS */
+	public final GenomeInterval getCI() {
+		return new GenomeInterval(pos.withStrand(Strand.FWD).shifted(ciPosLo), -ciPosLo + ciPosHi);
+	}
+
 	/**
 	 * Initialize object
 	 * 
@@ -63,6 +70,16 @@ public abstract class StructuralVariant {
 		this.ciPosLo = ciPosLo;
 		this.ciPosHi = ciPosHi;
 		this.subType = subType;
+	}
+
+	/** @return numeric ID of SV chromosome begin position */
+	public int getChr() {
+		return getGenomePos().getChr();
+	}
+
+	/** @return numeric ID of SV chromosome end position */
+	public int getChrEnd() {
+		return getGenomePosEnd().getChr();
 	}
 
 	/** @return {@link GenomePosition} of SV starting point */
@@ -93,6 +110,11 @@ public abstract class StructuralVariant {
 	/** @return String with sub type as in VCF, e.g. "ME:L1" or "TANDEM", or <code>""</code> */
 	public String getSubType() {
 		return subType;
+	}
+
+	@Override
+	public int compareTo(StructuralVariant o) {
+		return getGenomePos().compareTo(o.getGenomePos());
 	}
 
 }
