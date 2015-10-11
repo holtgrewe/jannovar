@@ -7,11 +7,9 @@ import com.google.common.base.Predicate;
 // TODO(holtgrew): structural variants need more refinement
 
 /**
- * These codes reflect the possible types of variants that we call for an exome.
- *
- * The values in this enum are given in the putative order of impact (more severe to less severe). The documentation
- * gives the sequence ontology (SO) ID and the SO description. Also, the documentation of each value explains whether
- * Jannovar generates this annotation or not.
+ * These codes reflect the possible types of variants that we call for an exome. The values in this enum are given in
+ * the putative order of impact (more severe to less severe). The documentation gives the sequence ontology (SO) ID and
+ * the SO description. Also, the documentation of each value explains whether Jannovar generates this annotation or not.
  *
  * @author Peter Robinson <peter.robinson@charite.de>
  * @author Marten Jaeger <marten.jaeger@charite.de>
@@ -27,24 +25,19 @@ public enum VariantEffect {
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:1000182">SO:1000182</a> A kind of chromosome
 	 * variation where the chromosome complement is not an exact multiple of the haploid number (is a
-	 * chromosome_variation).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * chromosome_variation). <b>Not</not> used in Jannovar annotations.
 	 */
 	CHROMOSOME_NUMBER_VARIATION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001893">SO:0001893</a> A feature ablation
-	 * whereby the deleted region includes a transcript feature (is a: feature_ablation)
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * whereby the deleted region includes a transcript feature (is a: feature_ablation) <b>Not</not> used in Jannovar
+	 * annotations.
 	 */
 	TRANSCRIPT_ABLATION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001572">SO:0001572</a> A sequence variant
 	 * whereby an exon is lost from the transcript (is a (is a: {@link #SPLICING_VARIANT}), {@link #TRANSCRIPT_VARIANT}
-	 * ).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * ). <b>Not</not> used in Jannovar annotations.
 	 */
 	EXON_LOSS_VARIANT,
 
@@ -64,30 +57,23 @@ public enum VariantEffect {
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001589">SO:0001589</a>A sequence variant
 	 * which causes a disruption of the translational reading frame, because the number of nucleotides inserted or
-	 * deleted is not a multiple of threee (is a: protein_altering_variant).
-	 *
-	 * Used for frameshift variant for the case where there is no stop codon any more and the rare case in which the
-	 * transcript length is retained.
+	 * deleted is not a multiple of threee (is a: protein_altering_variant). Used for frameshift variant for the case
+	 * where there is no stop codon any more and the rare case in which the transcript length is retained.
 	 */
 	FRAMESHIFT_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001908">SO:0001908</a> A sequence variant
 	 * that causes the extension of a genomic feature from within the feature rather than from the terminus of the
-	 * feature, with regard to the reference sequence.
-	 *
-	 * In Jannovar, used to annotate a {@link #COMPLEX_SUBSTITUTION} that does not lead to a frameshift and increases
-	 * the transcript length.
+	 * feature, with regard to the reference sequence. In Jannovar, used to annotate a {@link #COMPLEX_SUBSTITUTION}
+	 * that does not lead to a frameshift and increases the transcript length.
 	 */
 	INTERNAL_FEATURE_ELONGATION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001906">SO:0001906</a> A sequence variant
 	 * that causes the reduction of a genomic feature, with regard to the reference sequence (is a: feature_variant).
-	 *
 	 * The term <a href="http://www.sequenceontology.org/browser/current_svn/term/INTERNAL_FEATURE_TRUNCATION">
-	 * INTERNAL_FEATURE_TRUNCATION</a> would be more fitting but is not available in SO.
-	 *
-	 * In Jannovar, used to annotate a {@link #COMPLEX_SUBSTITUTION} that does not lead to a frameshift and decreases
-	 * the transcript length.
+	 * INTERNAL_FEATURE_TRUNCATION</a> would be more fitting but is not available in SO. In Jannovar, used to annotate a
+	 * {@link #COMPLEX_SUBSTITUTION} that does not lead to a frameshift and decreases the transcript length.
 	 */
 	FEATURE_TRUNCATION,
 	/**
@@ -99,12 +85,10 @@ public enum VariantEffect {
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:1000005">SO:1000005</a> When no simple or
 	 * well defined DNA mutation event describes the observed DNA change, the keyword "complex" should be used. Usually
-	 * there are multiple equally plausible explanations for the change (is a: substitution).
-	 *
-	 * Used together with {@link #INTERNAL_FEATURE_ELONGATION} or {@link #FEATURE_TRUNCATION} to describe an variant
-	 * that does not lead to a frameshift but a changed transcript length. Used together with
-	 * {@link #FRAMESHIFT_ELONGATION} or {@link #FRAMESHIFT_TRUNCATION} if the substitution leads to a frameshift
-	 * variant.
+	 * there are multiple equally plausible explanations for the change (is a: substitution). Used together with
+	 * {@link #INTERNAL_FEATURE_ELONGATION} or {@link #FEATURE_TRUNCATION} to describe an variant that does not lead to
+	 * a frameshift but a changed transcript length. Used together with {@link #FRAMESHIFT_ELONGATION} or
+	 * {@link #FRAMESHIFT_TRUNCATION} if the substitution leads to a frameshift variant.
 	 */
 	COMPLEX_SUBSTITUTION,
 	/**
@@ -141,11 +125,28 @@ public enum VariantEffect {
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002008">SO:0002008</a> A sequence variant
 	 * whereby at least one base of a codon encoding a rare amino acid is changed, resulting in a different encoded
-	 * amino acid (children: selenocysteine_loss, pyrrolysine_loss).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * amino acid (children: selenocysteine_loss, pyrrolysine_loss). <b>Not</not> used in Jannovar annotations.
 	 */
 	RARE_AMINO_ACID_VARIANT,
+
+	// copy number changes
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001911">SO:0001911</a> A sequence variant
+	 * where copies of a feature are increased relative to the reference..
+	 */
+	COPY_NUMBER_INCREASE,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001912">SO:0001912</a> A sequence variant
+	 * where copies of a feature are decreased relative to the reference.
+	 */
+	COPY_NUMBER_DECREASE,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001563">SO:0001563</a> A sequence variant
+	 * where copies of a feature (CNV) are either increased or decreased. Used for denoting &lt;CNV&gt (childen:
+	 * copy_number_increase, copy_number_decrease); value from VCF in Jannovar.
+	 */
+	COPY_NUMBER_CHANGE,
+
 	/**
 	 * Marker for smallest {@link VariantEffect} with {@link PutativeImpact#HIGH} impact.
 	 */
@@ -190,17 +191,13 @@ public enum VariantEffect {
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002013">SO:0002013</a> A sequence variant
 	 * that causes the reduction of a the 5'UTR with regard to the reference sequence (is a:
-	 * {@link #FIVE_PRIME_UTR_VARIANT})
-	 *
-	 * Jannovar does <b>not</b> yield use this at the moment.
+	 * {@link #FIVE_PRIME_UTR_VARIANT}) Jannovar does <b>not</b> yield use this at the moment.
 	 */
 	FIVE_PRIME_UTR_TRUNCATION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002015">SO:0002015</a> A sequence variant
 	 * that causes the reduction of a the 3' UTR with regard to the reference sequence (is a:
-	 * {@link #THREE_PRIME_UTR_VARIANT}).
-	 *
-	 * Jannovar does <b>not</b> yield use this at the moment.
+	 * {@link #THREE_PRIME_UTR_VARIANT}). Jannovar does <b>not</b> yield use this at the moment.
 	 */
 	THREE_PRIME_UTR_TRUNCATION,
 
@@ -263,9 +260,8 @@ public enum VariantEffect {
 
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001983">SO:0001983</a> A 5' UTR variant
-	 * where a premature start codon is introduced, moved or lost (is a: {@link #FIVE_PRIME_UTR_VARIANT}).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * where a premature start codon is introduced, moved or lost (is a: {@link #FIVE_PRIME_UTR_VARIANT}). <b>Not</not>
+	 * used in Jannovar annotations.
 	 */
 	// TODO(holtgrem): use
 	FIVE_PRIME_UTR_PREMATURE_START_CODON_GAIN_VARIANT,
@@ -292,17 +288,14 @@ public enum VariantEffect {
 	// duplication marker
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:1000039">SO:1000039</a> A tandem duplication
-	 * where the individual regions are in the same orientation (is a: tandem_duplication).
-	 *
-	 * In Jannovar used, as an additional marker to describe that an insertion is a duplication.
+	 * where the individual regions are in the same orientation (is a: tandem_duplication). In Jannovar used, as an
+	 * additional marker to describe that an insertion is a duplication.
 	 */
 	DIRECT_TANDEM_DUPLICATION,
 
 	// variant in custom region
 	/**
-	 * Variant in a user-specified custom region.
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * Variant in a user-specified custom region. <b>Not</not> used in Jannovar annotations.
 	 */
 	// TODO(holtgrem): use?
 	CUSTOM,
@@ -327,25 +320,21 @@ public enum VariantEffect {
 	// regulatory / TFBS variants
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001782">SO:0001782</a> A sequence variant
-	 * located within a transcription factor binding site (is a: {@link #REGULATORY_REGION_VARIANT}).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * located within a transcription factor binding site (is a: {@link #REGULATORY_REGION_VARIANT}). <b>Not</not> used
+	 * in Jannovar annotations.
 	 */
 	TF_BINDING_SITE_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001566">SO:0001566</a> A sequence variant
-	 * located within a regulatory region (is a: feature_variant).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * located within a regulatory region (is a: feature_variant). <b>Not</not> used in Jannovar annotations.
 	 */
 	REGULATORY_REGION_VARIANT,
 
 	// variant in intronic regions
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002018">SO:0002018</a> A transcript variant
-	 * occurring within a conserved region of an intron (is a: {@link #INTRON_VARIANT}).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * occurring within a conserved region of an intron (is a: {@link #INTRON_VARIANT}). <b>Not</not> used in Jannovar
+	 * annotations.
 	 */
 	CONSERVED_INTRON_VARIANT,
 
@@ -370,21 +359,16 @@ public enum VariantEffect {
 	STRUCTURAL_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001580">SO:0001580</a> A sequence variant
-	 * that changes the coding sequence (is a: {@link #CODING_TRANSCRIPT_VARIANT}, {@link #EXON_VARIANT}).
-	 *
-	 * Sequence Ontology does <b>not</b> have a term <a
+	 * that changes the coding sequence (is a: {@link #CODING_TRANSCRIPT_VARIANT}, {@link #EXON_VARIANT}). Sequence
+	 * Ontology does <b>not</b> have a term <a
 	 * href="http://www.sequenceontology.org/browser/current_svn/term/CODING_TRANSCRIPT_EXON_VARIANT"
-	 * >CODING_TRANSCRIPT_EXON_VARIANT</a>, so we use this.
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * >CODING_TRANSCRIPT_EXON_VARIANT</a>, so we use this. <b>Not</not> used in Jannovar annotations.
 	 */
 	CODING_SEQUENCE_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001627">SO:0001627</a> A transcript variant
-	 * occurring within an intron (is a: {@link #TRANSCRIPT_VARIANT}).
-	 *
-	 * Jannovar uses {@link #CODING_TRANSCRIPT_INTRON_VARIANT} and {@link #NON_CODING_TRANSCRIPT_INTRON_VARIANT}
-	 * instead.
+	 * occurring within an intron (is a: {@link #TRANSCRIPT_VARIANT}). Jannovar uses
+	 * {@link #CODING_TRANSCRIPT_INTRON_VARIANT} and {@link #NON_CODING_TRANSCRIPT_INTRON_VARIANT} instead.
 	 */
 	INTRON_VARIANT,
 	/**
@@ -394,70 +378,65 @@ public enum VariantEffect {
 	EXON_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001568">SO:0001568</a> A sequence variant
-	 * that changes the process of splicing (is a: {@link #GENE_VARIANT}).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * that changes the process of splicing (is a: {@link #GENE_VARIANT}). <b>Not</not> used in Jannovar annotations.
 	 */
 	SPLICING_VARIANT,
 	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001889">SO:0001889</a> A feature
+	 * amplification of a region containing a transcript.
+	 */
+	TRANSCRIPT_AMPLIFICATION,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001880">SO:0001880</a> A sequence variant,
+	 * caused by an alteration of the genomic sequence, where the structural change, an amplification of sequence, is
+	 * greater than the extent of the underlying genomic features. Used in Jannovar for amplification of whole exons if
+	 * not already {@link TRANSCRIPT_AMPLIFICATION}.
+	 */
+	FEATURE_AMPLIFICATION,
+	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0000276">SO:0000276</a> Variant affects a
-	 * miRNA (is a: miRNA_primary_transcript, small_regulatory_ncRNA).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * miRNA (is a: miRNA_primary_transcript, small_regulatory_ncRNA). <b>Not</not> used in Jannovar annotations.
 	 */
 	// TODO(holtgrem): use?
 	MIRNA,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001564">SO:0001564</a> A sequence variant
-	 * where the structure of the gene is changed (is a: feature_variant).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * where the structure of the gene is changed (is a: feature_variant). <b>Not</not> used in Jannovar annotations.
 	 */
 	GENE_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001968">SO:0001968</a> A transcript variant
-	 * of a protein coding gene (is a: {@link TRANSCRIPT_VARIANT}).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * of a protein coding gene (is a: {@link TRANSCRIPT_VARIANT}). <b>Not</not> used in Jannovar annotations.
 	 */
 	CODING_TRANSCRIPT_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001619">SO:0001619</a> (is a:
-	 * {@link #TRANSCRIPT_VARIANT}).
-	 *
-	 * Used for marking splicing variants as non-coding.
+	 * {@link #TRANSCRIPT_VARIANT}). Used for marking splicing variants as non-coding.
 	 */
 	NON_CODING_TRANSCRIPT_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001576">SO:0001576</a> A sequence variant
 	 * that changes the structure of the transcript (is a: {@link #GENE_VARIANT}). TRANSCRIPT_VARIANT, /** <a
 	 * href="http://www.sequenceontology.org/browser/current_svn/term/SO:">SO:</a> (is a: {@link #GENE_VARIANT})).
-	 *
 	 * <b>Not</not> used in Jannovar annotations.
 	 */
 	TRANSCRIPT_VARIANT,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0000605">SO:0000605</a> A region containing
 	 * or overlapping no genes that is bounded on either side by a gene, or bounded by a gene and the end of the
-	 * chromosome (is a: biological_region).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * chromosome (is a: biological_region). <b>Not</not> used in Jannovar annotations.
 	 */
 	INTERGENIC_REGION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0000340">SO:0000340</a> Structural unit
 	 * composed of a nucleic acid molecule which controls its own replication through the interaction of specific
-	 * proteins at one or more origins of replication (is a: replicon).
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * proteins at one or more origins of replication (is a: replicon). <b>Not</not> used in Jannovar annotations.
 	 */
 	CHROMOSOME,
 
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0001060">SO:0001060</a> Top level term for
-	 * variants, can be used for marking "uknown effect".
-	 *
-	 * <b>Not</not> used in Jannovar annotations.
+	 * variants, can be used for marking "uknown effect". <b>Not</not> used in Jannovar annotations.
 	 */
 	SEQUENCE_VARIANT;
 
@@ -600,6 +579,11 @@ public enum VariantEffect {
 		case STRUCTURAL_VARIANT:
 		case TF_BINDING_SITE_VARIANT:
 		case TRANSCRIPT_VARIANT:
+		case COPY_NUMBER_INCREASE:
+		case COPY_NUMBER_DECREASE:
+		case COPY_NUMBER_CHANGE:
+		case TRANSCRIPT_AMPLIFICATION:
+		case FEATURE_AMPLIFICATION:
 		case _SMALLEST_HIGH_IMPACT:
 		case _SMALLEST_LOW_IMPACT:
 		case _SMALLEST_MODERATE_IMPACT:
@@ -628,6 +612,12 @@ public enum VariantEffect {
 	 */
 	public String getSequenceOntologyTerm() {
 		switch (this) {
+		case COPY_NUMBER_INCREASE:
+			return "copy_number_increase";
+		case COPY_NUMBER_DECREASE:
+			return "copy_number_decrease";
+		case COPY_NUMBER_CHANGE:
+			return "copy_number_change";
 		case CHROMOSOME:
 			return "chromosome";
 		case CHROMOSOME_NUMBER_VARIATION:
@@ -660,6 +650,8 @@ public enum VariantEffect {
 			return "exon_variant";
 		case FEATURE_TRUNCATION:
 			return "feature_truncation";
+		case FEATURE_AMPLIFICATION:
+			return "feature_amplification";
 		case FIVE_PRIME_UTR_PREMATURE_START_CODON_GAIN_VARIANT:
 			return "5_prime_UTR_premature_start_codon_gain_variant";
 		case FIVE_PRIME_UTR_TRUNCATION:
@@ -734,6 +726,8 @@ public enum VariantEffect {
 			return "3_prime_utr_variant";
 		case TRANSCRIPT_ABLATION:
 			return "transcript_ablation";
+		case TRANSCRIPT_AMPLIFICATION:
+			return "transcript_amplification";
 		case TRANSCRIPT_VARIANT:
 			return "transcript_variant";
 		case UPSTREAM_GENE_VARIANT:
@@ -754,6 +748,12 @@ public enum VariantEffect {
 	 */
 	public String getSequenceOID() {
 		switch (this) {
+		case COPY_NUMBER_INCREASE:
+			return "SO:0001911";
+		case COPY_NUMBER_DECREASE:
+			return "SO:0001912";
+		case COPY_NUMBER_CHANGE:
+			return "SO:0001563";
 		case CHROMOSOME:
 			return "SO:0000340";
 		case CHROMOSOME_NUMBER_VARIATION:
@@ -784,6 +784,8 @@ public enum VariantEffect {
 			return "SO:0001572";
 		case EXON_VARIANT:
 			return "SO:0001791";
+		case FEATURE_AMPLIFICATION:
+			return "SO:0001880";
 		case FEATURE_TRUNCATION:
 			return "SO:0001906";
 		case FIVE_PRIME_UTR_PREMATURE_START_CODON_GAIN_VARIANT:
@@ -860,6 +862,8 @@ public enum VariantEffect {
 			return "SO:0001624";
 		case TRANSCRIPT_ABLATION:
 			return "SO:0001624";
+		case TRANSCRIPT_AMPLIFICATION:
+			return "SO:0001889";
 		case TRANSCRIPT_VARIANT:
 			return "SO:0001624";
 		case UPSTREAM_GENE_VARIANT:
@@ -887,7 +891,18 @@ public enum VariantEffect {
 	 * @return <code>true</code> if this {@link VariantEffect} annotates structural variants.
 	 */
 	public boolean isStructural() {
-		return (this == STRUCTURAL_VARIANT);
+		switch (this) {
+		case COPY_NUMBER_INCREASE:
+		case COPY_NUMBER_DECREASE:
+		case COPY_NUMBER_CHANGE:
+		case FEATURE_AMPLIFICATION:
+		case TRANSCRIPT_AMPLIFICATION:
+		case TRANSCRIPT_ABLATION:
+		case STRUCTURAL_VARIANT:
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	/**
@@ -949,6 +964,7 @@ public enum VariantEffect {
 		case STOP_RETAINED_VARIANT:
 		case SYNONYMOUS_VARIANT:
 		case TRANSCRIPT_ABLATION:
+		case TRANSCRIPT_AMPLIFICATION:
 			return false;
 		default:
 			return true;
@@ -968,12 +984,14 @@ public enum VariantEffect {
 
 		switch (this) {
 		case CODING_TRANSCRIPT_INTRON_VARIANT:
+		case FEATURE_AMPLIFICATION:
 		case FIVE_PRIME_UTR_TRUNCATION:
 		case FIVE_PRIME_UTR_VARIANT:
 		case THREE_PRIME_UTR_TRUNCATION:
 		case THREE_PRIME_UTR_VARIANT:
 		case NON_CODING_TRANSCRIPT_INTRON_VARIANT:
 		case NON_CODING_TRANSCRIPT_VARIANT:
+		case TRANSCRIPT_AMPLIFICATION:
 			return false;
 		default:
 			return true;

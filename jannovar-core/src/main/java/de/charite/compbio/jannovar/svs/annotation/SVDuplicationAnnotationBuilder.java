@@ -1,6 +1,13 @@
 package de.charite.compbio.jannovar.svs.annotation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.annotation.builders.AnnotationBuilderOptions;
+import de.charite.compbio.jannovar.reference.GenomeInterval;
+import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.svs.StructuralVariant;
 
@@ -11,14 +18,52 @@ import de.charite.compbio.jannovar.svs.StructuralVariant;
  */
 public class SVDuplicationAnnotationBuilder extends StructuralVariantAnnotationBuilder {
 
-	SVDuplicationAnnotationBuilder(TranscriptModel transcript, StructuralVariant variant, AnnotationBuilderOptions options) {
+	SVDuplicationAnnotationBuilder(TranscriptModel transcript, StructuralVariant variant,
+			AnnotationBuilderOptions options) {
 		super(transcript, variant, options);
 	}
 
 	@Override
 	public StructuralVariantAnnotation build() {
-		// TODO Auto-generated method stub
-		return null;
+		return new StructuralVariantAnnotation(transcript, variant, getEffects());
 	}
 
+	/**
+	 * @return the effects that {@link #variant} has on {@link #transcript}
+	 */
+	private Collection<VariantEffect> getEffects() {
+		List<VariantEffect> effects = new ArrayList<>();
+
+		GenomeInterval affected = variant.getAffectedIntervalOuter().withStrand(Strand.FWD);
+
+		// Case of transcript or exon loss/truncation
+		if (variant.getAffectedIntervalOuter().contains(transcript.getTXRegion()))
+			effects.add(VariantEffect.TRANSCRIPT_ABLATION);
+		if (effects.isEmpty()) {
+			for (GenomeInterval exon : transcript.getExonRegions())
+				if (affected.contains(exon))
+					effects.add(VariantEffect.EXON_LOSS_VARIANT);
+				else if (affected.overlapsWith(exon))
+					effects.add(VariantEffect.FEATURE_TRUNCATION);
+		}
+		if (!effects.isEmpty())
+			effects.add(VariantEffect.TRANSCRIPT_AMPLIFICATION);
+
+		// Case of upstream/downstream/intergenic
+		if (effects.isEmpty() && so.overlapsWithDownstreamRegion(affected))
+			effects.add(VariantEffect.DOWNSTREAM_GENE_VARIANT);
+		else if (effects.isEmpty() && so.overlapsWithUpstreamRegion(affected))
+			effects.add(VariantEffect.UPSTREAM_GENE_VARIANT);
+		else if (effects.isEmpty())
+			effects.add(VariantEffect.INTERGENIC_VARIANT);
+
+		// Variant is SV in any case and affects coding/non-coding tx
+		effects.add(VariantEffect.STRUCTURAL_VARIANT);
+		if (transcript.isCoding())
+			effects.add(VariantEffect.CODING_TRANSCRIPT_VARIANT);
+		else
+			effects.add(VariantEffect.NON_CODING_TRANSCRIPT_VARIANT);
+
+		return effects;
+	}
 }

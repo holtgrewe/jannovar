@@ -33,6 +33,9 @@ HIGH             SO:0002012  start_lost
 HIGH             SO:0001619  splice_acceptor_variant
 HIGH             SO:0001575  splice_donor_variant
 HIGH             SO:0001619  rare_amino_acid_variant
+HIGH             SO:0001563  copy_number_change
+HIGH             SO:0001911  copy_number_increase
+HIGH             SO:0001912  copy_number_decrease
 MODERATE         SO:0001583  missense_variant
 MODERATE         SO:0001821  inframe_insertion
 MODERATE         SO:0001824  disruptive_inframe_insertion
@@ -65,6 +68,8 @@ MODIFIER         SO:0001580  coding_sequence_variant
 MODIFIER         SO:0001908  intron_variant
 MODIFIER         SO:0001791  exon_variant
 MODIFIER         SO:0001568  splicing_variant
+MODIFIER         SO:0001880  feature_amplification
+MODIFIER         SO:0001889  transcript_amplification
 MODIFIER         SO:0001908  miRNA
 MODIFIER         SO:0001564  gene_variant
 MODIFIER         SO:0001968  coding_transcript_variant

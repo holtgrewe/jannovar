@@ -34,7 +34,7 @@ public class SVDeletionAnnotationBuilder extends StructuralVariantAnnotationBuil
 		List<VariantEffect> effects = new ArrayList<>();
 
 		GenomeInterval affected = variant.getAffectedIntervalOuter().withStrand(Strand.FWD);
-		
+
 		// Case of transcript or exon loss/truncation
 		if (variant.getAffectedIntervalOuter().contains(transcript.getTXRegion()))
 			effects.add(VariantEffect.TRANSCRIPT_ABLATION);
@@ -63,4 +63,5 @@ public class SVDeletionAnnotationBuilder extends StructuralVariantAnnotationBuil
 
 		return effects;
 	}
+
 }
