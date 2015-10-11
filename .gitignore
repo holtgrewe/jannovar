@@ -17,8 +17,6 @@ cov-int*
 /data*
 # any inline-generated VCF/Jannovar files
 *.jannovar
-*.vcf
-*.vcf.idx
 *.ped
 log.txt
 data
