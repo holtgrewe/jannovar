@@ -13,7 +13,7 @@ import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
 import de.charite.compbio.jannovar.hgvs.protein.change.ProteinChange;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
-import de.charite.compbio.jannovar.reference.VariantDescription;
+import de.charite.compbio.jannovar.reference.SmallVariantDescription;
 import de.charite.compbio.jannovar.svs.StructuralVariant;
 
 // TODO(holtgrewe): Merge back with Annotation!
@@ -22,7 +22,7 @@ import de.charite.compbio.jannovar.svs.StructuralVariant;
 /**
  * Collect the information for one variant's annotation.
  *
- * Implements the {@link VariantDescription} interface for quicker access to the variant description information.
+ * Implements the {@link SmallVariantDescription} interface for quicker access to the variant description information.
  *
  * @see AnnotationVariantTypeDecorator
  * @see AnnotationTextGenerator

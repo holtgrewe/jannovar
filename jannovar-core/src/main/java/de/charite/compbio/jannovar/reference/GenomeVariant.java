@@ -24,7 +24,7 @@ import de.charite.compbio.jannovar.impl.util.DNAUtils;
  * @author Peter N Robinson <peter.robinson@charite.de>
  */
 @Immutable
-public final class GenomeVariant implements VariantDescription {
+public final class GenomeVariant implements SmallVariantDescription {
 
 	/** position of the change */
 	private final GenomePosition pos;
