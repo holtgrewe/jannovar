@@ -1,6 +1,6 @@
 package de.charite.compbio.jannovar.reference;
 
-import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
+import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 
 /**
  * Minimal description of a variant as triple (position, ref, alt).
@@ -45,6 +45,6 @@ public interface VariantDescription {
 	/**
 	 * @return <code>int</code> describing how <code>this</code> compares with <code>other</code>
 	 */
-	int compareTo(SmallVariantAnnotation other);
+	int compareTo(VariantAnnotation other);
 
 }

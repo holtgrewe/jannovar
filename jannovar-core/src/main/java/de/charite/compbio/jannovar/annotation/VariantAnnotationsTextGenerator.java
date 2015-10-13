@@ -53,7 +53,7 @@ public abstract class VariantAnnotationsTextGenerator {
 	 */
 	public String buildEffectText() {
 		StringBuilder builder = new StringBuilder();
-		for (SmallVariantAnnotation anno : annotations.getAnnotations()) {
+		for (VariantAnnotation anno : annotations.getAnnotations()) {
 			if (builder.length() != 0)
 				builder.append(',');
 			if (altCount > 1)
@@ -68,7 +68,7 @@ public abstract class VariantAnnotationsTextGenerator {
 	 */
 	public String buildHGVSText() {
 		StringBuilder builder = new StringBuilder();
-		for (SmallVariantAnnotation anno : annotations.getAnnotations()) {
+		for (VariantAnnotation anno : annotations.getAnnotations()) {
 			if (builder.length() != 0)
 				builder.append(',');
 			if (altCount > 1)

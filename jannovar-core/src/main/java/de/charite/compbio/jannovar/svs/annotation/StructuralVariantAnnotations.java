@@ -44,7 +44,7 @@ public final class StructuralVariantAnnotations implements Comparable<Structural
 	 *
 	 * Note that <code>variant</code> is converted to the forward strand using {@link StructuralVariant#withStrand}.
 	 *
-	 * @param change
+	 * @param variant
 	 *            {@link StructuralVariant} that this anotation list annotates
 	 * @param entries
 	 *            {@link Collection} of {@link StructuralVariantAnnotation} objects

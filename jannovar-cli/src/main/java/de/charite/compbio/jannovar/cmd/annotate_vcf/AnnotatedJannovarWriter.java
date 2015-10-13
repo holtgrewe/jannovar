@@ -16,6 +16,7 @@ import com.google.common.collect.ImmutableMap;
 import de.charite.compbio.jannovar.JannovarOptions;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationException;
+import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 import de.charite.compbio.jannovar.annotation.VariantAnnotations;
 import de.charite.compbio.jannovar.annotation.VariantAnnotator;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -146,7 +147,10 @@ public class AnnotatedJannovarWriter extends AnnotatedVariantWriter {
 			throw new AnnotationException(e);
 		}
 
-		for (SmallVariantAnnotation a : anno.getAnnotations()) {
+		for (VariantAnnotation varAnno : anno.getAnnotations()) {
+			if (!(varAnno instanceof SmallVariantAnnotation))
+				continue;
+			SmallVariantAnnotation a = (SmallVariantAnnotation) varAnno;
 			String effect = Joiner.on("+").join(
 					FluentIterable.from(a.getEffects()).transform(VariantEffect.TO_LEGACY_NAME));
 			String annt = Joiner

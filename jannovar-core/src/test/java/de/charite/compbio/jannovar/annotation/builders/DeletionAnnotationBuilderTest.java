@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
+import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
@@ -101,7 +102,7 @@ public class DeletionAnnotationBuilderTest {
 		// intergenic downstream
 		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
 				PositionType.ZERO_BASED), "A", "");
-		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
+		VariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(null, annotation1.getAnnoLoc());

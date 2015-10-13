@@ -2,7 +2,7 @@ package de.charite.compbio.jannovar.svs;
 
 import com.google.common.collect.ComparisonChain;
 
-import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
+import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
 import de.charite.compbio.jannovar.reference.GenomeVariant;
@@ -125,7 +125,7 @@ public abstract class StructuralVariant extends GenomeVariant implements Compara
 	}
 
 	@Override
-	public int compareTo(SmallVariantAnnotation other) {
+	public int compareTo(VariantAnnotation other) {
 		return ComparisonChain.start().compare(pos, other.getPos()).compare(ref, other.getRef())
 				.compare(alt, other.getAlt()).result();
 	}

@@ -12,6 +12,7 @@ import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocationBuilder;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
+import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.hgvs.nts.NucleotideRange;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
@@ -121,7 +122,7 @@ abstract class AnnotationBuilder {
 	 *
 	 * @return {@link SmallVariantAnnotation} for the given {@link #transcript} and {@link #change}.
 	 */
-	public abstract SmallVariantAnnotation build();
+	public abstract VariantAnnotation build();
 
 	/**
 	 * @return chromosome/genome-level {@link NucleotideChange}

@@ -17,6 +17,7 @@ import com.google.common.collect.ImmutableMap;
 
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
+import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 import de.charite.compbio.jannovar.annotation.VariantAnnotations;
 import de.charite.compbio.jannovar.annotation.VariantAnnotator;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -25,6 +26,7 @@ import de.charite.compbio.jannovar.data.Chromosome;
 import de.charite.compbio.jannovar.data.JannovarData;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.Strand;
@@ -171,7 +173,8 @@ public final class VariantContextAnnotator {
 		final Allele altAllele = vc.getAlternateAllele(alleleID);
 		final String alt = altAllele.getBaseString();
 		final int pos = vc.getStart();
-		return new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, chr, pos, PositionType.ONE_BASED), ref, alt);
+		return new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, chr, pos, PositionType.ONE_BASED), ref,
+				alt);
 	}
 
 	/**
@@ -247,7 +250,7 @@ public final class VariantContextAnnotator {
 		ArrayList<String> annotations = new ArrayList<String>();
 		for (int alleleID = 0; alleleID < vc.getAlternateAlleles().size(); ++alleleID) {
 			if (!annos.get(alleleID).getAnnotations().isEmpty()) {
-				for (SmallVariantAnnotation ann : annos.get(alleleID).getAnnotations()) {
+				for (VariantAnnotation ann : annos.get(alleleID).getAnnotations()) {
 					final String alt = vc.getAlternateAllele(alleleID).getBaseString();
 					annotations.add(ann.toVCFAnnoString(alt));
 					if (options.oneAnnotationOnly)
@@ -265,7 +268,11 @@ public final class VariantContextAnnotator {
 		final int altAlleleCount = vc.getAlternateAlleles().size();
 		for (int alleleID = 0; alleleID < altAlleleCount; ++alleleID) {
 			if (!annos.get(alleleID).getAnnotations().isEmpty()) {
-				for (SmallVariantAnnotation ann : annos.get(alleleID).getAnnotations()) {
+				for (VariantAnnotation varAnn : annos.get(alleleID).getAnnotations()) {
+					if (!(varAnn instanceof SmallVariantAnnotation))
+						continue;
+					SmallVariantAnnotation ann = (SmallVariantAnnotation) varAnn;
+
 					final String alt = vc.getAlternateAllele(alleleID).getBaseString();
 					effectList.add(ann.getMostPathogenicVarType());
 					if (altAlleleCount == 1)
@@ -289,8 +296,8 @@ public final class VariantContextAnnotator {
 	 *            {@link SmallGenomeVariant} to build error annotation for
 	 * @return VariantAnnotations having the message set to {@link AnnotationMessage#ERROR_PROBLEM_DURING_ANNOTATION}.
 	 */
-	public VariantAnnotations buildErrorAnnotations(SmallGenomeVariant change) {
-		return new VariantAnnotations(change, ImmutableList.of(new SmallVariantAnnotation(ImmutableList
+	public VariantAnnotations buildErrorAnnotations(GenomeVariant variant) {
+		return new VariantAnnotations(variant, ImmutableList.of(new SmallVariantAnnotation(ImmutableList
 				.of(AnnotationMessage.ERROR_PROBLEM_DURING_ANNOTATION))));
 	}
 

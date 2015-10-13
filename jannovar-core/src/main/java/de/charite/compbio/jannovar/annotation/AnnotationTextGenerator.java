@@ -19,7 +19,7 @@ final public class AnnotationTextGenerator {
 	}
 
 	/** @return the decorated {@link SmallVariantAnnotation} */
-	public SmallVariantAnnotation getAnnotation() {
+	public VariantAnnotation getAnnotation() {
 		return annotation;
 	}
 

@@ -38,7 +38,7 @@ public abstract class StructuralVariantAnnotationBuilder {
 	 *
 	 * @param transcript
 	 *            the {@link TranscriptInfo} to build the annotation for
-	 * @param change
+	 * @param variant
 	 *            the {@link SmallGenomeVariant} to use for building the annotation
 	 * @param options
 	 *            the configuration to use for the {@link AnnotationBuilder}
@@ -52,9 +52,9 @@ public abstract class StructuralVariantAnnotationBuilder {
 	}
 
 	/**
-	 * Build annotation for {@link #transcript} and {@link #change}
+	 * Build annotation for {@link #transcript} and {@link #variant}
 	 *
-	 * @return {@link StructuralVariantAnnotation} for the given {@link #transcript} and {@link #change}.
+	 * @return {@link StructuralVariantAnnotation} for the given {@link #transcript} and {@link #variant}.
 	 */
 	public abstract StructuralVariantAnnotation build();
 

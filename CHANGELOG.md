@@ -4,6 +4,7 @@
 
 ## jannovar-core
 
+* more refactorization, introducing `VariantAnnotation` class
 * moving around some functions in the `GenomeVariant` class hierarchy
 * renaming back `SmallVariantDescription` to `SmallVariantDescription`
 * adding `GenomeVariant` as super class for `SmallGenomeVariant` and `StructuralGenomeVariant`

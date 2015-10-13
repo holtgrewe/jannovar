@@ -105,6 +105,13 @@ public abstract class GenomeVariant implements VariantDescription {
 	public abstract GenomeInterval getGenomeInterval();
 
 	/**
+	 * @return begin position of {@link getGenomeInterval}()
+	 */
+	public GenomePosition getGenomePos() {
+		return getGenomeInterval().getGenomeBeginPos();
+	}
+
+	/**
 	 * @return the {@link GenomeVariant} on the given strand
 	 */
 	public abstract GenomeVariant withStrand(Strand strand);

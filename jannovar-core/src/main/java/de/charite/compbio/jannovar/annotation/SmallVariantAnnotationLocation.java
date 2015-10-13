@@ -1,6 +1,5 @@
 package de.charite.compbio.jannovar.annotation;
 
-import de.charite.compbio.jannovar.Immutable;
 import de.charite.compbio.jannovar.reference.TranscriptInterval;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
@@ -11,7 +10,6 @@ import de.charite.compbio.jannovar.reference.TranscriptModel;
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
-@Immutable
 public class SmallVariantAnnotationLocation {
 
 	/** Enumeration for rank types, exon, intron, or neither (i.e. spans more than one feature). */

@@ -11,17 +11,19 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 
 import de.charite.compbio.jannovar.data.Chromosome;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 
 /**
  * This class collects all the information about a variant and its annotations and calculates the final annotations for
  * a given variant. The {@link de.charite.compbio.jannovar.data.Chromosome Chromosome} objects each use an instance of
- * this class to assemble a list of {@link SmallVariantAnnotation} objects for each variant. Each variant should receive at least
- * one {@link SmallVariantAnnotation}, but variants that affect multiple transcripts will have multiple annotations.
+ * this class to assemble a list of {@link VariantAnnotation} objects for each variant. Each variant should receive at
+ * least one {@link VariantAnnotation}, but variants that affect multiple transcripts will have multiple annotations.
  *
- * This class creates one {@link de.charite.compbio.jannovar.annotation.VariantAnnotations AnnotationList} object for each
- * variant (with one or more {@link SmallVariantAnnotation} objects), that can return both an ArrayList of all annotations, a list
- * of all annotations of the highest priority level for the variant, and a single representative Annotation.
+ * This class creates one {@link de.charite.compbio.jannovar.annotation.VariantAnnotations AnnotationList} object for
+ * each variant (with one or more {@link VariantAnnotation} objects), that can return both an ArrayList of all
+ * annotations, a list of all annotations of the highest priority level for the variant, and a single representative
+ * Annotation.
  *
  * The default preference for annotations is thus
  *
@@ -45,14 +47,14 @@ import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
  *
  * One object of this class is created for each variant we want to annotate. The
  * {@link de.charite.compbio.jannovar.data.Chromosome Chromosome} class goes through a list of genes in the vicinity of
- * the variant and adds one {@link SmallVariantAnnotation} object for each gene. These are essentially candidates for the actual
- * correct annotation of the variant, but we can only decide what the correct annotation is once we have seen enough
- * candidates. Therefore, once we have gone through the candidates, this class decides what the best annotation is and
- * returns the corresponding {@link SmallVariantAnnotation} object (in some cases, this class may modify the {@link SmallVariantAnnotation}
- * object before returning it).
+ * the variant and adds one {@link VariantAnnotation} object for each gene. These are essentially candidates for the
+ * actual correct annotation of the variant, but we can only decide what the correct annotation is once we have seen
+ * enough candidates. Therefore, once we have gone through the candidates, this class decides what the best annotation
+ * is and returns the corresponding {@link VariantAnnotation} object (in some cases, this class may modify the
+ * {@link VariantAnnotation} object before returning it).
  *
  * For each class of Variant, there is a function that returns a single
- * {@link de.charite.compbio.jannovar.annotation.SmallVariantAnnotation Annotation} object. These functions are called
+ * {@link de.charite.compbio.jannovar.annotation.VariantAnnotation Annotation} object. These functions are called
  * summarizeABC(), where ABC is Intronic, Exonic, etc., representing the precedence classes.
  *
  * Used for the implementation of VariantAnnotator.
@@ -66,8 +68,8 @@ final class AnnotationCollector {
 	/** the logger object to use */
 	private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationCollector.class);
 
-	/** List of all {@link SmallVariantAnnotation} objects found for exonic variation. */
-	private ArrayList<SmallVariantAnnotation> annotationLst = null;
+	/** List of all {@link VariantAnnotation} objects found for exonic variation. */
+	private ArrayList<VariantAnnotation> annotationLst = null;
 
 	/**
 	 * Set of all gene symbols used for the current annotation (usually one, but if the size of this set is greater than
@@ -121,14 +123,14 @@ final class AnnotationCollector {
 	private int annotationCount;
 
 	/**
-	 * The constructor initializes an ArrayList of {@link SmallVariantAnnotation} objects as well as a HashSet of Gene symbols
-	 * (Strings).
+	 * The constructor initializes an ArrayList of {@link VariantAnnotation} objects as well as a HashSet of Gene
+	 * symbols (Strings).
 	 *
 	 * @param initialCapacity
 	 *            The initial capacity of the arraylist and hashset.
 	 */
 	public AnnotationCollector(int initialCapacity) {
-		this.annotationLst = new ArrayList<SmallVariantAnnotation>();
+		this.annotationLst = new ArrayList<VariantAnnotation>();
 		this.geneSymbolSet = new HashSet<String>();
 	}
 
@@ -157,15 +159,15 @@ final class AnnotationCollector {
 	}
 
 	/**
-	 * @return The number of {@link SmallVariantAnnotation} objects for the current variant.
+	 * @return The number of {@link VariantAnnotation} objects for the current variant.
 	 */
 	public int getAnnotationCount() {
 		return this.annotationCount;
 	}
 
 	/**
-	 * Note that this function is used by {@link Chromosome} during the construction of an {@link VariantAnnotations} for a
-	 * given variant.
+	 * Note that this function is used by {@link Chromosome} during the construction of an {@link VariantAnnotations}
+	 * for a given variant.
 	 *
 	 * @return true if there are currently no annotations.
 	 */
@@ -198,12 +200,12 @@ final class AnnotationCollector {
 	 * are the best candidates. Otherwise, return all variants that affect other exonic sequences (UTRs, ncRNA).
 	 * Otherwise, return UPSTREAM and DOWNSTREAM annotations if they exist. Otherwise, return an intergenic Annotation.
 	 *
-	 * @param change
+	 * @param variant
 	 *            <code>GenomeChange</code> to build the <code>AnnotationList</code> for
-	 * @return returns the {@link VariantAnnotations} with all associated {@link SmallVariantAnnotation}s
+	 * @return returns the {@link VariantAnnotations} with all associated {@link VariantAnnotation}s
 	 */
-	public VariantAnnotations getAnnotationList(SmallGenomeVariant change) {
-		return new VariantAnnotations(change, this.annotationLst);
+	public VariantAnnotations getAnnotationList(GenomeVariant variant) {
+		return new VariantAnnotations(variant, this.annotationLst);
 	}
 
 	/**
@@ -223,7 +225,7 @@ final class AnnotationCollector {
 	private VariantEffect getMostPathogenicVariantType() {
 		VariantEffect vt;
 		Collections.sort(this.annotationLst);
-		SmallVariantAnnotation a = this.annotationLst.get(0);
+		VariantAnnotation a = this.annotationLst.get(0);
 		return a.getMostPathogenicVarType();
 	}
 
@@ -234,7 +236,7 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            A noncoding RNA exonic annotation object.
 	 */
-	public void addNonCodingRNAExonicAnnotation(SmallVariantAnnotation ann) {
+	public void addNonCodingRNAExonicAnnotation(VariantAnnotation ann) {
 		this.annotationLst.add(ann);
 		this.hasNcRna = true;
 		this.annotationCount++;
@@ -247,7 +249,7 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            A 5' UTR annotation object.
 	 */
-	public void addUTR5Annotation(SmallVariantAnnotation ann) {
+	public void addUTR5Annotation(VariantAnnotation ann) {
 		this.annotationLst.add(ann);
 		this.hasUTR5 = true;
 		this.hasGenicMutation = true;
@@ -261,7 +263,7 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            A 3' UTR annotation object.
 	 */
-	public void addUTR3Annotation(SmallVariantAnnotation ann) {
+	public void addUTR3Annotation(VariantAnnotation ann) {
 		this.annotationLst.add(ann);
 		this.hasUTR3 = true;
 		this.hasGenicMutation = true;
@@ -276,7 +278,7 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            An Annotation with type INTERGENIC
 	 */
-	public void addIntergenicAnnotation(SmallVariantAnnotation ann) {
+	public void addIntergenicAnnotation(VariantAnnotation ann) {
 		this.annotationLst.add(ann);
 		this.hasIntergenic = true;
 		this.annotationCount++;
@@ -290,7 +292,7 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            An Annotation to be added.
 	 */
-	public void addExonicAnnotation(SmallVariantAnnotation ann) {
+	public void addExonicAnnotation(VariantAnnotation ann) {
 		this.annotationLst.add(ann);
 		if (FluentIterable.from(ann.getEffects()).anyMatch(Predicates.equalTo(VariantEffect.SYNONYMOUS_VARIANT)))
 			this.hasSynonymous = true;
@@ -309,9 +311,9 @@ final class AnnotationCollector {
 	 * annotation for a noncoding RNA transcript that is affected by a splice mutation.
 	 *
 	 * @param ann
-	 *            {@link SmallVariantAnnotation} to be registered
+	 *            {@link VariantAnnotation} to be registered
 	 */
-	public void addNcRNASplicing(SmallVariantAnnotation ann) {
+	public void addNcRNASplicing(VariantAnnotation ann) {
 		// String s = String.format("%s", ann.hgvsDescription);
 		this.hasNcRna = true;
 		// ann.setVariantAnnotation(s); // TODO(holtgrew): necessary?
@@ -326,10 +328,10 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            the Intronic annotation to be added.
 	 */
-	public void addIntronicAnnotation(SmallVariantAnnotation ann) {
+	public void addIntronicAnnotation(VariantAnnotation ann) {
 		this.geneSymbolSet.add(ann.getTranscript().getGeneSymbol());
 		if (FluentIterable.from(ann.getEffects()).anyMatch(VariantEffect.IS_INTRONIC)) {
-			for (SmallVariantAnnotation a : this.annotationLst) {
+			for (VariantAnnotation a : this.annotationLst) {
 				if (a.equals(ann))
 					return; /* already have identical annotation */
 			}
@@ -351,7 +353,7 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            the Structual annotation to be added
 	 */
-	public void addStructuralAnnotation(SmallVariantAnnotation ann) {
+	public void addStructuralAnnotation(VariantAnnotation ann) {
 		this.annotationLst.add(ann);
 		this.geneSymbolSet.add(ann.getTranscript().getGeneSymbol());
 		this.hasStructural = true;
@@ -364,7 +366,7 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            An Annotation object that contains a String representing the error.
 	 */
-	public void addErrorAnnotation(SmallVariantAnnotation ann) {
+	public void addErrorAnnotation(VariantAnnotation ann) {
 		this.annotationLst.add(ann);
 		this.hasError = true;
 		this.annotationCount++;
@@ -378,8 +380,8 @@ final class AnnotationCollector {
 	 * @param ann
 	 *            The annotation that is to be added to the list of annotations for the current sequence variant.
 	 */
-	public void addUpDownstreamAnnotation(SmallVariantAnnotation ann) {
-		for (SmallVariantAnnotation a : annotationLst) {
+	public void addUpDownstreamAnnotation(VariantAnnotation ann) {
+		for (VariantAnnotation a : annotationLst) {
 			if (a.equals(ann))
 				return;
 		}

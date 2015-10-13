@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import de.charite.compbio.jannovar.Immutable;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
 import de.charite.compbio.jannovar.hgvs.protein.change.ProteinChange;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
@@ -27,40 +28,10 @@ import de.charite.compbio.jannovar.reference.VariantDescription;
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 @Immutable
-public final class SmallVariantAnnotation implements VariantDescription, Comparable<SmallVariantAnnotation> {
-
-	/**
-	 * This line is added to the output of a VCF file annotated by Jannovar and describes the new field for the INFO
-	 * section entitled EFFECT, which decribes the effects of variants (splicing,missense,stoploss, etc).
-	 */
-	public static final String INFO_EFFECT = ""
-			+ "variant effect (UTR5,UTR3,intronic,splicing,missense,stoploss,stopgain,"
-			+ "startloss,duplication,frameshift-insertion,frameshift-deletion,non-frameshift-deletion,"
-			+ "non-frameshift-insertion,synonymous)";
-
-	/**
-	 * This line is added to the output of a VCF file annotated by Jannovar and describes the new field for the INFO
-	 * section entitled HGVS, which provides the HGVS encoded variant corresponding to the chromosomal variant in the
-	 * original VCF file.
-	 */
-	public static final String INFO_HGVS = "HGVS Nomenclature";
-
-	/** The DESCRIPTION string to use in the VCF header for VCFVariantAnnotation objects */
-	public static final String VCF_ANN_DESCRIPTION_STRING = "Functional annotations:'Allele|Annotation|"
-			+ "Annotation_Impact|Gene_Name|Gene_ID|Feature_Type|Feature_ID|Transcript_BioType|Rank|HGVS.c|HGVS.p|"
-			+ "cDNA.pos / cDNA.length|CDS.pos / CDS.length|AA.pos / AA.length|Distance|ERRORS / WARNINGS / INFO'";
-
-	/** the annotated {@link SmallGenomeVariant} */
-	private final SmallGenomeVariant change;
-
-	/** variant types, sorted by internal pathogenicity score */
-	private final ImmutableSortedSet<VariantEffect> effects;
-
-	/** errors and warnings */
-	private final ImmutableSortedSet<AnnotationMessage> messages;
+public final class SmallVariantAnnotation extends VariantAnnotation {
 
 	/** location of the annotation, <code>null</code> if not even nearby a {@link TranscriptModel} */
-	private final SmallVariantAnnotationLocation annoLoc;
+	final SmallVariantAnnotationLocation annoLoc;
 
 	/** Chromosome/genome-level change, to be prepended with "g." */
 	private final NucleotideChange genomicNTChange;
@@ -69,13 +40,10 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 	 * CDS-level {@link NucleotideChange} for coding transcripts (to be prependend with "c.") and transcript level for
 	 * non-coding transcripts (to be prepended with "n.")
 	 */
-	private final NucleotideChange cdsNTChange;
+	final NucleotideChange cdsNTChange;
 
 	/** change on the protein level */
-	private final ProteinChange proteinChange;
-
-	/** the transcript, <code>null</code> for {@link VariantEffect#INTERGENIC} annotations */
-	private final TranscriptModel transcript;
+	final ProteinChange proteinChange;
 
 	/**
 	 * Initialize object with messages only.
@@ -107,9 +75,9 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 	 * @param proteinChange
 	 *            predicted {@link ProteinChange}
 	 */
-	public SmallVariantAnnotation(TranscriptModel transcript, SmallGenomeVariant change, Collection<VariantEffect> varTypes,
-			SmallVariantAnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
-			ProteinChange proteinChange) {
+	public SmallVariantAnnotation(TranscriptModel transcript, SmallGenomeVariant change,
+			Collection<VariantEffect> varTypes, SmallVariantAnnotationLocation annoLoc,
+			NucleotideChange genomicNTChange, NucleotideChange cdsNTChange, ProteinChange proteinChange) {
 		this(transcript, change, varTypes, annoLoc, genomicNTChange, cdsNTChange, proteinChange, ImmutableSortedSet
 				.<AnnotationMessage> of());
 	}
@@ -119,8 +87,8 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 	 *
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *
-	 * @param change
-	 *            the annotated {@link SmallGenomeVariant}
+	 * @param variant
+	 *            the annotated {@link GenomeVariant}
 	 * @param transcript
 	 *            transcript for this annotation
 	 * @param effects
@@ -136,37 +104,14 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 	 * @param messages
 	 *            {@link Collection} of {@link AnnotatioMessage} objects
 	 */
-	public SmallVariantAnnotation(TranscriptModel transcript, SmallGenomeVariant change, Collection<VariantEffect> varTypes,
+	public SmallVariantAnnotation(TranscriptModel transcript, GenomeVariant variant, Collection<VariantEffect> effects,
 			SmallVariantAnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange, Collection<AnnotationMessage> messages) {
-		if (change != null)
-			change = change.withStrand(Strand.FWD); // enforce forward strand
-		this.change = change;
-		if (varTypes == null)
-			this.effects = ImmutableSortedSet.<VariantEffect> of();
-		else
-			this.effects = ImmutableSortedSet.copyOf(varTypes);
+		super(variant, effects, messages, transcript);
 		this.annoLoc = annoLoc;
 		this.genomicNTChange = genomicNTChange;
 		this.cdsNTChange = cdsNTChange;
 		this.proteinChange = proteinChange;
-		this.transcript = transcript;
-		this.messages = ImmutableSortedSet.copyOf(messages);
-	}
-
-	/** @return the annotated {@link SmallGenomeVariant} */
-	public SmallGenomeVariant getGenomeVariant() {
-		return change;
-	}
-
-	/** @return variant types, sorted by internal pathogenicity score */
-	public ImmutableSortedSet<VariantEffect> getEffects() {
-		return effects;
-	}
-
-	/** @return errors and warnings */
-	public ImmutableSortedSet<AnnotationMessage> getMessages() {
-		return messages;
 	}
 
 	/** @return location of the annotation, <code>null</code> if not even nearby a {@link TranscriptModel} */
@@ -219,38 +164,12 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 			return "p." + proteinChange.toHGVSString();
 	}
 
-	/** @return the transcript, <code>null</code> for {@link VariantEffect#INTERGENIC} annotations */
-	public TranscriptModel getTranscript() {
-		return transcript;
-	}
-
-	/**
-	 * @return highest {@link PutativeImpact} of all {@link #effects}.
-	 */
-	public PutativeImpact getPutativeImpact() {
-		if (effects.isEmpty())
-			return null;
-		VariantEffect worst = effects.first();
-		for (VariantEffect vt : effects)
-			if (worst.getImpact().compareTo(vt.getImpact()) > 0)
-				worst = vt;
-		return worst.getImpact();
-	}
-
-	/**
-	 * Return the standardized VCF variant string for the given <code>ALT</code> allele.
-	 *
-	 * The <code>ALT</code> allele has to be given to this function since we trim away at least the first base of
-	 * <code>REF</code>/<code>ALT</code>.
-	 *
-	 * @param escape
-	 *            whether or not to escape the invalid VCF characters, e.g. <code>'='</code>.
-	 */
+	@Override
 	public String toVCFAnnoString(String alt, boolean escape) {
 		VCFAnnotationData data = new VCFAnnotationData();
 		data.effects = effects;
 		data.impact = getPutativeImpact();
-		data.setTranscriptAndChange(transcript, change);
+		data.setTranscriptAndChange(transcript, variant);
 		data.setAnnoLoc(annoLoc);
 		data.isCoding = transcript.isCoding();
 		data.cdsNTChange = cdsNTChange;
@@ -263,25 +182,6 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 	}
 
 	/**
-	 * Forward to {@link toVCFAnnoString}<code>(alt, true)</code>.
-	 */
-	public String toVCFAnnoString(String alt) {
-		return toVCFAnnoString(alt, true);
-	}
-
-	/**
-	 * Return the gene annotation or <code>"."</code> if it has no transcript.
-	 *
-	 * @return gene symbol or <code>"."</code>
-	 */
-	public String getGeneSymbol() {
-		if (transcript == null || transcript.getGeneSymbol() == null)
-			return ".";
-		else
-			return transcript.getGeneSymbol();
-	}
-
-	/**
 	 * Return the full annotation with the gene symbol.
 	 *
 	 * If this annotation does not have a symbol (e.g., for an intergenic annotation) then just return the annotation
@@ -289,6 +189,7 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 	 *
 	 * @return full annotation string or <code>null</code> if {@link #transcript} is <code>null</code>
 	 */
+	@Override
 	public String getSymbolAndAnnotation() {
 		if (transcript == null)
 			return null;
@@ -298,80 +199,14 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 				.join(transcript.getGeneSymbol(), transcript.getAccession(), getCDSNTChangeStr(), getProteinChangeStr());
 	}
 
-	/**
-	 * @return most pathogenic {@link VariantEffect} link {@link #effects}, <code>null</code> if none.
-	 */
-	public VariantEffect getMostPathogenicVarType() {
-		if (effects.isEmpty())
-			return null;
-		return effects.first();
-	}
-
-	@Override
-	public String getChrName() {
-		return change.getChrName();
-	}
-
-	@Override
-	public int getChr() {
-		return change.getChr();
-	}
-
-	@Override
-	public int getPos() {
-		return change.getPos();
-	}
-
-	@Override
-	public String getRef() {
-		return change.getRef();
-	}
-
-	@Override
-	public String getAlt() {
-		return change.getAlt();
-	}
-
-	@Override
-	public int compareTo(SmallVariantAnnotation other) {
-		if (getMostPathogenicVarType() == null && getMostPathogenicVarType() == other.getMostPathogenicVarType())
-			return 0;
-		else if (other.getMostPathogenicVarType() == null)
-			return -1;
-		else if (getMostPathogenicVarType() == null)
-			return 1;
-
-		int result = getMostPathogenicVarType().ordinal() - other.getMostPathogenicVarType().ordinal();
-		if (result != 0)
-			return result;
-
-		if (transcript == null && other.transcript == null)
-			return 0;
-		else if (other.transcript == null)
-			return -1;
-		else if (transcript == null)
-			return 1;
-
-		return transcript.compareTo(other.transcript);
-	}
-
-	@Override
-	public String toString() {
-		return "Annotation [change=" + change + ", effects=" + effects + ", cdsNTChange=" + cdsNTChange
-				+ ", proteinChange=" + proteinChange.toHGVSString() + ", transcript.getAccession()="
-				+ transcript.getAccession() + "]";
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((proteinChange == null) ? 0 : proteinChange.hashCode());
 		result = prime * result + ((annoLoc == null) ? 0 : annoLoc.hashCode());
-		result = prime * result + ((effects == null) ? 0 : effects.hashCode());
-		result = prime * result + ((messages == null) ? 0 : messages.hashCode());
 		result = prime * result + ((cdsNTChange == null) ? 0 : cdsNTChange.hashCode());
-		result = prime * result + ((transcript == null) ? 0 : transcript.hashCode());
+		result = prime * result + ((genomicNTChange == null) ? 0 : genomicNTChange.hashCode());
+		result = prime * result + ((proteinChange == null) ? 0 : proteinChange.hashCode());
 		return result;
 	}
 
@@ -384,37 +219,33 @@ public final class SmallVariantAnnotation implements VariantDescription, Compara
 		if (getClass() != obj.getClass())
 			return false;
 		SmallVariantAnnotation other = (SmallVariantAnnotation) obj;
-		if (proteinChange == null) {
-			if (other.proteinChange != null)
-				return false;
-		} else if (!proteinChange.equals(other.proteinChange))
-			return false;
 		if (annoLoc == null) {
 			if (other.annoLoc != null)
 				return false;
 		} else if (!annoLoc.equals(other.annoLoc))
-			return false;
-		if (effects == null) {
-			if (other.effects != null)
-				return false;
-		} else if (!effects.equals(other.effects))
-			return false;
-		if (messages == null) {
-			if (other.messages != null)
-				return false;
-		} else if (!messages.equals(other.messages))
 			return false;
 		if (cdsNTChange == null) {
 			if (other.cdsNTChange != null)
 				return false;
 		} else if (!cdsNTChange.equals(other.cdsNTChange))
 			return false;
-		if (transcript == null) {
-			if (other.transcript != null)
+		if (genomicNTChange == null) {
+			if (other.genomicNTChange != null)
 				return false;
-		} else if (!transcript.equals(other.transcript))
+		} else if (!genomicNTChange.equals(other.genomicNTChange))
+			return false;
+		if (proteinChange == null) {
+			if (other.proteinChange != null)
+				return false;
+		} else if (!proteinChange.equals(other.proteinChange))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "SmallVariantAnnotation [annoLoc=" + annoLoc + ", genomicNTChange=" + genomicNTChange + ", cdsNTChange="
+				+ cdsNTChange + ", proteinChange=" + proteinChange + ", super=" + super.toString() + "]";
 	}
 
 }

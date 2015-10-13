@@ -14,7 +14,7 @@ import java.util.Collection;
 
 import com.google.common.collect.ImmutableList;
 
-import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
+import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 
 /**
  * Helper for creating a {@link VariantContextWriter} from a {@link VariantContextReader}.
@@ -137,17 +137,17 @@ public final class VariantContextWriterConstructionHelper {
 		if (fields == InfoFields.EFFECT_HGVS || fields == InfoFields.BOTH) {
 			// add INFO line for EFFECT field
 			VCFInfoHeaderLine effectLine = new VCFInfoHeaderLine("EFFECT", 1, VCFHeaderLineType.String,
-					SmallVariantAnnotation.INFO_EFFECT);
+					VariantAnnotation.INFO_EFFECT);
 			header.addMetaDataLine(effectLine);
 			// add INFO line for HGVS field
 			VCFInfoHeaderLine hgvsLine = new VCFInfoHeaderLine("HGVS", 1, VCFHeaderLineType.String,
-					SmallVariantAnnotation.INFO_HGVS);
+					VariantAnnotation.INFO_HGVS);
 			header.addMetaDataLine(hgvsLine);
 		}
 		if (fields == InfoFields.VCF_ANN || fields == InfoFields.BOTH) {
 			// add INFO line for standardized ANN field
 			VCFInfoHeaderLine annLine = new VCFInfoHeaderLine("ANN", 1, VCFHeaderLineType.String,
-					SmallVariantAnnotation.VCF_ANN_DESCRIPTION_STRING);
+					VariantAnnotation.VCF_ANN_DESCRIPTION_STRING);
 			header.addMetaDataLine(annLine);
 		}
 		return header;

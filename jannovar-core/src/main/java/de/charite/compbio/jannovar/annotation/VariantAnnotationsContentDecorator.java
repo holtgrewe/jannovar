@@ -35,7 +35,7 @@ public class VariantAnnotationsContentDecorator {
 	 */
 	public boolean hasMultipleGeneSymbols() {
 		HashSet<String> geneSymbols = new HashSet<String>();
-		for (SmallVariantAnnotation entry : annotations.getAnnotations())
+		for (VariantAnnotation entry : annotations.getAnnotations())
 			geneSymbols.add(entry.getTranscript().getGeneSymbol());
 		return (geneSymbols.size() > 0);
 	}
@@ -45,7 +45,7 @@ public class VariantAnnotationsContentDecorator {
 	 *         <code>true</code>.
 	 */
 	public boolean hasStructuralVariant() {
-		for (SmallVariantAnnotation entry : annotations.getAnnotations())
+		for (VariantAnnotation entry : annotations.getAnnotations())
 			if (entry.getMostPathogenicVarType().isStructural())
 				return true;
 		return false;

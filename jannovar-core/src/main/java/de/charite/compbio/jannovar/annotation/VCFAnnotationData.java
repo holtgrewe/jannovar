@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation.RankType;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
 import de.charite.compbio.jannovar.hgvs.protein.change.ProteinChange;
-import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.ProjectionException;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptPosition;
@@ -85,7 +85,7 @@ class VCFAnnotationData {
 		}
 	}
 
-	public void setTranscriptAndChange(TranscriptModel tm, SmallGenomeVariant change) {
+	public void setTranscriptAndChange(TranscriptModel tm, GenomeVariant variant) {
 		if (tm == null)
 			return;
 		featureType = "transcript";
@@ -96,11 +96,11 @@ class VCFAnnotationData {
 
 		if (effects.contains(VariantEffect.INTERGENIC_VARIANT) || effects.contains(VariantEffect.UPSTREAM_GENE_VARIANT)
 				|| effects.contains(VariantEffect.DOWNSTREAM_GENE_VARIANT)) {
-			if (change.getGenomeInterval().isLeftOf(tm.getTXRegion().getGenomeBeginPos()))
+			if (variant.getGenomeInterval().isLeftOf(tm.getTXRegion().getGenomeBeginPos()))
 				this.distance = tm.getTXRegion().getGenomeBeginPos()
-						.differenceTo(change.getGenomeInterval().getGenomeEndPos());
+						.differenceTo(variant.getGenomeInterval().getGenomeEndPos());
 			else
-				this.distance = change.getGenomeInterval().getGenomeBeginPos()
+				this.distance = variant.getGenomeInterval().getGenomeBeginPos()
 						.differenceTo(tm.getTXRegion().getGenomeEndPos());
 		}
 	}

@@ -25,7 +25,7 @@ public final class VariantAnnotations implements VariantDescription {
 	private final GenomeVariant variant;
 
 	/** the list of the annotations */
-	private final ImmutableList<SmallVariantAnnotation> entries;
+	private final ImmutableList<VariantAnnotation> entries;
 
 	/**
 	 * @param change
@@ -33,7 +33,7 @@ public final class VariantAnnotations implements VariantDescription {
 	 * @return empty <code>AnnotationList</code> with the given {@link GenomeVariant}
 	 */
 	public static VariantAnnotations buildEmptyList(GenomeVariant change) {
-		return new VariantAnnotations(change, ImmutableList.<SmallVariantAnnotation> of());
+		return new VariantAnnotations(change, ImmutableList.<VariantAnnotation> of());
 	}
 
 	/**
@@ -46,7 +46,7 @@ public final class VariantAnnotations implements VariantDescription {
 	 * @param entries
 	 *            {@link Collection} of {@link SmallVariantAnnotation} objects
 	 */
-	public VariantAnnotations(GenomeVariant variant, Collection<SmallVariantAnnotation> entries) {
+	public VariantAnnotations(GenomeVariant variant, Collection<? extends VariantAnnotation> entries) {
 		this.variant = variant.withStrand(Strand.FWD);
 		this.entries = ImmutableList.copyOf(ImmutableSortedMultiset.copyOf(entries));
 	}
@@ -66,7 +66,7 @@ public final class VariantAnnotations implements VariantDescription {
 	/**
 	 * @return the list of annotations
 	 */
-	public ImmutableList<SmallVariantAnnotation> getAnnotations() {
+	public ImmutableList<VariantAnnotation> getAnnotations() {
 		return entries;
 	}
 
@@ -80,7 +80,7 @@ public final class VariantAnnotations implements VariantDescription {
 	/**
 	 * @return {@link SmallVariantAnnotation} with highest predicted impact, or <code>null</code> if there is none.
 	 */
-	public SmallVariantAnnotation getHighestImpactAnnotation() {
+	public VariantAnnotation getHighestImpactAnnotation() {
 		if (!hasAnnotation())
 			return null;
 		else
@@ -94,7 +94,7 @@ public final class VariantAnnotations implements VariantDescription {
 	 *         {@link VariantEffect.SEQUENCE_VARIANT} if {@link #entries} is empty or has no annotated effects.
 	 */
 	public VariantEffect getHighestImpactEffect() {
-		final SmallVariantAnnotation anno = getHighestImpactAnnotation();
+		final VariantAnnotation anno = getHighestImpactAnnotation();
 		if (anno == null || anno.getEffects().isEmpty())
 			return VariantEffect.SEQUENCE_VARIANT;
 		else
@@ -151,7 +151,7 @@ public final class VariantAnnotations implements VariantDescription {
 		return variant.getAlt();
 	}
 
-	public int compareTo(SmallVariantAnnotation other) {
+	public int compareTo(VariantAnnotation other) {
 		return variant.compareTo(other);
 	}
 
