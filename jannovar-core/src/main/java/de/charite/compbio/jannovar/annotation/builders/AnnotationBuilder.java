@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocationBuilder;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocationBuilder;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.hgvs.nts.NucleotideRange;
@@ -319,7 +319,7 @@ abstract class AnnotationBuilder {
 		TranscriptSequenceOntologyDecorator soDecorator = new TranscriptSequenceOntologyDecorator(transcript);
 		TranscriptProjectionDecorator projector = new TranscriptProjectionDecorator(transcript);
 
-		AnnotationLocationBuilder locBuilder = new AnnotationLocationBuilder();
+		SmallVariantAnnotationLocationBuilder locBuilder = new SmallVariantAnnotationLocationBuilder();
 		locBuilder.setTranscript(transcript);
 		// System.err.println("CHANGE\t" + change.getGenomeInterval());
 		// System.err.println("TX REGION\t" + transcript.txRegion);

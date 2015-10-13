@@ -11,7 +11,7 @@ import de.charite.compbio.jannovar.reference.TranscriptModel;
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 @Immutable
-public class AnnotationLocationBuilder {
+public class SmallVariantAnnotationLocationBuilder {
 
 	/** {@link SmallVariantAnnotationLocation#transcript} of next build {@link SmallVariantAnnotationLocation}. */
 	public TranscriptModel transcript = null;
@@ -38,34 +38,42 @@ public class AnnotationLocationBuilder {
 		return new SmallVariantAnnotationLocation(transcript, rankType, rank, totalRank, txLocation);
 	}
 
+	/** @return affected {@link TranscriptModel} */
 	public TranscriptModel getTranscript() {
 		return transcript;
 	}
 
+	/** Set affected {@link TranscriptModel} */
 	public void setTranscript(TranscriptModel transcript) {
 		this.transcript = transcript;
 	}
 
+	/** @return current {@link RankType} */
 	public RankType getRankType() {
 		return rankType;
 	}
 
+	/** Set current {@link RankType} */
 	public void setRankType(RankType rankType) {
 		this.rankType = rankType;
 	}
 
+	/** @return current rank */
 	public int getRank() {
 		return rank;
 	}
 
+	/** Set current rank */
 	public void setRank(int rank) {
 		this.rank = rank;
 	}
 
+	/** @return current location on the transcript level */
 	public TranscriptInterval getTXLocation() {
 		return txLocation;
 	}
 
+	/** Set location on the transcript level */
 	public void setTXLocation(TranscriptInterval txLocation) {
 		this.txLocation = txLocation;
 	}
