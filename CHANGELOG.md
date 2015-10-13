@@ -4,6 +4,7 @@
 
 ## jannovar-core
 
+* adding `GenomeVariant` as super class for `SmallGenomeVariant` and `StructuralGenomeVariant`
 * renaming `GenomeVariantType` to `SmallGenomeVariantType`
 * renaming `GenomeVariant` to `SmallGenomeVariant`
 * adding `InvalidGenomeVariant(String, Throwable)`

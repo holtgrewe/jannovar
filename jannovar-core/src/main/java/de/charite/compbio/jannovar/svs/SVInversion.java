@@ -9,7 +9,7 @@ import de.charite.compbio.jannovar.reference.GenomePosition;
  * 
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */
-public class SVInversion extends LinearStructuralVariant {
+public final class SVInversion extends LinearStructuralVariant {
 
 	/**
 	 * Construct with the given parameters, see

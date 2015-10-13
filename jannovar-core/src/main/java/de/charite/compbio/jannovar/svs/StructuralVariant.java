@@ -3,6 +3,7 @@ package de.charite.compbio.jannovar.svs;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 
 //TODO(holtgrewe): Test me!
@@ -13,39 +14,14 @@ import de.charite.compbio.jannovar.reference.Strand;
  * 
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */
-public abstract class StructuralVariant implements Comparable<StructuralVariant> {
+public abstract class StructuralVariant extends GenomeVariant implements Comparable<StructuralVariant> {
 
 	/** Subtype as in VCF, e.g. "ME:L1", or "TANDEM" */
 	protected final String subType;
-	/** Position of the starting point of the SV */
-	protected final GenomePosition pos;
-	/** String representation of reference allele, as in VCF */
-	protected final String ref;
-	/** String representation of alternative allele, as in VCF */
-	protected final String alt;
 	/** Lower bound (inclusive) of confidence interval around POS */
 	protected final int ciPosLo;
 	/** Upper bound (inclusive) of confidence interval around POS */
 	protected final int ciPosHi;
-
-	/**
-	 * @return {@link SVType} with the type of the structural variant
-	 */
-	public abstract SVType getType();
-
-	/** @return end position of the linear structural variant */
-	public abstract GenomePosition getGenomePosEnd();
-
-	/** @return inner affected interval, using confidence intervals */
-	public abstract GenomeInterval getAffectedIntervalInner();
-
-	/** @return inner affected interval, using confidence intervals */
-	public abstract GenomeInterval getAffectedIntervalOuter();
-
-	/** @return confidence interval around POS */
-	public final GenomeInterval getCI() {
-		return new GenomeInterval(pos.withStrand(Strand.FWD).shifted(ciPosLo), -ciPosLo + ciPosHi);
-	}
 
 	/**
 	 * Initialize object
@@ -64,13 +40,30 @@ public abstract class StructuralVariant implements Comparable<StructuralVariant>
 	 *            sub type of the SV, if any
 	 */
 	protected StructuralVariant(GenomePosition pos, String ref, String alt, int ciPosLo, int ciPosHi, String subType) {
-		super();
-		this.pos = pos;
-		this.ref = ref;
-		this.alt = alt;
+		super(pos, ref, alt);
+		// TODO(holtgrewe): throw if non-symbolic alleles
 		this.ciPosLo = ciPosLo;
 		this.ciPosHi = ciPosHi;
 		this.subType = subType;
+	}
+
+	/**
+	 * @return {@link SVType} with the type of the structural variant
+	 */
+	public abstract SVType getType();
+
+	/** @return end position of the linear structural variant */
+	public abstract GenomePosition getGenomePosEnd();
+
+	/** @return inner affected interval, using confidence intervals */
+	public abstract GenomeInterval getAffectedIntervalInner();
+
+	/** @return inner affected interval, using confidence intervals */
+	public abstract GenomeInterval getAffectedIntervalOuter();
+
+	/** @return confidence interval around POS */
+	public final GenomeInterval getCI() {
+		return new GenomeInterval(pos.withStrand(Strand.FWD).shifted(ciPosLo), -ciPosLo + ciPosHi);
 	}
 
 	/** @return numeric ID of SV chromosome begin position */

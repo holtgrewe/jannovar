@@ -74,6 +74,11 @@ public abstract class LinearStructuralVariant extends StructuralVariant {
 	public GenomeInterval getAffectedIntervalOuter() {
 		return new GenomeInterval(pos.withStrand(Strand.FWD).shifted(-ciPosLo), ciPosLo + length + ciPosEndHi);
 	}
+	
+	@Override
+	public GenomeInterval getGenomeInterval() {
+		return new GenomeInterval(pos.withStrand(Strand.FWD), length);
+	}
 
 	/** @return length of the linear structural variant */
 	public int getLength() {

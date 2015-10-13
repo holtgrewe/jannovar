@@ -108,24 +108,24 @@ public final class VariantAnnotator {
 	 * When we get to this point, the client code has identified the right chromosome, and we are provided the
 	 * coordinates on that chromosome.
 	 *
-	 * @param change
+	 * @param variant
 	 *            the {@link SmallGenomeVariant} to annotate
 	 * @return {@link VariantAnnotations} for the genome change
 	 * @throws AnnotationException
 	 *             on problems building the annotation list
 	 */
-	public VariantAnnotations buildAnnotations(SmallGenomeVariant change) throws AnnotationException {
+	public VariantAnnotations buildAnnotations(SmallGenomeVariant variant) throws AnnotationException {
 		// Short-circuit in the case of symbolic changes/alleles. These could be SVs, large duplications, etc., that are
 		// described as shortcuts in the VCF file. We cannot annotate these yet.
-		if (change.isSymbolic())
-			return VariantAnnotations.buildEmptyList(change);
+		if (variant.isSymbolic())
+			return VariantAnnotations.buildEmptyList(variant);
 
 		// Get genomic change interval and reset the factory.
-		final GenomeInterval changeInterval = change.getGenomeInterval();
+		final GenomeInterval changeInterval = variant.getGenomeInterval();
 		this.annovarFactory.clearAnnotationLists();
 
 		// Get the TranscriptModel objects that overlap with changeInterval.
-		final Chromosome chr = chromosomeMap.get(change.getChr());
+		final Chromosome chr = chromosomeMap.get(variant.getChr());
 		IntervalArray<TranscriptModel>.QueryResult qr;
 		if (changeInterval.length() == 0)
 			qr = chr.getTMIntervalTree().findOverlappingWithPoint(changeInterval.getBeginPos());
@@ -136,24 +136,24 @@ public final class VariantAnnotator {
 
 		// Handle the case of no overlapping transcript. Then, create intergenic, upstream, or downstream annotations
 		// and return the result.
-		boolean isStructuralVariant = (change.getRef().length() >= 1000 || change.getAlt().length() >= 1000);
+		boolean isStructuralVariant = (variant.getRef().length() >= 1000 || variant.getAlt().length() >= 1000);
 		if (candidateTranscripts.isEmpty()) {
 			if (isStructuralVariant)
-				buildSVAnnotation(change, null);
+				buildSVAnnotation(variant, null);
 			else
-				buildNonSVAnnotation(change, qr.getLeft(), qr.getRight());
-			return annovarFactory.getAnnotationList(change);
+				buildNonSVAnnotation(variant, qr.getLeft(), qr.getRight());
+			return annovarFactory.getAnnotationList(variant);
 		}
 
 		// If we reach here, then there is at least one transcript that overlaps with the query. Iterate over these
 		// transcripts and collect annotations for each (they are collected in annovarFactory).
 		for (TranscriptModel tm : candidateTranscripts)
 			if (isStructuralVariant)
-				buildSVAnnotation(change, tm);
+				buildSVAnnotation(variant, tm);
 			else
-				buildNonSVAnnotation(change, tm);
+				buildNonSVAnnotation(variant, tm);
 
-		return annovarFactory.getAnnotationList(change);
+		return annovarFactory.getAnnotationList(variant);
 	}
 
 	private void buildSVAnnotation(SmallGenomeVariant change, TranscriptModel transcript) throws AnnotationException {

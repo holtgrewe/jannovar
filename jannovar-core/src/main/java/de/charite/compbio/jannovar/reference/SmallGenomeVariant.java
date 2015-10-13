@@ -25,37 +25,14 @@ import de.charite.compbio.jannovar.impl.util.DNAUtils;
  * @author Peter N Robinson <peter.robinson@charite.de>
  */
 @Immutable
-public final class SmallGenomeVariant implements SmallVariantDescription {
-
-	/** position of the change */
-	private final GenomePosition pos;
-	/** nucleic acid reference string */
-	private final String ref;
-	/** nucleic acid alternative string */
-	private final String alt;
+public final class SmallGenomeVariant extends GenomeVariant implements SmallVariantDescription {
 
 	/**
 	 * Construct object given the position, reference, and alternative nucleic acid string.
-	 *
-	 * On construction, pos, ref, and alt are automatically adjusted to the right/incremented by the length of the
-	 * longest common prefix and suffix of ref and alt.
-	 * 
-	 * An exception is if <code>ref</code> or <code>alt</code> encode a symbolic allele (start/end with <tt>'.'</tt>, or
-	 * contain <tt>'['</tt>/<tt>']'</tt>/<tt>'&lt;'</tt>/<tt>'&gt;'</tt>. In this case, no adjustment is performed.
 	 */
 	public SmallGenomeVariant(GenomePosition pos, String ref, String alt) {
-		if (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt)) {
-			this.pos = pos;
-			this.ref = ref;
-			this.alt = alt;
-			return;
-		}
-
-		VariantDataCorrector corr = new VariantDataCorrector(ref, alt, pos.getPos());
-		this.pos = new GenomePosition(pos.getRefDict(), pos.getStrand(), pos.getChr(), corr.position,
-				PositionType.ZERO_BASED);
-		this.ref = corr.ref;
-		this.alt = corr.alt;
+		super(pos, ref, alt);
+		// TODO(holtgrew): throw in case of symbolic variant
 	}
 
 	/**
@@ -65,55 +42,14 @@ public final class SmallGenomeVariant implements SmallVariantDescription {
 	 * longest common prefix and suffix of ref and alt. Further, the position is adjusted to the given strand.
 	 */
 	public SmallGenomeVariant(GenomePosition pos, String ref, String alt, Strand strand) {
-		if (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt)) {
-			this.pos = pos.withStrand(strand);
-			if (strand == pos.getStrand()) {
-				this.ref = ref;
-				this.alt = alt;
-			} else {
-				this.ref = DNAUtils.reverseComplement(ref);
-				this.alt = DNAUtils.reverseComplement(alt);
-			}
-			return;
-		}
-
-		// Correct variant data.
-		VariantDataCorrector corr = new VariantDataCorrector(ref, alt, pos.getPos());
-		if (strand == pos.getStrand()) {
-			this.ref = corr.ref;
-			this.alt = corr.alt;
-		} else {
-			this.ref = DNAUtils.reverseComplement(corr.ref);
-			this.alt = DNAUtils.reverseComplement(corr.alt);
-		}
-
-		int delta = 0;
-		if (strand != pos.getStrand() && ref.length() == 0)
-			delta = -1;
-		else if (strand != pos.getStrand() /* && ref.length() != 0 */)
-			delta = ref.length() - 1;
-
-		this.pos = new GenomePosition(pos.getRefDict(), pos.getStrand(), pos.getChr(), corr.position,
-				PositionType.ZERO_BASED).shifted(delta).withStrand(strand);
+		super(pos, ref, alt, strand);
 	}
 
 	/**
-	 * @return <code>true</code> if this is a symbolic allele, as described
+	 * Construct object and enforce strand.
 	 */
-	public boolean isSymbolic() {
-		return (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt));
-	}
-
-	/**
-	 * @return <code>true</code> if the given <code>allele</code> string describes a symbolic allele (events not
-	 *         described by replacement of bases, e.g. break-ends or duplications that are described in one line).
-	 */
-	private static boolean wouldBeSymbolicAllele(String allele) {
-		if (allele.length() <= 1)
-			return false;
-		return (allele.charAt(0) == '<' || allele.charAt(allele.length() - 1) == '>') || // symbolic or large insertion
-				(allele.charAt(0) == '.' || allele.charAt(allele.length() - 1) == '.') || // single breakend
-				(allele.contains("[") || allele.contains("]")); // mated breakend
+	public SmallGenomeVariant(SmallGenomeVariant other, Strand strand) {
+		super(other, strand);
 	}
 
 	@Override
@@ -141,27 +77,6 @@ public final class SmallGenomeVariant implements SmallVariantDescription {
 	}
 
 	/**
-	 * Construct object and enforce strand.
-	 */
-	public SmallGenomeVariant(SmallGenomeVariant other, Strand strand) {
-		if (strand == other.pos.getStrand()) {
-			this.ref = other.ref;
-			this.alt = other.alt;
-		} else {
-			this.ref = DNAUtils.reverseComplement(other.ref);
-			this.alt = DNAUtils.reverseComplement(other.alt);
-		}
-
-		// Get position as 0-based position.
-
-		if (strand == other.pos.getStrand()) {
-			this.pos = other.pos;
-		} else {
-			this.pos = other.pos.shifted(this.ref.length() - 1).withStrand(strand);
-		}
-	}
-
-	/**
 	 * @return numeric ID of chromosome this change is on
 	 */
 	@Override
@@ -169,9 +84,7 @@ public final class SmallGenomeVariant implements SmallVariantDescription {
 		return pos.getChr();
 	}
 
-	/**
-	 * @return interval of the genome change
-	 */
+	@Override
 	public GenomeInterval getGenomeInterval() {
 		if (isSymbolic())
 			return new GenomeInterval(pos, 1);
@@ -263,60 +176,6 @@ public final class SmallGenomeVariant implements SmallVariantDescription {
 		else if (this.ref.equals("T") && this.alt.equals("C"))
 			return false;
 		// If we get here, the variant must be a SNV and a transversion.
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		if (pos != null && pos.getStrand() != null && pos.getStrand().isReverse())
-			return withStrand(Strand.FWD).hashCode();
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((alt == null) ? 0 : alt.hashCode());
-		result = prime * result + ((pos == null) ? 0 : pos.hashCode());
-		result = prime * result + ((ref == null) ? 0 : ref.hashCode());
-		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-
-		SmallGenomeVariant other = (SmallGenomeVariant) obj;
-		if (pos != null && pos.getStrand() != Strand.FWD)
-			return withStrand(Strand.FWD).equals(obj);
-		other = other.withStrand(Strand.FWD);
-
-		if (alt == null) {
-			if (other.alt != null)
-				return false;
-		} else if (!alt.equals(other.alt))
-			return false;
-		if (pos == null) {
-			if (other.pos != null)
-				return false;
-		} else if (!pos.equals(other.pos))
-			return false;
-		if (ref == null) {
-			if (other.ref != null)
-				return false;
-		} else if (!ref.equals(other.ref))
-			return false;
 		return true;
 	}
 
