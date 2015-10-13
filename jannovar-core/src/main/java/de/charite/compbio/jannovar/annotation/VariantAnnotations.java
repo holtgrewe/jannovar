@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedMultiset;
 
 import de.charite.compbio.jannovar.Immutable;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.SmallVariantDescription;
 
@@ -21,8 +21,8 @@ import de.charite.compbio.jannovar.reference.SmallVariantDescription;
 @Immutable
 public final class VariantAnnotations implements SmallVariantDescription {
 
-	/** the {@link GenomeVariant} that this <code>AnnotationList</code> contains entries for. */
-	private final GenomeVariant change;
+	/** the {@link SmallGenomeVariant} that this <code>AnnotationList</code> contains entries for. */
+	private final SmallGenomeVariant change;
 
 	/** the list of the annotations */
 	private final ImmutableList<SmallVariantAnnotation> entries;
@@ -30,36 +30,36 @@ public final class VariantAnnotations implements SmallVariantDescription {
 	/**
 	 * @param change
 	 *            to use for the empty list
-	 * @return empty <code>AnnotationList</code> with the given {@link GenomeVariant}
+	 * @return empty <code>AnnotationList</code> with the given {@link SmallGenomeVariant}
 	 */
-	public static VariantAnnotations buildEmptyList(GenomeVariant change) {
+	public static VariantAnnotations buildEmptyList(SmallGenomeVariant change) {
 		return new VariantAnnotations(change, ImmutableList.<SmallVariantAnnotation> of());
 	}
 
 	/**
 	 * Construct ImmutableAnnotationList from a {@link Collection} of {@link SmallVariantAnnotation} objects.
 	 *
-	 * Note that <code>variant</code> is converted to the forward strand using {@link GenomeVariant#withStrand}.
+	 * Note that <code>variant</code> is converted to the forward strand using {@link SmallGenomeVariant#withStrand}.
 	 *
 	 * @param change
-	 *            {@link GenomeVariant} that this anotation list annotates
+	 *            {@link SmallGenomeVariant} that this anotation list annotates
 	 * @param entries
 	 *            {@link Collection} of {@link SmallVariantAnnotation} objects
 	 */
-	public VariantAnnotations(GenomeVariant variant, Collection<SmallVariantAnnotation> entries) {
+	public VariantAnnotations(SmallGenomeVariant variant, Collection<SmallVariantAnnotation> entries) {
 		this.change = variant.withStrand(Strand.FWD);
 		this.entries = ImmutableList.copyOf(ImmutableSortedMultiset.copyOf(entries));
 	}
 
 	/**
-	 * Return the {@link GenomeVariant} that this AnnotationList is annotated with.
+	 * Return the {@link SmallGenomeVariant} that this AnnotationList is annotated with.
 	 *
-	 * Note that the {@link GenomeVariant} is converted to be on the forward strand on construction of AnnotationList
+	 * Note that the {@link SmallGenomeVariant} is converted to be on the forward strand on construction of AnnotationList
 	 * objects.
 	 *
-	 * @return {@link GenomeVariant} that this <code>AnnotationList</code> contains entries for.
+	 * @return {@link SmallGenomeVariant} that this <code>AnnotationList</code> contains entries for.
 	 */
-	public GenomeVariant getGenomeVariant() {
+	public SmallGenomeVariant getGenomeVariant() {
 		return change;
 	}
 

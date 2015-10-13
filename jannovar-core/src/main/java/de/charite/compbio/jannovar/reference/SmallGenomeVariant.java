@@ -8,10 +8,11 @@ import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.impl.util.DNAUtils;
 
 // TODO(holtgrewe): We only want genome changes on the forward strand, make sure this does not lead to problems downstream.
-// TODO(holtgrewe): Add support for symbolic alleles in all the members.
-
+// 
 /**
- * Denote a change with a "REF" and an "ALT" string using genome coordinates.
+ * Denote a "small" change with a "REF" and an "ALT" string using genome coordinates.
+ * 
+ * "Small" changes are in contrast to structural variants and are described by substitution of REF by ALT.
  *
  * GenomeChange objects are immutable, the members are automatically adjusted for the longest common suffix and prefix
  * in REF and ALT.
@@ -24,7 +25,7 @@ import de.charite.compbio.jannovar.impl.util.DNAUtils;
  * @author Peter N Robinson <peter.robinson@charite.de>
  */
 @Immutable
-public final class GenomeVariant implements SmallVariantDescription {
+public final class SmallGenomeVariant implements SmallVariantDescription {
 
 	/** position of the change */
 	private final GenomePosition pos;
@@ -42,7 +43,7 @@ public final class GenomeVariant implements SmallVariantDescription {
 	 * An exception is if <code>ref</code> or <code>alt</code> encode a symbolic allele (start/end with <tt>'.'</tt>, or
 	 * contain <tt>'['</tt>/<tt>']'</tt>/<tt>'&lt;'</tt>/<tt>'&gt;'</tt>. In this case, no adjustment is performed.
 	 */
-	public GenomeVariant(GenomePosition pos, String ref, String alt) {
+	public SmallGenomeVariant(GenomePosition pos, String ref, String alt) {
 		if (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt)) {
 			this.pos = pos;
 			this.ref = ref;
@@ -63,7 +64,7 @@ public final class GenomeVariant implements SmallVariantDescription {
 	 * On construction, pos, ref, and alt are automatically adjusted to the right/incremented by the length of the
 	 * longest common prefix and suffix of ref and alt. Further, the position is adjusted to the given strand.
 	 */
-	public GenomeVariant(GenomePosition pos, String ref, String alt, Strand strand) {
+	public SmallGenomeVariant(GenomePosition pos, String ref, String alt, Strand strand) {
 		if (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt)) {
 			this.pos = pos.withStrand(strand);
 			if (strand == pos.getStrand()) {
@@ -142,7 +143,7 @@ public final class GenomeVariant implements SmallVariantDescription {
 	/**
 	 * Construct object and enforce strand.
 	 */
-	public GenomeVariant(GenomeVariant other, Strand strand) {
+	public SmallGenomeVariant(SmallGenomeVariant other, Strand strand) {
 		if (strand == other.pos.getStrand()) {
 			this.ref = other.ref;
 			this.alt = other.alt;
@@ -181,8 +182,8 @@ public final class GenomeVariant implements SmallVariantDescription {
 	/**
 	 * @return the GenomeChange on the given strand
 	 */
-	public GenomeVariant withStrand(Strand strand) {
-		return new GenomeVariant(this, strand);
+	public SmallGenomeVariant withStrand(Strand strand) {
+		return new SmallGenomeVariant(this, strand);
 	}
 
 	/**
@@ -296,7 +297,7 @@ public final class GenomeVariant implements SmallVariantDescription {
 		if (getClass() != obj.getClass())
 			return false;
 
-		GenomeVariant other = (GenomeVariant) obj;
+		SmallGenomeVariant other = (SmallGenomeVariant) obj;
 		if (pos != null && pos.getStrand() != Strand.FWD)
 			return withStrand(Strand.FWD).equals(obj);
 		other = other.withStrand(Strand.FWD);

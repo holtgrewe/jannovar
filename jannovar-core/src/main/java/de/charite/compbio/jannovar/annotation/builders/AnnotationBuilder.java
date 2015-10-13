@@ -20,7 +20,7 @@ import de.charite.compbio.jannovar.hgvs.protein.change.ProteinMiscChange;
 import de.charite.compbio.jannovar.hgvs.protein.change.ProteinMiscChangeType;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.GenomeVariantNormalizer;
 import de.charite.compbio.jannovar.reference.NucleotidePointLocationBuilder;
 import de.charite.compbio.jannovar.reference.ProjectionException;
@@ -55,7 +55,7 @@ abstract class AnnotationBuilder {
 	/** transcript to annotate. */
 	protected final TranscriptModel transcript;
 	/** genome change to use for annotation */
-	protected final GenomeVariant change;
+	protected final SmallGenomeVariant change;
 
 	/** helper for sequence ontology terms */
 	protected final TranscriptSequenceOntologyDecorator so;
@@ -81,11 +81,11 @@ abstract class AnnotationBuilder {
 	 * @param transcript
 	 *            the {@link TranscriptInfo} to build the annotation for
 	 * @param change
-	 *            the {@link GenomeVariant} to use for building the annotation
+	 *            the {@link SmallGenomeVariant} to use for building the annotation
 	 * @param options
 	 *            the configuration to use for the {@link AnnotationBuilder}
 	 */
-	AnnotationBuilder(TranscriptModel transcript, GenomeVariant change, AnnotationBuilderOptions options) {
+	AnnotationBuilder(TranscriptModel transcript, SmallGenomeVariant change, AnnotationBuilderOptions options) {
 		this.options = options;
 
 		// Project the change to the same strand as transcript, reverse-complementing the REF/ALT strings.
@@ -311,10 +311,10 @@ abstract class AnnotationBuilder {
 	 * @param transcript
 	 *            {@link TranscriptInfo} to build annotation for
 	 * @param change
-	 *            {@link GenomeVariant} to build annotation for
+	 *            {@link SmallGenomeVariant} to build annotation for
 	 * @return AnnotationLocation with location annotation
 	 */
-	private SmallVariantAnnotationLocation buildLocAnno(TranscriptModel transcript, GenomeVariant change) {
+	private SmallVariantAnnotationLocation buildLocAnno(TranscriptModel transcript, SmallGenomeVariant change) {
 		// System.err.println("ACCESSION\t" + transcript.accession);
 		TranscriptSequenceOntologyDecorator soDecorator = new TranscriptSequenceOntologyDecorator(transcript);
 		TranscriptProjectionDecorator projector = new TranscriptProjectionDecorator(transcript);
@@ -388,11 +388,11 @@ abstract class AnnotationBuilder {
 	 * @param transcript
 	 *            {@link TranscriptInfo} to build annotation for
 	 * @param change
-	 *            {@link GenomeVariant} to build annotation for
+	 *            {@link SmallGenomeVariant} to build annotation for
 	 * @return {@link NucleotideRange} describing the CDS-level position of the change (or transcript-level in the case
 	 *         of non-coding transcripts)
 	 */
-	private NucleotideRange buildNTChangeRange(TranscriptModel transcript, GenomeVariant change) {
+	private NucleotideRange buildNTChangeRange(TranscriptModel transcript, SmallGenomeVariant change) {
 		NucleotidePointLocationBuilder posBuilder = new NucleotidePointLocationBuilder(transcript);
 
 		GenomePosition firstChangePos = change.getGenomeInterval().getGenomeBeginPos();

@@ -2,14 +2,14 @@ package de.charite.compbio.jannovar.reference;
 
 
 /**
- * Helper code for the normalization of {@link GenomeVariant}s.
+ * Helper code for the normalization of {@link SmallGenomeVariant}s.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 public final class GenomeVariantNormalizer {
 
 	/**
-	 * Transform a {@link GenomeVariant} to its HGVS-normalized representation.
+	 * Transform a {@link SmallGenomeVariant} to its HGVS-normalized representation.
 	 *
 	 * @param transcript
 	 *            the transcript with the sequence that should be used
@@ -17,9 +17,9 @@ public final class GenomeVariantNormalizer {
 	 *            the genome change for which we want to return the HGVS-normalized representation for
 	 * @param txPos
 	 *            the corresponding position on the transcript
-	 * @return normalized {@link GenomeVariant}
+	 * @return normalized {@link SmallGenomeVariant}
 	 */
-	public static GenomeVariant normalizeGenomeChange(TranscriptModel transcript, GenomeVariant change,
+	public static SmallGenomeVariant normalizeGenomeChange(TranscriptModel transcript, SmallGenomeVariant change,
 			TranscriptPosition txPos) {
 		switch (change.getType()) {
 		case DELETION:
@@ -33,13 +33,13 @@ public final class GenomeVariantNormalizer {
 	}
 
 	/**
-	 * Transform an insertion {@link GenomeVariant} to its HGVS-normalized representation.
+	 * Transform an insertion {@link SmallGenomeVariant} to its HGVS-normalized representation.
 	 *
 	 * The algorithm works as follows. <code>String alt = change.getAlt()</code> is inserted into
 	 * <code>transcript.sequence</code> <code>at the position <code>int pos = txPos.getPos()</code>. Then,
 	 * <code>pos</code> is incremented as long as <code>pos + alt.length() &lt; transcript.sequence.length()</code> and
 	 * <code>transcript.sequence[pos] = transcript.sequence[pos + alt.length()]</code>. The last <code>pos</code>
-	 * fulfilling this condition is then used to construct the resulting {@link GenomeVariant}.
+	 * fulfilling this condition is then used to construct the resulting {@link SmallGenomeVariant}.
 	 *
 	 * If necessary, the strand of <code>change</code> is set to the same as <code>transcript</code>.
 	 *
@@ -49,9 +49,9 @@ public final class GenomeVariantNormalizer {
 	 *            the genome change for which we want to return the HGVS-normalized representation for
 	 * @param txPos
 	 *            the corresponding position on the transcript
-	 * @return normalized {@link GenomeVariant}
+	 * @return normalized {@link SmallGenomeVariant}
 	 */
-	public static GenomeVariant normalizeInsertion(TranscriptModel transcript, GenomeVariant change,
+	public static SmallGenomeVariant normalizeInsertion(TranscriptModel transcript, SmallGenomeVariant change,
 			TranscriptPosition txPos) {
 		assert (change.getRef().length() == 0);
 		if (change.getGenomePos().getStrand() != transcript.getStrand()) // ensure that we have the correct strand
@@ -85,11 +85,11 @@ public final class GenomeVariantNormalizer {
 		if (shift == 0) // only rebuild if shift > 0
 			return change;
 		else
-			return new GenomeVariant(shiftedPos, "", seq.substring(pos, pos + LEN));
+			return new SmallGenomeVariant(shiftedPos, "", seq.substring(pos, pos + LEN));
 	}
 
 	/**
-	 * Transform a deletion {@link GenomeVariant} into its HGVS-normalized representation.
+	 * Transform a deletion {@link SmallGenomeVariant} into its HGVS-normalized representation.
 	 *
 	 * This simply works by shifting the interval to the left as long as the first deleted character equals the
 	 * character after the deleetion.
@@ -103,9 +103,9 @@ public final class GenomeVariantNormalizer {
 	 *            the genome change for which we want to return the HGVS-normalized representation for
 	 * @param txPos
 	 *            the corresponding position on the transcript
-	 * @return normalized {@link GenomeVariant}
+	 * @return normalized {@link SmallGenomeVariant}
 	 */
-	public static GenomeVariant normalizeDeletion(TranscriptModel transcript, GenomeVariant change,
+	public static SmallGenomeVariant normalizeDeletion(TranscriptModel transcript, SmallGenomeVariant change,
 			TranscriptPosition txPos) {
 		// TODO(holtgrem): check the splice site invariant?
 		assert (change.getRef().length() != 0 && change.getAlt().length() == 0);
@@ -126,7 +126,7 @@ public final class GenomeVariantNormalizer {
 		if (shift == 0) // only rebuild if shift > 0
 			return change;
 		else
-			return new GenomeVariant(change.getGenomePos().shifted(shift), seq.substring(pos, pos + LEN), "");
+			return new SmallGenomeVariant(change.getGenomePos().shifted(shift), seq.substring(pos, pos + LEN), "");
 	}
 
 }

@@ -12,7 +12,7 @@ import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.HG19RefDictBuilder;
 import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.Strand;
@@ -61,7 +61,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardUpstream() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640059,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640059,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -74,7 +74,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardDownstream() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -88,7 +88,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 	@Test
 	public void testForwardIntergenic() throws InvalidGenomeVariant {
 		// intergenic upstream
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639059,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639059,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -98,7 +98,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		Assert.assertEquals(null, annotation1.getProteinChange());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.INTERGENIC_VARIANT), annotation1.getEffects());
 		// intergenic downstream
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		SmallVariantAnnotation annotation2 = new BlockSubstitutionAnnotationBuilder(infoForward, change2,
 				new AnnotationBuilderOptions()).build();
@@ -114,7 +114,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		StringBuilder chars200 = new StringBuilder();
 		for (int i = 0; i < 200; ++i)
 			chars200.append("A");
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
 				PositionType.ZERO_BASED), chars200.toString(), "CGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -127,7 +127,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardIntronic() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642106,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642106,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -139,7 +139,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFivePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640070,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640070,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -151,7 +151,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardThreePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649329,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649329,
 				PositionType.ZERO_BASED), "ACG", "CGGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -166,7 +166,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		// Testing with some START_LOST scenarios.
 
 		// Delete one base of start codon.
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -177,7 +177,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation1.getEffects());
 
 		// Delete chunk out of first exon, spanning start codon from the left.
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640660,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640660,
 				PositionType.ZERO_BASED), "CCCTCCAGACC", "GTTG");
 		SmallVariantAnnotation annotation2 = new BlockSubstitutionAnnotationBuilder(infoForward, change2,
 				new AnnotationBuilderOptions()).build();
@@ -188,7 +188,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation2.getEffects());
 
 		// Delete chunk out of first exon, spanning start codon from the right.
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
 				PositionType.ZERO_BASED), "GGACGGCTCCT", "CTTG");
 		SmallVariantAnnotation annotation3 = new BlockSubstitutionAnnotationBuilder(infoForward, change3,
 				new AnnotationBuilderOptions()).build();
@@ -199,7 +199,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation3.getEffects());
 
 		// Deletion from before transcript, reaching into the start codon.
-		GenomeVariant change4 = new GenomeVariant(
+		SmallGenomeVariant change4 = new SmallGenomeVariant(
 				new GenomePosition(refDict, Strand.FWD, 1, 6640399, PositionType.ZERO_BASED),
 				"TCTCACCAGGCCCTTCTTCACGACCCTGGCCCCCCATCCAGCATCCCCCCTGGCCAATCCAATATGGCCCCCGGCCCCCGGGAGGCTGTCAGTGTGTTCCAGCCCTCCGCGTGCACCCCTCACCCTGACCCAAGCCCTCGTGCTGATAAATATGATTATTTGAGTAGAGGCCAACTTCCCGTTTCTCTCTCTTGACTCCAGGAGCTTTCTCTTGCATACCCTCGCTTAGGCTGGCCGGGGTGTCACTTCTGCCTCCCTGCCCTCCAGACCA",
 				"ACCT");
@@ -217,7 +217,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 	@Test
 	public void testForwardStopLoss() throws InvalidGenomeVariant {
 		// Replace bases of stop codon by 4 nucleotides, frameshift case.
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "ACG", "CGTT");
 		// Note that the transcript here differs to the one Mutalyzer uses after the CDS.
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
@@ -230,7 +230,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 				annotation1.getEffects());
 
 		// Replace stop codon by 6 nucleotides, non-frameshift case.
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
 				PositionType.ZERO_BASED), "ACT", "CGGTCG");
 		SmallVariantAnnotation annotation2 = new BlockSubstitutionAnnotationBuilder(infoForward, change2,
 				new AnnotationBuilderOptions()).build();
@@ -243,7 +243,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 				VariantEffect.COMPLEX_SUBSTITUTION, VariantEffect.STOP_LOST), annotation2.getEffects());
 
 		// Delete first base of stop codon, leads to complete loss.
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
 				PositionType.ZERO_BASED), "ACG", "CGGT");
 		SmallVariantAnnotation annotation3 = new BlockSubstitutionAnnotationBuilder(infoForward, change3,
 				new AnnotationBuilderOptions()).build();
@@ -259,7 +259,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 	@Test
 	public void testForwardSplicing() throws InvalidGenomeVariant {
 		// intronic splicing
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642116,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642116,
 				PositionType.ZERO_BASED), "G", "TT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -271,7 +271,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 				VariantEffect.SPLICE_ACCEPTOR_VARIANT), annotation1.getEffects());
 
 		// exonic splicing
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
 				PositionType.ZERO_BASED), "TGG", "AA");
 		SmallVariantAnnotation annotation2 = new BlockSubstitutionAnnotationBuilder(infoForward, change2,
 				new AnnotationBuilderOptions()).build();
@@ -286,7 +286,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 	@Test
 	public void testForwardFrameShiftBlockSubstitution() throws InvalidGenomeVariant {
 		// The following case contains a shift in the nucleotide sequence.
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6647537,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6647537,
 				PositionType.ZERO_BASED), "TGCCCCACCT", "CCC");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -301,7 +301,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 	@Test
 	public void testForwardNonFrameBlockSubstitution() throws InvalidGenomeVariant {
 		// deletion of two codons, insertion of one
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642114,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642114,
 				PositionType.ZERO_BASED), "TAAACA", "GTT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -313,7 +313,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 				VariantEffect.SPLICE_ACCEPTOR_VARIANT, VariantEffect.FEATURE_TRUNCATION), annotation1.getEffects());
 
 		// deletion of three codons, insertion of one
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642126,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642126,
 				PositionType.ZERO_BASED), "GTGGTTCAA", "ACC");
 		SmallVariantAnnotation annotation2 = new BlockSubstitutionAnnotationBuilder(infoForward, change2,
 				new AnnotationBuilderOptions()).build();
@@ -326,7 +326,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 				annotation2.getEffects());
 
 		// deletion of three codons, insertion of one, includes truncation of replacement ref from the right
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642134,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642134,
 				PositionType.ZERO_BASED), "AGTGGAGGAT", "CTT");
 		SmallVariantAnnotation annotation3 = new BlockSubstitutionAnnotationBuilder(infoForward, change3,
 				new AnnotationBuilderOptions()).build();
@@ -352,7 +352,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_025055.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 74536399,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 74536399,
 				PositionType.ZERO_BASED), "TAAGAAGGAGACCATCA", "ACTACCAGAGGAAT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -376,7 +376,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001004754.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 5475430,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 5475430,
 				PositionType.ZERO_BASED), "TCAACA", "ACAACACT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -402,7 +402,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_012206.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 156479564,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 156479564,
 				PositionType.ZERO_BASED), "AGTCGT", "AGTGAG");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -426,7 +426,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 74536399,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 74536399,
 				PositionType.ZERO_BASED), "TAAGAAGGAGACCATCA", "ACTACCAGAGGAAT");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -452,7 +452,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_012206.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 156479564,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 156479564,
 				PositionType.ZERO_BASED), "AGTCGT", "GAGCTA");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -477,7 +477,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_000396.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 150771702,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 150771702,
 				PositionType.ZERO_BASED), "TG", "CA");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -502,7 +502,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001258273
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 37090097,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 37090097,
 				PositionType.ONE_BASED), "TGAGG", "C");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -528,7 +528,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001128834.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 103041655, PositionType.ONE_BASED), "GGTGATC", "A");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
@@ -553,7 +553,7 @@ public class BlockSubstitutionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348067,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348067,
 				PositionType.ZERO_BASED), "GTA", "AGG");
 		SmallVariantAnnotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();

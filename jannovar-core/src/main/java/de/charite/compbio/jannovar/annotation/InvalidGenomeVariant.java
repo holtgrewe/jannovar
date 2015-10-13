@@ -1,9 +1,9 @@
 package de.charite.compbio.jannovar.annotation;
 
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 
 /**
- * Thrown when the the given {@link GenomeVariant} does not fit the used annotation builder class.
+ * Thrown when the the given {@link SmallGenomeVariant} does not fit the used annotation builder class.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */

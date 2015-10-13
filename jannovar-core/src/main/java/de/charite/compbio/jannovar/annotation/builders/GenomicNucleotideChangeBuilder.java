@@ -7,26 +7,26 @@ import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideInsertion;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideInversion;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideSubstitution;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 
 /**
- * Build {@link NucleotideChange} for a {@link GenomeVariant}.
+ * Build {@link NucleotideChange} for a {@link SmallGenomeVariant}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */
 public class GenomicNucleotideChangeBuilder {
 
-	private final GenomeVariant variant;
+	private final SmallGenomeVariant variant;
 
 	/** Initialize with the given <code>variant</code>. */
-	public GenomicNucleotideChangeBuilder(GenomeVariant variant) {
+	public GenomicNucleotideChangeBuilder(SmallGenomeVariant variant) {
 		this.variant = variant;
 	}
 
 	/**
-	 * @return {@link GenomeVariant} that the {@link NucleotideChange} is to be built for.
+	 * @return {@link SmallGenomeVariant} that the {@link NucleotideChange} is to be built for.
 	 */
-	public GenomeVariant getVariant() {
+	public SmallGenomeVariant getVariant() {
 		return variant;
 	}
 

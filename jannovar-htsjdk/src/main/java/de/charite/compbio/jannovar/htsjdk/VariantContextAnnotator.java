@@ -25,7 +25,7 @@ import de.charite.compbio.jannovar.data.Chromosome;
 import de.charite.compbio.jannovar.data.JannovarData;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
@@ -142,7 +142,7 @@ public final class VariantContextAnnotator {
 	}
 
 	/**
-	 * Build a {@link GenomeVariant} from a {@link VariantContext} object.
+	 * Build a {@link SmallGenomeVariant} from a {@link VariantContext} object.
 	 *
 	 * In the case of exceptions, you can use {@link #buildbuildUnknownRefAnnotationLists} to build an
 	 * {@link VariantAnnotations} with an error message.
@@ -151,11 +151,11 @@ public final class VariantContextAnnotator {
 	 *            {@link VariantContext} describing the variant
 	 * @param alleleID
 	 *            numeric identifier of the allele
-	 * @return {@link GenomeVariant} corresponding to <ocde>vc</code>, guaranteed to be on {@link Strand#FWD}.
+	 * @return {@link SmallGenomeVariant} corresponding to <ocde>vc</code>, guaranteed to be on {@link Strand#FWD}.
 	 * @throws InvalidCoordinatesException
 	 *             in the case that the reference in <code>vc</code> is not known in {@link #refDict}.
 	 */
-	public GenomeVariant buildGenomeVariant(VariantContext vc, int alleleID) throws InvalidCoordinatesException {
+	public SmallGenomeVariant buildGenomeVariant(VariantContext vc, int alleleID) throws InvalidCoordinatesException {
 		// Catch the case that vc.getChr() is not in ChromosomeMap.identifier2chromosom. This is the case
 		// for the "random" and "alternative locus" contigs etc.
 		Integer boxedInt = refDict.getContigNameToID().get(vc.getContig());
@@ -171,7 +171,7 @@ public final class VariantContextAnnotator {
 		final Allele altAllele = vc.getAlternateAllele(alleleID);
 		final String alt = altAllele.getBaseString();
 		final int pos = vc.getStart();
-		return new GenomeVariant(new GenomePosition(refDict, Strand.FWD, chr, pos, PositionType.ONE_BASED), ref, alt);
+		return new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, chr, pos, PositionType.ONE_BASED), ref, alt);
 	}
 
 	/**
@@ -202,14 +202,14 @@ public final class VariantContextAnnotator {
 	 *         the alternative alleles in <code>vc</code>
 	 * @throws InvalidCoordinatesException
 	 *             in the case of problems with resolving coordinates internally, namely building the
-	 *             {@link GenomeVariant} object one one of the returned {@link VariantAnnotations}s.
+	 *             {@link SmallGenomeVariant} object one one of the returned {@link VariantAnnotations}s.
 	 */
 	public ImmutableList<VariantAnnotations> buildAnnotations(VariantContext vc) throws InvalidCoordinatesException {
 		LOGGER.trace("building annotation lists for {}", new Object[] { vc });
 
 		ImmutableList.Builder<VariantAnnotations> builder = new ImmutableList.Builder<VariantAnnotations>();
 		for (int alleleID = 0; alleleID < vc.getAlternateAlleles().size(); ++alleleID) {
-			GenomeVariant change = buildGenomeVariant(vc, alleleID);
+			SmallGenomeVariant change = buildGenomeVariant(vc, alleleID);
 
 			// Build AnnotationList object for this allele.
 			try {
@@ -286,10 +286,10 @@ public final class VariantContextAnnotator {
 
 	/**
 	 * @param change
-	 *            {@link GenomeVariant} to build error annotation for
+	 *            {@link SmallGenomeVariant} to build error annotation for
 	 * @return VariantAnnotations having the message set to {@link AnnotationMessage#ERROR_PROBLEM_DURING_ANNOTATION}.
 	 */
-	public VariantAnnotations buildErrorAnnotations(GenomeVariant change) {
+	public VariantAnnotations buildErrorAnnotations(SmallGenomeVariant change) {
 		return new VariantAnnotations(change, ImmutableList.of(new SmallVariantAnnotation(ImmutableList
 				.of(AnnotationMessage.ERROR_PROBLEM_DURING_ANNOTATION))));
 	}

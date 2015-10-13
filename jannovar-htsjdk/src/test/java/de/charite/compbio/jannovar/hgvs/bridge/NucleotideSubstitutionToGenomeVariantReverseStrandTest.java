@@ -18,7 +18,7 @@ import de.charite.compbio.jannovar.data.SerializationException;
 import de.charite.compbio.jannovar.hgvs.HGVSVariant;
 import de.charite.compbio.jannovar.hgvs.nts.variant.SingleAlleleNucleotideVariant;
 import de.charite.compbio.jannovar.hgvs.parser.HGVSParser;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.utils.ResourceUtils;
 
 /**
@@ -64,7 +64,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.217680T>A", gVar.toString());
 	}
 
@@ -75,7 +75,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.217679C>T", gVar.toString());
 	}
 
@@ -86,7 +86,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.217681C>T", gVar.toString());
 	}
 
@@ -97,7 +97,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.436967T>A", gVar.toString());
 	}
 
@@ -108,7 +108,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.436966A>G", gVar.toString());
 	}
 
@@ -119,7 +119,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.436968G>C", gVar.toString());
 	}
 
@@ -130,7 +130,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.203186A>G", gVar.toString());
 	}
 
@@ -141,7 +141,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.203185G>T", gVar.toString());
 	}
 
@@ -152,7 +152,7 @@ public class NucleotideSubstitutionToGenomeVariantReverseStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.203187A>T", gVar.toString());
 	}
 

@@ -24,13 +24,13 @@ public final class TranscriptSequenceChangeHelper {
 	}
 
 	/**
-	 * Return modified transcript after applying a {@link GenomeVariant}.
+	 * Return modified transcript after applying a {@link SmallGenomeVariant}.
 	 *
 	 * @param change
-	 *            {@link GenomeVariant} to apply to the transcript
-	 * @return transcript string with applied {@link GenomeVariant}
+	 *            {@link SmallGenomeVariant} to apply to the transcript
+	 * @return transcript string with applied {@link SmallGenomeVariant}
 	 */
-	public String getTranscriptWithChange(GenomeVariant change) {
+	public String getTranscriptWithChange(SmallGenomeVariant change) {
 		switch (change.getType()) {
 		case SNV:
 		case INSERTION:
@@ -43,7 +43,7 @@ public final class TranscriptSequenceChangeHelper {
 		}
 	}
 
-	private String getTranscriptWithPointInRefAffected(GenomeVariant change) {
+	private String getTranscriptWithPointInRefAffected(SmallGenomeVariant change) {
 		// Short-circuit in the case of change that does not affect the transcript.
 		TranscriptSequenceOntologyDecorator soDecorator = new TranscriptSequenceOntologyDecorator(transcript);
 		if (!transcript.getTXRegion().overlapsWith(change.getGenomeInterval())
@@ -68,7 +68,7 @@ public final class TranscriptSequenceChangeHelper {
 		return builder.toString();
 	}
 
-	private String getTranscriptWithRangeInRefAffected(GenomeVariant change) {
+	private String getTranscriptWithRangeInRefAffected(SmallGenomeVariant change) {
 		// Short-circuit in the case of change that does not affect the transcript.
 		if (!transcript.getTXRegion().overlapsWith(change.getGenomeInterval()))
 			return transcript.getSequence();
@@ -136,10 +136,10 @@ public final class TranscriptSequenceChangeHelper {
 	 * frameshift changes.
 	 *
 	 * @param change
-	 *            {@link GenomeVariant} to apply to the CDS region of the transcript
-	 * @return CDS of transcript with applied {@link GenomeVariant}
+	 *            {@link SmallGenomeVariant} to apply to the CDS region of the transcript
+	 * @return CDS of transcript with applied {@link SmallGenomeVariant}
 	 */
-	public String getCDSWithGenomeVariant(GenomeVariant change) {
+	public String getCDSWithGenomeVariant(SmallGenomeVariant change) {
 		switch (change.getType()) {
 		case SNV:
 		case INSERTION:
@@ -152,7 +152,7 @@ public final class TranscriptSequenceChangeHelper {
 		}
 	}
 
-	private String getCDSWithPointInRefAffected(GenomeVariant change) {
+	private String getCDSWithPointInRefAffected(SmallGenomeVariant change) {
 		TranscriptProjectionDecorator projector = new TranscriptProjectionDecorator(transcript);
 		TranscriptSequenceOntologyDecorator soDecorator = new TranscriptSequenceOntologyDecorator(transcript);
 
@@ -184,7 +184,7 @@ public final class TranscriptSequenceChangeHelper {
 		return builder.toString();
 	}
 
-	private String getCDSWithRangeInRefAffected(GenomeVariant change) {
+	private String getCDSWithRangeInRefAffected(SmallGenomeVariant change) {
 		TranscriptProjectionDecorator projector = new TranscriptProjectionDecorator(transcript);
 		TranscriptSequenceOntologyDecorator soDecorator = new TranscriptSequenceOntologyDecorator(transcript);
 

@@ -5,11 +5,11 @@ import com.google.common.collect.ImmutableList;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
 /**
- * Dispatches annotation building to the specific classes, depending on their {@link GenomeVariant#getType}.
+ * Dispatches annotation building to the specific classes, depending on their {@link SmallGenomeVariant#getType}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
@@ -18,11 +18,11 @@ public final class AnnotationBuilderDispatcher {
 	/** transcript to build annotation for */
 	private final TranscriptModel transcript;
 	/** genomic change to build annotation for */
-	private final GenomeVariant change;
+	private final SmallGenomeVariant change;
 	/** configuration to use */
 	private final AnnotationBuilderOptions options;
 
-	public AnnotationBuilderDispatcher(TranscriptModel transcript, GenomeVariant change,
+	public AnnotationBuilderDispatcher(TranscriptModel transcript, SmallGenomeVariant change,
 			AnnotationBuilderOptions options) {
 		this.transcript = transcript;
 		this.change = change;

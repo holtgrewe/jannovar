@@ -27,14 +27,14 @@ import de.charite.compbio.jannovar.reference.AminoAcidChangeNormalizer;
 import de.charite.compbio.jannovar.reference.CDSPosition;
 import de.charite.compbio.jannovar.reference.DuplicationChecker;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.NucleotidePointLocationBuilder;
 import de.charite.compbio.jannovar.reference.ProjectionException;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptPosition;
 
 /**
- * Builds {@link SmallVariantAnnotation} objects for the insertion {@link GenomeVariant} in the given {@link TranscriptInfo}.
+ * Builds {@link SmallVariantAnnotation} objects for the insertion {@link SmallGenomeVariant} in the given {@link TranscriptInfo}.
  *
  * <h2>Duplications</h2>
  *
@@ -54,13 +54,13 @@ public final class InsertionAnnotationBuilder extends AnnotationBuilder {
 	 * @param transcript
 	 *            {@link TranscriptInfo} to build the annotation for
 	 * @param change
-	 *            {@link GenomeVariant} to build the annotation with
+	 *            {@link SmallGenomeVariant} to build the annotation with
 	 * @param options
 	 *            the configuration to use for the {@link AnnotationBuilder}
 	 * @throws InvalidGenomeVariant
 	 *             if <code>change</code> did not describe an insertion
 	 */
-	InsertionAnnotationBuilder(TranscriptModel transcript, GenomeVariant change, AnnotationBuilderOptions options)
+	InsertionAnnotationBuilder(TranscriptModel transcript, SmallGenomeVariant change, AnnotationBuilderOptions options)
 			throws InvalidGenomeVariant {
 		super(transcript, change, options);
 

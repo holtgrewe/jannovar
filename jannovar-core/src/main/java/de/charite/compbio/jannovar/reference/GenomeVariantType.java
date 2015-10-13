@@ -1,7 +1,7 @@
 package de.charite.compbio.jannovar.reference;
 
 /**
- * Types of genomic variants represented by {@link GenomeVariant}.
+ * Types of genomic variants represented by {@link SmallGenomeVariant}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */

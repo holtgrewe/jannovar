@@ -18,7 +18,7 @@ import de.charite.compbio.jannovar.data.SerializationException;
 import de.charite.compbio.jannovar.hgvs.HGVSVariant;
 import de.charite.compbio.jannovar.hgvs.nts.variant.SingleAlleleNucleotideVariant;
 import de.charite.compbio.jannovar.hgvs.parser.HGVSParser;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.utils.ResourceUtils;
 
 /**
@@ -64,7 +64,7 @@ public class NucleotideInversionToGenomeVariantForwardStrandTest {
 		Assert.assertEquals(hgvsStr, hgvsVar.toHGVSString());
 
 		SingleAlleleNucleotideVariant saVar = (SingleAlleleNucleotideVariant) hgvsVar;
-		GenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
+		SmallGenomeVariant gVar = translator.translateNucleotideVariantToGenomeVariant(saVar);
 		Assert.assertEquals("ref:g.58585_58589delATCTCinsGAGAT", gVar.toString());
 	}
 

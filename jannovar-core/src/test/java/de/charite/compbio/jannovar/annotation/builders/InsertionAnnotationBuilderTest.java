@@ -12,7 +12,7 @@ import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.HG19RefDictBuilder;
 import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.Strand;
@@ -64,7 +64,7 @@ public class InsertionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardUpstream() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation anno = new InsertionAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -76,7 +76,7 @@ public class InsertionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardDownstream() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation anno = new InsertionAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -89,7 +89,7 @@ public class InsertionAnnotationBuilderTest {
 	@Test
 	public void testForwardIntergenic() throws InvalidGenomeVariant {
 		// upstream intergenic
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639062,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639062,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation anno = new InsertionAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -99,7 +99,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.INTERGENIC_VARIANT), anno.getEffects());
 
 		// downstream intergenic
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation anno2 = new InsertionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno2.getTranscript().getAccession());
@@ -111,7 +111,7 @@ public class InsertionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardIntronic() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6646098,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6646098,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation anno = new InsertionAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -123,7 +123,7 @@ public class InsertionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFivePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation anno = new InsertionAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -135,7 +135,7 @@ public class InsertionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardThreePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649272,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649272,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation anno = new InsertionAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -148,7 +148,7 @@ public class InsertionAnnotationBuilderTest {
 	@Test
 	public void testForwardSplicing() throws InvalidGenomeVariant {
 		// TODO(holtgrem): test more cases
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
 				PositionType.ZERO_BASED), "", "ACT");
 		SmallVariantAnnotation anno = new InsertionAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -167,7 +167,7 @@ public class InsertionAnnotationBuilderTest {
 		// TODO(holtgrem): The WT start codon is replaced by another one -- duplication.
 
 		// The WT stop codon is replaced by another one.
-		GenomeVariant change1agc = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
+		SmallGenomeVariant change1agc = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "", "AGC");
 		SmallVariantAnnotation annotation1agc = new InsertionAnnotationBuilder(infoForward, change1agc,
 				new AnnotationBuilderOptions()).build();
@@ -178,7 +178,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT), annotation1agc.getEffects());
 
 		// The WT stop codon is destroyed but there is a new one downstream
-		GenomeVariant change1tgc = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
+		SmallGenomeVariant change1tgc = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "", "TGC");
 		SmallVariantAnnotation annotation1tgc = new InsertionAnnotationBuilder(infoForward, change1tgc,
 				new AnnotationBuilderOptions()).build();
@@ -189,7 +189,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.STOP_LOST), annotation1tgc.getEffects());
 
 		// Test case where the start codon is destroyed.
-		GenomeVariant change2agc = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
+		SmallGenomeVariant change2agc = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
 				PositionType.ZERO_BASED), "", "AGC");
 		SmallVariantAnnotation annotation2agc = new InsertionAnnotationBuilder(infoForward, change2agc,
 				new AnnotationBuilderOptions()).build();
@@ -203,7 +203,7 @@ public class InsertionAnnotationBuilderTest {
 		// Test cases where the start codon is not subjected to an insertion.
 
 		// Directly insert stop codon.
-		GenomeVariant change3taa = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3taa = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "TAA");
 		SmallVariantAnnotation annotation3taa = new InsertionAnnotationBuilder(infoForward, change3taa,
 				new AnnotationBuilderOptions()).build();
@@ -215,7 +215,7 @@ public class InsertionAnnotationBuilderTest {
 				annotation3taa.getEffects());
 
 		// Directly insert some base and then a stop codon.
-		GenomeVariant change3tcctaa = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3tcctaa = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "TCCTAA");
 		SmallVariantAnnotation annotation3tcctaa = new InsertionAnnotationBuilder(infoForward, change3tcctaa,
 				new AnnotationBuilderOptions()).build();
@@ -227,7 +227,7 @@ public class InsertionAnnotationBuilderTest {
 				annotation3tcctaa.getEffects());
 
 		// Insertion without a new stop codon that is no duplication.
-		GenomeVariant change4tcctcctcc = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change4tcctcctcc = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "TCCTCCTCC");
 		SmallVariantAnnotation annotation4tcctcctcc = new InsertionAnnotationBuilder(infoForward, change4tcctcctcc,
 				new AnnotationBuilderOptions()).build();
@@ -238,7 +238,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.INFRAME_INSERTION), annotation4tcctcctcc.getEffects());
 
 		// Insertion without a new stop codon that is a duplication.
-		GenomeVariant change5gatggc = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change5gatggc = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "GATGGC");
 		SmallVariantAnnotation annotation5gatggc = new InsertionAnnotationBuilder(infoForward, change5gatggc,
 				new AnnotationBuilderOptions()).build();
@@ -255,7 +255,7 @@ public class InsertionAnnotationBuilderTest {
 		// We check some one-nucleotide insertions in the first ten bases and compared them by hand to Mutalyzer
 		// results.
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -265,7 +265,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("0?", annotation1.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation1.getEffects());
 
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation2 = new InsertionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -277,7 +277,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert all non-duplicate NTs between 3 and 4.
 
-		GenomeVariant change3a = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3a = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation3a = new InsertionAnnotationBuilder(infoForward, change3a, new AnnotationBuilderOptions())
 				.build();
@@ -287,7 +287,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Argfs*37)", annotation3a.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_VARIANT), annotation3a.getEffects());
 
-		GenomeVariant change3c = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3c = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation annotation3c = new InsertionAnnotationBuilder(infoForward, change3c, new AnnotationBuilderOptions())
 				.build();
@@ -297,7 +297,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Argfs*37)", annotation3c.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_VARIANT), annotation3c.getEffects());
 
-		GenomeVariant change3t = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3t = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation3t = new InsertionAnnotationBuilder(infoForward, change3t, new AnnotationBuilderOptions())
 				.build();
@@ -309,7 +309,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert all non-duplicate NTs between 4 and 5.
 
-		GenomeVariant change4c = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
+		SmallGenomeVariant change4c = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation annotation4c = new InsertionAnnotationBuilder(infoForward, change4c, new AnnotationBuilderOptions())
 				.build();
@@ -319,7 +319,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Alafs*37)", annotation4c.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_VARIANT), annotation4c.getEffects());
 
-		GenomeVariant change4t = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
+		SmallGenomeVariant change4t = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation4t = new InsertionAnnotationBuilder(infoForward, change4t, new AnnotationBuilderOptions())
 				.build();
@@ -331,7 +331,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert all non-duplicate NTs between 5 and 6.
 
-		GenomeVariant change5g = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
+		SmallGenomeVariant change5g = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation5g = new InsertionAnnotationBuilder(infoForward, change5g, new AnnotationBuilderOptions())
 				.build();
@@ -341,7 +341,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Glufs*37)", annotation5g.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_VARIANT), annotation5g.getEffects());
 
-		GenomeVariant change5t = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
+		SmallGenomeVariant change5t = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation5t = new InsertionAnnotationBuilder(infoForward, change5t, new AnnotationBuilderOptions())
 				.build();
@@ -354,7 +354,7 @@ public class InsertionAnnotationBuilderTest {
 		// It appears to be impossible to force a stop loss for this transcript.
 
 		// Tests for stop shift.
-		GenomeVariant change6t = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
+		SmallGenomeVariant change6t = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation6t = new InsertionAnnotationBuilder(infoForward, change6t, new AnnotationBuilderOptions())
 				.build();
@@ -364,7 +364,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(*689Tyrext*15)", annotation6t.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_ELONGATION), annotation6t.getEffects());
 
-		GenomeVariant change6c = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
+		SmallGenomeVariant change6c = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation annotation6c = new InsertionAnnotationBuilder(infoForward, change6c, new AnnotationBuilderOptions())
 				.build();
@@ -375,7 +375,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_ELONGATION), annotation6c.getEffects());
 
 		// Test for no change when inserting into stop codon.
-		GenomeVariant change7g = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
+		SmallGenomeVariant change7g = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation7g = new InsertionAnnotationBuilder(infoForward, change7g, new AnnotationBuilderOptions())
 				.build();
@@ -391,7 +391,7 @@ public class InsertionAnnotationBuilderTest {
 		// We check some two-nucleotide insertions in the first ten bases and compared them by hand to Mutalyzer
 		// results.
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
 				PositionType.ZERO_BASED), "", "GA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -401,7 +401,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("0?", annotation1.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation1.getEffects());
 
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
 				PositionType.ZERO_BASED), "", "AG");
 		SmallVariantAnnotation annotation2 = new InsertionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -413,7 +413,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert some non-duplicate NT pairs between 3 and 4.
 
-		GenomeVariant change3ac = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3ac = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "AC");
 		SmallVariantAnnotation annotation3ac = new InsertionAnnotationBuilder(infoForward, change3ac,
 				new AnnotationBuilderOptions()).build();
@@ -423,7 +423,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Thrfs*10)", annotation3ac.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_ELONGATION), annotation3ac.getEffects());
 
-		GenomeVariant change3cg = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3cg = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "CG");
 		SmallVariantAnnotation annotation3cg = new InsertionAnnotationBuilder(infoForward, change3cg,
 				new AnnotationBuilderOptions()).build();
@@ -433,7 +433,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Argfs*10)", annotation3cg.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_ELONGATION), annotation3cg.getEffects());
 
-		GenomeVariant change3ta = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change3ta = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "", "TA");
 		SmallVariantAnnotation annotation3ta = new InsertionAnnotationBuilder(infoForward, change3ta,
 				new AnnotationBuilderOptions()).build();
@@ -445,7 +445,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert some non-duplicate NT pairs between 4 and 5.
 
-		GenomeVariant change4ct = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
+		SmallGenomeVariant change4ct = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
 				PositionType.ZERO_BASED), "", "CT");
 		SmallVariantAnnotation annotation4ct = new InsertionAnnotationBuilder(infoForward, change4ct,
 				new AnnotationBuilderOptions()).build();
@@ -455,7 +455,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Alafs*10)", annotation4ct.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_ELONGATION), annotation3cg.getEffects());
 
-		GenomeVariant change4tg = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
+		SmallGenomeVariant change4tg = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
 				PositionType.ZERO_BASED), "", "TG");
 		SmallVariantAnnotation annotation4tg = new InsertionAnnotationBuilder(infoForward, change4tg,
 				new AnnotationBuilderOptions()).build();
@@ -467,7 +467,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert some non-duplicate NT pairs between 5 and 6.
 
-		GenomeVariant change5gc = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
+		SmallGenomeVariant change5gc = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
 				PositionType.ZERO_BASED), "", "GC");
 		SmallVariantAnnotation annotation5gc = new InsertionAnnotationBuilder(infoForward, change5gc,
 				new AnnotationBuilderOptions()).build();
@@ -477,7 +477,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Glufs*10)", annotation5gc.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.STOP_GAINED), annotation3ta.getEffects());
 
-		GenomeVariant change5ta = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
+		SmallGenomeVariant change5ta = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
 				PositionType.ZERO_BASED), "", "TA");
 		SmallVariantAnnotation annotation5ta = new InsertionAnnotationBuilder(infoForward, change5ta,
 				new AnnotationBuilderOptions()).build();
@@ -495,7 +495,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert some non-duplicate NT pairs between 4 and 5.
 
-		GenomeVariant change4actagact = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
+		SmallGenomeVariant change4actagact = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
 				PositionType.ZERO_BASED), "", "ACTAGACT");
 		SmallVariantAnnotation annotation4actagact = new InsertionAnnotationBuilder(infoForward, change4actagact,
 				new AnnotationBuilderOptions()).build();
@@ -505,7 +505,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Gly3*)", annotation4actagact.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.STOP_GAINED), annotation4actagact.getEffects());
 
-		GenomeVariant change4cgtg = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
+		SmallGenomeVariant change4cgtg = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
 				PositionType.ZERO_BASED), "", "CGTG");
 		SmallVariantAnnotation annotation4cgtg = new InsertionAnnotationBuilder(infoForward, change4cgtg,
 				new AnnotationBuilderOptions()).build();
@@ -524,7 +524,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Insert C and G between nucleotides 1 and 2.
 
-		GenomeVariant change1c = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694497,
+		SmallGenomeVariant change1c = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694497,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation annotation1c = new InsertionAnnotationBuilder(infoReverse, change1c, new AnnotationBuilderOptions())
 				.build();
@@ -534,7 +534,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("0?", annotation1c.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation1c.getEffects());
 
-		GenomeVariant change1g = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694497,
+		SmallGenomeVariant change1g = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694497,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation1g = new InsertionAnnotationBuilder(infoReverse, change1g, new AnnotationBuilderOptions())
 				.build();
@@ -546,7 +546,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Insert A and C between nucleotides 2 and 3.
 
-		GenomeVariant change2a = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694496,
+		SmallGenomeVariant change2a = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694496,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation2a = new InsertionAnnotationBuilder(infoReverse, change2a, new AnnotationBuilderOptions())
 				.build();
@@ -556,7 +556,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("0?", annotation2a.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation2a.getEffects());
 
-		GenomeVariant change2c = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694496,
+		SmallGenomeVariant change2c = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694496,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation2c = new InsertionAnnotationBuilder(infoReverse, change2c, new AnnotationBuilderOptions())
 				.build();
@@ -568,7 +568,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Insertions between nucleotides 3 and 4.
 
-		GenomeVariant change3a = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694495,
+		SmallGenomeVariant change3a = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694495,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation3a = new InsertionAnnotationBuilder(infoReverse, change3a, new AnnotationBuilderOptions())
 				.build();
@@ -578,7 +578,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(Ala2Serfs*16)", annotation3a.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_VARIANT), annotation3a.getEffects());
 
-		GenomeVariant change3c = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694495,
+		SmallGenomeVariant change3c = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694495,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation3c = new InsertionAnnotationBuilder(infoReverse, change3c, new AnnotationBuilderOptions())
 				.build();
@@ -590,7 +590,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Some insertions into stop codon
 
-		GenomeVariant change4g = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688463,
+		SmallGenomeVariant change4g = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688463,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation4g = new InsertionAnnotationBuilder(infoReverse, change4g, new AnnotationBuilderOptions())
 				.build();
@@ -600,7 +600,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals("(*471Serext*7)", annotation4g.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_ELONGATION), annotation4g.getEffects());
 
-		GenomeVariant change4c = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688463,
+		SmallGenomeVariant change4c = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688463,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation annotation4c = new InsertionAnnotationBuilder(infoReverse, change4c, new AnnotationBuilderOptions())
 				.build();
@@ -618,7 +618,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// Try to insert some non-duplicate NT pairs between 4 and 5.
 
-		GenomeVariant change4actagact = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694494,
+		SmallGenomeVariant change4actagact = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694494,
 				PositionType.ZERO_BASED), "", "ACTAGACT");
 		SmallVariantAnnotation annotation4actagact = new InsertionAnnotationBuilder(infoReverse, change4actagact,
 				new AnnotationBuilderOptions()).build();
@@ -630,7 +630,7 @@ public class InsertionAnnotationBuilderTest {
 				annotation4actagact.getEffects());
 
 		// This insertion will be shifted.
-		GenomeVariant change4cgtg = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694494,
+		SmallGenomeVariant change4cgtg = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694494,
 				PositionType.ZERO_BASED), "", "CGTG");
 		SmallVariantAnnotation annotation4cgtg = new InsertionAnnotationBuilder(infoReverse, change4cgtg,
 				new AnnotationBuilderOptions()).build();
@@ -641,7 +641,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FRAMESHIFT_ELONGATION), annotation4cgtg.getEffects());
 
 		// Insert whole stop codon.
-		GenomeVariant change5cgtg = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694492,
+		SmallGenomeVariant change5cgtg = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694492,
 				PositionType.ZERO_BASED), "", "ATTA");
 		SmallVariantAnnotation annotation5cgtg = new InsertionAnnotationBuilder(infoReverse, change5cgtg,
 				new AnnotationBuilderOptions()).build();
@@ -658,7 +658,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// directly after the exons
 
-		GenomeVariant varInsertionAfterExon1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640196,
+		SmallGenomeVariant varInsertionAfterExon1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640196,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annoInsertionAfterExon1 = new InsertionAnnotationBuilder(infoForward, varInsertionAfterExon1,
 				new AnnotationBuilderOptions()).build();
@@ -670,7 +670,7 @@ public class InsertionAnnotationBuilderTest {
 				ImmutableSortedSet.of(VariantEffect.SPLICE_REGION_VARIANT, VariantEffect.FIVE_PRIME_UTR_VARIANT),
 				annoInsertionAfterExon1.getEffects());
 
-		GenomeVariant varInsertionAfterExon2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6641359,
+		SmallGenomeVariant varInsertionAfterExon2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6641359,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annoInsertionAfterExon2 = new InsertionAnnotationBuilder(infoForward, varInsertionAfterExon2,
 				new AnnotationBuilderOptions()).build();
@@ -681,7 +681,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SPLICE_DONOR_VARIANT,
 				VariantEffect.CODING_TRANSCRIPT_INTRON_VARIANT), annoInsertionAfterExon2.getEffects());
 
-		GenomeVariant varInsertionAfterExon3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642359,
+		SmallGenomeVariant varInsertionAfterExon3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642359,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annoInsertionAfterExon3 = new InsertionAnnotationBuilder(infoForward, varInsertionAfterExon3,
 				new AnnotationBuilderOptions()).build();
@@ -694,7 +694,7 @@ public class InsertionAnnotationBuilderTest {
 
 		// directly before the exons
 
-		GenomeVariant varInsertionBeforeExon1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640600,
+		SmallGenomeVariant varInsertionBeforeExon1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640600,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annoInsertionBeforeExon1 = new InsertionAnnotationBuilder(infoForward, varInsertionBeforeExon1,
 				new AnnotationBuilderOptions()).build();
@@ -706,7 +706,7 @@ public class InsertionAnnotationBuilderTest {
 				ImmutableSortedSet.of(VariantEffect.SPLICE_REGION_VARIANT, VariantEffect.FIVE_PRIME_UTR_VARIANT),
 				annoInsertionBeforeExon1.getEffects());
 
-		GenomeVariant varInsertionBeforeExon2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
+		SmallGenomeVariant varInsertionBeforeExon2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annoInsertionBeforeExon2 = new InsertionAnnotationBuilder(infoForward, varInsertionBeforeExon2,
 				new AnnotationBuilderOptions()).build();
@@ -717,7 +717,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SPLICE_ACCEPTOR_VARIANT,
 				VariantEffect.CODING_TRANSCRIPT_INTRON_VARIANT), annoInsertionBeforeExon2.getEffects());
 
-		GenomeVariant varInsertionBeforeExon3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6645978,
+		SmallGenomeVariant varInsertionBeforeExon3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6645978,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annoInsertionBeforeExon3 = new InsertionAnnotationBuilder(infoForward, varInsertionBeforeExon3,
 				new AnnotationBuilderOptions()).build();
@@ -742,7 +742,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// no RefSeq
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 49218811,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 49218811,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -766,7 +766,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 4544982,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 4544982,
 				PositionType.ZERO_BASED), "", "AAG");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -790,7 +790,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq XR_242648.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 97329737,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 97329737,
 				PositionType.ZERO_BASED), "", "GA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -813,7 +813,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 14, 73079293,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 14, 73079293,
 				PositionType.ZERO_BASED), "", "AA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -845,7 +845,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637422,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637422,
 				PositionType.ZERO_BASED), "", "TTC");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -887,7 +887,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_004477.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190878559,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190878559,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -914,7 +914,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 137968918,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 137968918,
 				PositionType.ZERO_BASED), "", "AGA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -938,7 +938,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001005495.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637607,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637607,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -968,7 +968,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637422,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637422,
 				PositionType.ZERO_BASED), "", "CTCTTC");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -995,7 +995,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001005495.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637422,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637422,
 				PositionType.ZERO_BASED), "", "CTGCTGCTCTTC");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1024,7 +1024,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_022149.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429186,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429186,
 				PositionType.ZERO_BASED), "", "AGT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1054,7 +1054,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_022149.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429171,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429171,
 				PositionType.ZERO_BASED), "", "TTTGTT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1081,7 +1081,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_022149.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429171,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429171,
 				PositionType.ZERO_BASED), "", "TTTTAGTTTGTT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1113,7 +1113,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637605,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248637605,
 				PositionType.ZERO_BASED), "", "GAAAAG");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1146,7 +1146,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_022149.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429154,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 184429154,
 				PositionType.ZERO_BASED), "", "TCC");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1176,7 +1176,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001122646.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 97568427,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 97568427,
 				PositionType.ZERO_BASED), "", "ATCG");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1203,7 +1203,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 109371423,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 109371423,
 				PositionType.ZERO_BASED), "", "CC");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1232,7 +1232,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 135272376,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 135272376,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1259,7 +1259,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 109383313,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 109383313,
 				PositionType.ZERO_BASED), "", "AGCG");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1288,7 +1288,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 109383877,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 109383877,
 				PositionType.ZERO_BASED), "", "CAT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1315,7 +1315,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// no RefSeq ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 179519684,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 179519684,
 				PositionType.ZERO_BASED), "", "AAGT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1345,7 +1345,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001122633.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 211421454,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 211421454,
 				PositionType.ZERO_BASED), "", "TTC");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1374,7 +1374,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 195510342,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 195510342,
 				PositionType.ZERO_BASED), "", "CA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1401,7 +1401,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_018406.6
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 195511592,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 195511592,
 				PositionType.ZERO_BASED), "", "CTG");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1428,7 +1428,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_004477.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190881973,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190881973,
 				PositionType.ZERO_BASED), "", "GACT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1455,7 +1455,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_020227.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 23526344,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 23526344,
 				PositionType.ZERO_BASED), "", "TGA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1485,7 +1485,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 77745856,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 77745856,
 				PositionType.ZERO_BASED), "", "T");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1510,7 +1510,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140573931,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140573931,
 				PositionType.ZERO_BASED), "", "ATGC");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1536,7 +1536,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 30782220,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 30782220,
 				PositionType.ZERO_BASED), "", "TTTG");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1563,7 +1563,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 41754575,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 41754575,
 				PositionType.ZERO_BASED), "", "TCT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1591,7 +1591,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 44144382,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 44144382,
 				PositionType.ZERO_BASED), "", "AAAA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1618,7 +1618,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001164462.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 100637286,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 100637286,
 				PositionType.ZERO_BASED), "", "GTA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1646,7 +1646,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 137968919,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 137968919,
 				PositionType.ZERO_BASED), "", "AA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1673,7 +1673,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_033419.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 37830926,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 37830926,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1704,7 +1704,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_004477.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190862165,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190862165,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1731,7 +1731,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_004477.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190862166,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190862166,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1762,7 +1762,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6693165,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6693165,
 				PositionType.ZERO_BASED), "", "TA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1789,7 +1789,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 192335275,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 192335275,
 				PositionType.ZERO_BASED), "", "TAAT");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1818,7 +1818,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190884289,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 190884289,
 				PositionType.ZERO_BASED), "", "GACA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1844,7 +1844,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("22"), 20640690, PositionType.ZERO_BASED), "", "ATGCCGTGCACGGCATCCTCGTTAGCA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1871,7 +1871,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 37081781,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 37081781,
 				PositionType.ZERO_BASED), "", "TAAG");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1899,7 +1899,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 167138319,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 167138319,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1911,7 +1911,7 @@ public class InsertionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SPLICE_ACCEPTOR_VARIANT,
 				VariantEffect.CODING_TRANSCRIPT_INTRON_VARIANT), annotation1.getEffects());
 
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 167140961,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 167140961,
 				PositionType.ZERO_BASED), "", "A");
 		SmallVariantAnnotation annotation2 = new InsertionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -1937,7 +1937,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_006331.7
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 7080210,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 7080210,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1964,7 +1964,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_015717
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 71062833,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 71062833,
 				PositionType.ZERO_BASED), "", "C");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1991,7 +1991,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001077196
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 178494173,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 178494173,
 				PositionType.ZERO_BASED), "", "GGA");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -2019,7 +2019,7 @@ public class InsertionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001077196
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 27290969,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 27290969,
 				PositionType.ZERO_BASED), "", "G");
 		SmallVariantAnnotation annotation1 = new InsertionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();

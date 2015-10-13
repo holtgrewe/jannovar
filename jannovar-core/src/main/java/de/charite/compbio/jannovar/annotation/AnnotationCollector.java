@@ -11,7 +11,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 
 import de.charite.compbio.jannovar.data.Chromosome;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 
 /**
  * This class collects all the information about a variant and its annotations and calculates the final annotations for
@@ -202,7 +202,7 @@ final class AnnotationCollector {
 	 *            <code>GenomeChange</code> to build the <code>AnnotationList</code> for
 	 * @return returns the {@link VariantAnnotations} with all associated {@link SmallVariantAnnotation}s
 	 */
-	public VariantAnnotations getAnnotationList(GenomeVariant change) {
+	public VariantAnnotations getAnnotationList(SmallGenomeVariant change) {
 		return new VariantAnnotations(change, this.annotationLst);
 	}
 

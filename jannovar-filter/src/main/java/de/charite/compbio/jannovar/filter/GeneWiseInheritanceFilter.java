@@ -24,7 +24,7 @@ import de.charite.compbio.jannovar.pedigree.compatibilitychecker.InheritanceComp
 import de.charite.compbio.jannovar.pedigree.compatibilitychecker.InheritanceCompatibilityCheckerException;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
@@ -122,7 +122,7 @@ public class GeneWiseInheritanceFilter implements VariantContextFilter {
 		final String ref = vc.getReference().getBaseString();
 		final String alt = vc.getAlternateAllele(0).getBaseString();
 		final int pos = vc.getStart();
-		final GenomeVariant change = new GenomeVariant(
+		final SmallGenomeVariant change = new SmallGenomeVariant(
 				new GenomePosition(jannovarDB.getRefDict(), Strand.FWD, contigID, pos, PositionType.ONE_BASED), ref,
 				alt);
 
@@ -201,7 +201,7 @@ public class GeneWiseInheritanceFilter implements VariantContextFilter {
 	 *            to use for the check
 	 * @return <code>true</code> if <code>gene</code> is affected by <code>change</code>
 	 */
-	private static boolean isGeneAffectedByChange(Gene gene, GenomeVariant change) {
+	private static boolean isGeneAffectedByChange(Gene gene, SmallGenomeVariant change) {
 		final GenomeInterval changeInterval = change.getGenomeInterval();
 		if (changeInterval.length() == 0 && gene.getRegion().contains(changeInterval.getGenomeBeginPos())
 				&& gene.getRegion().contains(changeInterval.getGenomeBeginPos().shifted(-1)))

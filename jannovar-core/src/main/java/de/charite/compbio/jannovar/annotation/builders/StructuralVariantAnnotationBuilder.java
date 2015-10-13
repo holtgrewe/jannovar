@@ -8,7 +8,7 @@ import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation.Ran
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
 // TODO(holtgrem): Make AnnotationBuilder an interface and rename AnnotationBuilder to AnnotationBuilderBase?
@@ -25,19 +25,19 @@ public final class StructuralVariantAnnotationBuilder {
 	/** the transcript to build the annotation for */
 	private final TranscriptModel transcript;
 	/** the genome change to build the annotation for */
-	private final GenomeVariant change;
+	private final SmallGenomeVariant change;
 
 	/**
-	 * Initialize the builder for the structural variant {@link GenomeVariant} in the given {@link TranscriptInfo}.
+	 * Initialize the builder for the structural variant {@link SmallGenomeVariant} in the given {@link TranscriptInfo}.
 	 *
 	 * @param transcript
 	 *            {@link TranscriptInfo} for the transcript to compute the affection for, use <code>null</code> for
 	 *            intergenic variants
 	 * @param change
-	 *            {@link GenomeVariant} to compute the annotation for, must describe a structural variant affecting
+	 *            {@link SmallGenomeVariant} to compute the annotation for, must describe a structural variant affecting
 	 *            <code>transcript</code>
 	 */
-	public StructuralVariantAnnotationBuilder(TranscriptModel transcript, GenomeVariant change) {
+	public StructuralVariantAnnotationBuilder(TranscriptModel transcript, SmallGenomeVariant change) {
 		this.transcript = transcript;
 		this.change = change;
 	}

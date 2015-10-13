@@ -23,11 +23,11 @@ import de.charite.compbio.jannovar.reference.AminoAcidChange;
 import de.charite.compbio.jannovar.reference.AminoAcidChangeNormalizer;
 import de.charite.compbio.jannovar.reference.CDSPosition;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
 /**
- * Builds {@link SmallVariantAnnotation} objects for the deletion {@link GenomeVariant}s in the given {@link TranscriptInfo}.
+ * Builds {@link SmallVariantAnnotation} objects for the deletion {@link SmallGenomeVariant}s in the given {@link TranscriptInfo}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
@@ -37,13 +37,13 @@ public final class DeletionAnnotationBuilder extends AnnotationBuilder {
 	 * @param transcript
 	 *            {@link TranscriptInfo} to build the annotation for
 	 * @param change
-	 *            {@link GenomeVariant} to build the annotation with
+	 *            {@link SmallGenomeVariant} to build the annotation with
 	 * @param options
 	 *            the configuration to use for the {@link AnnotationBuilder}
 	 * @throws InvalidGenomeVariant
 	 *             if <code>change</code> did not describe a deletion
 	 */
-	DeletionAnnotationBuilder(TranscriptModel transcript, GenomeVariant change, AnnotationBuilderOptions options)
+	DeletionAnnotationBuilder(TranscriptModel transcript, SmallGenomeVariant change, AnnotationBuilderOptions options)
 			throws InvalidGenomeVariant {
 		super(transcript, change, options);
 

@@ -11,7 +11,7 @@ import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.HG19RefDictBuilder;
 import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.Strand;
@@ -61,7 +61,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardUpstream() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -73,7 +73,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardDownstream() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -86,7 +86,7 @@ public class SNVAnnotationBuilderTest {
 	@Test
 	public void testForwardIntergenic() throws InvalidGenomeVariant {
 		// upstream intergenic
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639061,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639061,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno1.getTranscript().getAccession());
@@ -96,7 +96,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.INTERGENIC_VARIANT), anno1.getEffects());
 
 		// downstream intergenic
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno2 = new SNVAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno2.getTranscript().getAccession());
@@ -109,7 +109,7 @@ public class SNVAnnotationBuilderTest {
 	@Test
 	public void testForwardIntronic() throws InvalidGenomeVariant {
 		// position towards right side of intron
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642106,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642106,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -119,7 +119,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.CODING_TRANSCRIPT_INTRON_VARIANT), anno.getEffects());
 
 		// position towards left side of intron
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6646100,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6646100,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno2 = new SNVAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno2.getTranscript().getAccession());
@@ -131,7 +131,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardThreePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649272,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649272,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -143,7 +143,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFivePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640668,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640668,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -155,7 +155,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardStartLoss() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -168,7 +168,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardStopLoss() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "G", "C");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -180,7 +180,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardStopGained() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649262,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649262,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -192,7 +192,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardStopRetained() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -206,7 +206,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardSplicingDonor() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640196,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640196,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -220,7 +220,7 @@ public class SNVAnnotationBuilderTest {
 
 	@Test
 	public void testForwardSplicingAcceptor() throws InvalidGenomeVariant {
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640599,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640599,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -235,7 +235,7 @@ public class SNVAnnotationBuilderTest {
 	@Test
 	public void testForwardSplicingRegion() throws InvalidGenomeVariant {
 		// in UTR
-		GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640602,
+		SmallGenomeVariant change = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640602,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno = new SNVAnnotationBuilder(infoForward, change, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
@@ -246,7 +246,7 @@ public class SNVAnnotationBuilderTest {
 				ImmutableSortedSet.of(VariantEffect.FIVE_PRIME_UTR_VARIANT, VariantEffect.SPLICE_REGION_VARIANT),
 				anno.getEffects());
 		// in CDS
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6647537,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6647537,
 				PositionType.ZERO_BASED), "T", "G");
 		SmallVariantAnnotation anno2 = new SNVAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno2.getTranscript().getAccession());
@@ -261,7 +261,7 @@ public class SNVAnnotationBuilderTest {
 	public void testForwardFirstCDSBases() throws InvalidGenomeVariant {
 		// We check the first 10 CDS bases and compared them by hand to Mutalyzer results.
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation anno1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno1.getTranscript().getAccession());
@@ -271,7 +271,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT, VariantEffect.START_LOST),
 				anno1.getEffects());
 
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640670,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation anno2 = new SNVAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno2.getTranscript().getAccession());
@@ -281,7 +281,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT, VariantEffect.START_LOST),
 				anno2.getEffects());
 
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno3 = new SNVAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno3.getTranscript().getAccession());
@@ -291,7 +291,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT, VariantEffect.START_LOST),
 				anno3.getEffects());
 
-		GenomeVariant change4 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
+		SmallGenomeVariant change4 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640672,
 				PositionType.ZERO_BASED), "G", "T");
 		SmallVariantAnnotation anno4 = new SNVAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno4.getTranscript().getAccession());
@@ -300,7 +300,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Tyr)", anno4.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno4.getEffects());
 
-		GenomeVariant change5 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
+		SmallGenomeVariant change5 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640673,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation anno5 = new SNVAnnotationBuilder(infoForward, change5, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno5.getTranscript().getAccession());
@@ -309,7 +309,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Asp2Val)", anno5.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno5.getEffects());
 
-		GenomeVariant change6 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
+		SmallGenomeVariant change6 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640674,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation anno6 = new SNVAnnotationBuilder(infoForward, change6, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno6.getTranscript().getAccession());
@@ -318,7 +318,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(=)", anno6.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT), anno6.getEffects());
 
-		GenomeVariant change7 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640675,
+		SmallGenomeVariant change7 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640675,
 				PositionType.ZERO_BASED), "G", "T");
 		SmallVariantAnnotation anno7 = new SNVAnnotationBuilder(infoForward, change7, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno7.getTranscript().getAccession());
@@ -327,7 +327,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Gly3Cys)", anno7.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno7.getEffects());
 
-		GenomeVariant change8 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640676,
+		SmallGenomeVariant change8 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640676,
 				PositionType.ZERO_BASED), "G", "T");
 		SmallVariantAnnotation anno8 = new SNVAnnotationBuilder(infoForward, change8, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno8.getTranscript().getAccession());
@@ -336,7 +336,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Gly3Val)", anno8.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno8.getEffects());
 
-		GenomeVariant change9 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640677,
+		SmallGenomeVariant change9 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640677,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation anno9 = new SNVAnnotationBuilder(infoForward, change9, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno9.getTranscript().getAccession());
@@ -345,7 +345,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(=)", anno9.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT), anno9.getEffects());
 
-		GenomeVariant change10 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640678,
+		SmallGenomeVariant change10 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640678,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno10 = new SNVAnnotationBuilder(infoForward, change10, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno10.getTranscript().getAccession());
@@ -359,7 +359,7 @@ public class SNVAnnotationBuilderTest {
 	public void testForwardLastCDSBases() throws InvalidGenomeVariant {
 		// Here, we start off 3 positions before the end (2 positions before the inclusive end).
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation anno1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno1.getTranscript().getAccession());
@@ -368,7 +368,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(*689Trpext*23)", anno1.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno1.getEffects(), ImmutableSortedSet.of(VariantEffect.STOP_LOST));
 
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation anno2 = new SNVAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno2.getTranscript().getAccession());
@@ -377,7 +377,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(*689Glnext*23)", anno2.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno2.getEffects(), ImmutableSortedSet.of(VariantEffect.STOP_LOST));
 
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649268,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649268,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation anno3 = new SNVAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno3.getTranscript().getAccession());
@@ -386,7 +386,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(=)", anno3.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno3.getEffects(), ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT));
 
-		GenomeVariant change4 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649267,
+		SmallGenomeVariant change4 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649267,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation anno4 = new SNVAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno4.getTranscript().getAccession());
@@ -395,7 +395,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Thr688Arg)", anno4.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno4.getEffects(), ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT));
 
-		GenomeVariant change5 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649266,
+		SmallGenomeVariant change5 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649266,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation anno5 = new SNVAnnotationBuilder(infoForward, change5, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno5.getTranscript().getAccession());
@@ -404,7 +404,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Thr688Ala)", anno5.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno5.getEffects(), ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT));
 
-		GenomeVariant change6 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649265,
+		SmallGenomeVariant change6 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649265,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation anno6 = new SNVAnnotationBuilder(infoForward, change6, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno6.getTranscript().getAccession());
@@ -413,7 +413,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(=)", anno6.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno6.getEffects(), ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT));
 
-		GenomeVariant change7 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649264,
+		SmallGenomeVariant change7 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649264,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation anno7 = new SNVAnnotationBuilder(infoForward, change7, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno7.getTranscript().getAccession());
@@ -422,7 +422,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Asp687Gly)", anno7.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno7.getEffects(), ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT));
 
-		GenomeVariant change8 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649263,
+		SmallGenomeVariant change8 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649263,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno8 = new SNVAnnotationBuilder(infoForward, change8, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno8.getTranscript().getAccession());
@@ -431,7 +431,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Asp687Asn)", anno8.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno8.getEffects(), ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT));
 
-		GenomeVariant change9 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649262,
+		SmallGenomeVariant change9 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649262,
 				PositionType.ZERO_BASED), "T", "G");
 		SmallVariantAnnotation anno9 = new SNVAnnotationBuilder(infoForward, change9, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno9.getTranscript().getAccession());
@@ -440,7 +440,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Cys686Trp)", anno9.getProteinChange().toHGVSString());
 		Assert.assertEquals(anno9.getEffects(), ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT));
 
-		GenomeVariant change10 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649261,
+		SmallGenomeVariant change10 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649261,
 				PositionType.ZERO_BASED), "G", "C");
 		SmallVariantAnnotation anno10 = new SNVAnnotationBuilder(infoForward, change10, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), anno10.getTranscript().getAccession());
@@ -454,7 +454,7 @@ public class SNVAnnotationBuilderTest {
 	public void testReverseFirstCDSBases() throws InvalidGenomeVariant {
 		// We check the first 10 CDS bases and compared them by hand to Mutalyzer results.
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694497,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694497,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation anno1 = new SNVAnnotationBuilder(infoReverse, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno1.getTranscript().getAccession());
@@ -464,7 +464,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT, VariantEffect.START_LOST),
 				anno1.getEffects());
 
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694496,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694496,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation anno2 = new SNVAnnotationBuilder(infoReverse, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno2.getTranscript().getAccession());
@@ -474,7 +474,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT, VariantEffect.START_LOST),
 				anno2.getEffects());
 
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694495,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694495,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation anno3 = new SNVAnnotationBuilder(infoReverse, change3, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno3.getTranscript().getAccession());
@@ -484,7 +484,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT, VariantEffect.START_LOST),
 				anno3.getEffects());
 
-		GenomeVariant change4 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694494,
+		SmallGenomeVariant change4 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694494,
 				PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation anno4 = new SNVAnnotationBuilder(infoReverse, change4, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno4.getTranscript().getAccession());
@@ -493,7 +493,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Ala2Ser)", anno4.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno4.getEffects());
 
-		GenomeVariant change5 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694493,
+		SmallGenomeVariant change5 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694493,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno5 = new SNVAnnotationBuilder(infoReverse, change5, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno5.getTranscript().getAccession());
@@ -502,7 +502,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Ala2Val)", anno5.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno5.getEffects());
 
-		GenomeVariant change6 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694492,
+		SmallGenomeVariant change6 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694492,
 				PositionType.ZERO_BASED), "T", "G");
 		SmallVariantAnnotation anno6 = new SNVAnnotationBuilder(infoReverse, change6, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno6.getTranscript().getAccession());
@@ -511,7 +511,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(=)", anno6.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT), anno6.getEffects());
 
-		GenomeVariant change7 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694491,
+		SmallGenomeVariant change7 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694491,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation anno7 = new SNVAnnotationBuilder(infoReverse, change7, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno7.getTranscript().getAccession());
@@ -520,7 +520,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Ala3Thr)", anno7.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno7.getEffects());
 
-		GenomeVariant change8 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694490,
+		SmallGenomeVariant change8 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694490,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation anno8 = new SNVAnnotationBuilder(infoReverse, change8, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno8.getTranscript().getAccession());
@@ -529,7 +529,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Ala3Val)", anno8.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno8.getEffects());
 
-		GenomeVariant change9 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694489,
+		SmallGenomeVariant change9 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694489,
 				PositionType.ZERO_BASED), "G", "C");
 		SmallVariantAnnotation anno9 = new SNVAnnotationBuilder(infoReverse, change9, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno9.getTranscript().getAccession());
@@ -538,7 +538,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(=)", anno9.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT), anno9.getEffects());
 
-		GenomeVariant change10 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694488,
+		SmallGenomeVariant change10 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23694488,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation anno10 = new SNVAnnotationBuilder(infoReverse, change10, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno10.getTranscript().getAccession());
@@ -552,7 +552,7 @@ public class SNVAnnotationBuilderTest {
 	public void testReverseLastCDSBases() throws InvalidGenomeVariant {
 		// Here, we start off 3 positions before the end (2 positions before the inclusive end).
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688461,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688461,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation anno1 = new SNVAnnotationBuilder(infoReverse, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno1.getTranscript().getAccession());
@@ -563,7 +563,7 @@ public class SNVAnnotationBuilderTest {
 				ImmutableSortedSet.of(VariantEffect.STOP_RETAINED_VARIANT, VariantEffect.SYNONYMOUS_VARIANT),
 				anno1.getEffects());
 
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688462,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688462,
 				PositionType.ZERO_BASED), "T", "G");
 		SmallVariantAnnotation anno2 = new SNVAnnotationBuilder(infoReverse, change2, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno2.getTranscript().getAccession());
@@ -572,7 +572,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(*471Serext*9)", anno2.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.STOP_LOST), anno2.getEffects());
 
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688463,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688463,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation anno3 = new SNVAnnotationBuilder(infoReverse, change3, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno3.getTranscript().getAccession());
@@ -581,7 +581,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(*471Lysext*9)", anno3.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.STOP_LOST), anno3.getEffects());
 
-		GenomeVariant change4 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688464,
+		SmallGenomeVariant change4 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688464,
 				PositionType.ZERO_BASED), "G", "C");
 		SmallVariantAnnotation anno4 = new SNVAnnotationBuilder(infoReverse, change4, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno4.getTranscript().getAccession());
@@ -590,7 +590,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Asp470Glu)", anno4.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno4.getEffects());
 
-		GenomeVariant change5 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688465,
+		SmallGenomeVariant change5 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688465,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation anno5 = new SNVAnnotationBuilder(infoReverse, change5, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno5.getTranscript().getAccession());
@@ -599,7 +599,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Asp470Gly)", anno5.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno5.getEffects());
 
-		GenomeVariant change6 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688466,
+		SmallGenomeVariant change6 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688466,
 				PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation anno6 = new SNVAnnotationBuilder(infoReverse, change6, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno6.getTranscript().getAccession());
@@ -608,7 +608,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Asp470Tyr)", anno6.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno6.getEffects());
 
-		GenomeVariant change7 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688467,
+		SmallGenomeVariant change7 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688467,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation anno7 = new SNVAnnotationBuilder(infoReverse, change7, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno7.getTranscript().getAccession());
@@ -617,7 +617,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(=)", anno7.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.SYNONYMOUS_VARIANT), anno7.getEffects());
 
-		GenomeVariant change8 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688468,
+		SmallGenomeVariant change8 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688468,
 				PositionType.ZERO_BASED), "G", "T");
 		SmallVariantAnnotation anno8 = new SNVAnnotationBuilder(infoReverse, change8, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno8.getTranscript().getAccession());
@@ -626,7 +626,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Thr469Lys)", anno8.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno8.getEffects());
 
-		GenomeVariant change9 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688469,
+		SmallGenomeVariant change9 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688469,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation anno9 = new SNVAnnotationBuilder(infoReverse, change9, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno9.getTranscript().getAccession());
@@ -635,7 +635,7 @@ public class SNVAnnotationBuilderTest {
 		Assert.assertEquals("(Thr469Ala)", anno9.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.MISSENSE_VARIANT), anno9.getEffects());
 
-		GenomeVariant change10 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688470,
+		SmallGenomeVariant change10 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23688470,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation anno10 = new SNVAnnotationBuilder(infoReverse, change10, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoReverse.getAccession(), anno10.getTranscript().getAccession());
@@ -660,7 +660,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 212799881,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 212799881,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -683,7 +683,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 30229462,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 30229462,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -704,7 +704,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 48286230,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 48286230,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -727,7 +727,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_024770.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 172180770,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 172180770,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -750,7 +750,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_024770.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 172180770,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 172180770,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -774,7 +774,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_024770.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 172180770,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 172180770,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -797,7 +797,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_207173.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 34889221,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 34889221,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -824,7 +824,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 154009587, PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -848,7 +848,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 154009587, PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -872,7 +872,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 154009587, PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -896,7 +896,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_002436.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 154009587, PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -920,7 +920,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 114017028,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 114017028,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -943,7 +943,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 114017028,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 114017028,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -964,7 +964,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 127637815,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 127637815,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -987,7 +987,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6278413,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6278413,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1010,7 +1010,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 12887548,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 12887548,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1032,7 +1032,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 13183438,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 13183438,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1055,7 +1055,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1078,7 +1078,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1101,7 +1101,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1124,7 +1124,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1147,7 +1147,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15687058,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1170,7 +1170,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15832542,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 15832542,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1193,7 +1193,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 19595136,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 19595136,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1216,7 +1216,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 19596123,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 19596123,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1239,7 +1239,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 21573854,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 21573854,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1263,7 +1263,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 22050648,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 22050648,
 				PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1286,7 +1286,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 22846708,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 22846708,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1309,7 +1309,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 24180961,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 24180961,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1332,7 +1332,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 26517793,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 26517793,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1355,7 +1355,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 33549534,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 33549534,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1378,7 +1378,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 15674685,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 15674685,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1401,7 +1401,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 24390516,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 24390516,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1424,7 +1424,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 27303754,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 27303754,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1451,7 +1451,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 154009587, PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1475,7 +1475,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 16475122,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 16475122,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1498,7 +1498,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 19447842,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 19447842,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1520,7 +1520,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 34329896,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 34329896,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		// XXX
@@ -1544,7 +1544,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 36927732,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 36927732,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1567,7 +1567,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100203692,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100203692,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1590,7 +1590,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 109794251,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 109794251,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1613,7 +1613,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 112308971,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 112308971,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1636,7 +1636,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 152193290,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 152193290,
 				PositionType.ZERO_BASED), "G", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1659,7 +1659,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001005214.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 165533004,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 165533004,
 				PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1682,7 +1682,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 170501384,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 170501384,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1705,7 +1705,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 172356436,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 172356436,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1728,7 +1728,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 183105533,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 183105533,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1751,7 +1751,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 201969081,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 201969081,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1774,7 +1774,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222721287,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222721287,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1797,7 +1797,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 16834596,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 16834596,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1820,7 +1820,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 18993869,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 18993869,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1843,7 +1843,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 63981562,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 63981562,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1866,7 +1866,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 98782749,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 98782749,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1889,7 +1889,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 137128829,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 7, 137128829,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1912,7 +1912,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 4251068,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 4251068,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1935,7 +1935,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 22, 36691606,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 22, 36691606,
 				PositionType.ZERO_BASED), "A", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1962,7 +1962,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 20620682,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 20620682,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -1985,7 +1985,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 13, 76445188,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 13, 76445188,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2008,7 +2008,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 150483839,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 150483839,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2031,7 +2031,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 245318687,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 245318687,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2054,7 +2054,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248058878,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 248058878,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2077,7 +2077,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 73899612,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 73899612,
 				PositionType.ZERO_BASED), "T", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2099,7 +2099,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 237150165,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 237150165,
 				PositionType.ZERO_BASED), "A", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2122,7 +2122,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 108093579,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 108093579,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2145,7 +2145,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 33933704,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 33933704,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2168,7 +2168,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 114521629,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 114521629,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2191,7 +2191,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 61565989,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 61565989,
 				PositionType.ZERO_BASED), "G", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2214,7 +2214,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 22, 26862152,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 22, 26862152,
 				PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2237,7 +2237,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 67242086,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 67242086,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2261,7 +2261,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 5935161,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 5935161,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2284,7 +2284,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 35917392,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 35917392,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2308,7 +2308,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348180,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348180,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2332,7 +2332,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348069,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348069,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2356,7 +2356,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348068,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348068,
 				PositionType.ZERO_BASED), "T", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2380,7 +2380,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348071,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 155348071,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2404,7 +2404,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 156704286,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 156704286,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2428,7 +2428,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 158064181,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 158064181,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2452,7 +2452,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 212964869,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 212964869,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2476,7 +2476,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 247419508,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 247419508,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2500,7 +2500,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 42871264,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 42871264,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2524,7 +2524,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 85571471,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 85571471,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2548,7 +2548,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 85662247,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 85662247,
 				PositionType.ZERO_BASED), "T", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2572,7 +2572,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 110926130,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 110926130,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2596,7 +2596,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 20620682,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 4, 20620682,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2624,7 +2624,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48883011,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48883011,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2647,7 +2647,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 173429994,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 173429994,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2669,7 +2669,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 159912417,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 159912417,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2693,7 +2693,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 36353760,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 36353760,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2717,7 +2717,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 18, 19408949,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 18, 19408949,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2741,7 +2741,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 25829351,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 25829351,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2763,7 +2763,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 70711957, PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2787,7 +2787,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("Y"), 8657214, PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2816,7 +2816,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 219128505,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 219128505,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2843,7 +2843,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 753405,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 753405,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2866,7 +2866,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 132349413,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 132349413,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2892,7 +2892,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23289568,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 23289568,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2921,7 +2921,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 909767,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 909767,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2951,7 +2951,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48876499,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48876499,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -2980,7 +2980,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48876999,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48876999,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3010,7 +3010,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48888799,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48888799,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3039,7 +3039,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48889799,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48889799,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3068,7 +3068,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48880599,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48880599,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3098,7 +3098,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48882699,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 48882699,
 				PositionType.ZERO_BASED), "C", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3126,7 +3126,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222761999,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222761999,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3153,7 +3153,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222762999,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222762999,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3182,7 +3182,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222731699,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222731699,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3211,7 +3211,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222731899,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222731899,
 				PositionType.ZERO_BASED), "T", "C");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3238,7 +3238,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222736699,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222736699,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3266,7 +3266,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222737199,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 222737199,
 				PositionType.ZERO_BASED), "A", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3296,7 +3296,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 25943999,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 25943999,
 				PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3326,7 +3326,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 25944999,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 25944999,
 				PositionType.ZERO_BASED), "C", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3356,7 +3356,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 36360999,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 36360999,
 				PositionType.ZERO_BASED), "A", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3386,7 +3386,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 36359599,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 36359599,
 				PositionType.ZERO_BASED), "G", "T");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3415,7 +3415,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6204221,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6204221,
 				PositionType.ZERO_BASED), "C", "G");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
@@ -3439,7 +3439,7 @@ public class SNVAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_005572.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 156107469,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 156107469,
 				PositionType.ZERO_BASED), "G", "A");
 		SmallVariantAnnotation annotation1 = new SNVAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());

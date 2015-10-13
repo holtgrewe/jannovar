@@ -6,7 +6,7 @@ import de.charite.compbio.jannovar.hgvs.nts.NucleotideSeqDescription;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideIndel;
 import de.charite.compbio.jannovar.htsjdk.GenomeRegionSequenceExtractor;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
@@ -30,11 +30,11 @@ class NucleotideIndelToGenomeVariantTranslationImpl extends NucleotideChangeToGe
 	 *            {@link SequenceType} that <code>ntSub</code> is for
 	 * @param ntIndel
 	 *            {@link NucleotideIndel} to convert
-	 * @return {@link GenomeVariant} with the translation result, possibly annotated with warning messages
+	 * @return {@link SmallGenomeVariant} with the translation result, possibly annotated with warning messages
 	 * @throws CannotTranslateHGVSVariant
 	 *             in case of translation problems
 	 */
-	public ResultWithWarnings<GenomeVariant> run(TranscriptModel tm, SequenceType sequenceType, NucleotideIndel ntIndel)
+	public ResultWithWarnings<SmallGenomeVariant> run(TranscriptModel tm, SequenceType sequenceType, NucleotideIndel ntIndel)
 			throws CannotTranslateHGVSVariant {
 		final NucleotideRange range = ntIndel.getRange();
 		final NucleotideSeqDescription insertedNTDesc = ntIndel.getInsSeq();
@@ -61,7 +61,7 @@ class NucleotideIndelToGenomeVariantTranslationImpl extends NucleotideChangeToGe
 			deletedNTs = refSeq;
 		}
 
-		final GenomeVariant result = new GenomeVariant(gItv.withStrand(tm.getStrand()).getGenomeBeginPos(), deletedNTs,
+		final SmallGenomeVariant result = new SmallGenomeVariant(gItv.withStrand(tm.getStrand()).getGenomeBeginPos(), deletedNTs,
 				insertedNTDesc.getNucleotides(), tm.getStrand()).withStrand(Strand.FWD);
 		if (warningMsg != null)
 			return ResultWithWarnings.construct(result, warningMsg);

@@ -6,7 +6,7 @@ import java.util.TreeSet;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.builders.AnnotationBuilderOptions;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptSequenceOntologyDecorator;
 import de.charite.compbio.jannovar.svs.StructuralVariant;
@@ -39,7 +39,7 @@ public abstract class StructuralVariantAnnotationBuilder {
 	 * @param transcript
 	 *            the {@link TranscriptInfo} to build the annotation for
 	 * @param change
-	 *            the {@link GenomeVariant} to use for building the annotation
+	 *            the {@link SmallGenomeVariant} to use for building the annotation
 	 * @param options
 	 *            the configuration to use for the {@link AnnotationBuilder}
 	 */

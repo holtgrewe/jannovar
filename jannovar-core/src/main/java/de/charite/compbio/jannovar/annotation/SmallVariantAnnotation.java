@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import de.charite.compbio.jannovar.Immutable;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
 import de.charite.compbio.jannovar.hgvs.protein.change.ProteinChange;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.SmallVariantDescription;
@@ -50,8 +50,8 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 			+ "Annotation_Impact|Gene_Name|Gene_ID|Feature_Type|Feature_ID|Transcript_BioType|Rank|HGVS.c|HGVS.p|"
 			+ "cDNA.pos / cDNA.length|CDS.pos / CDS.length|AA.pos / AA.length|Distance|ERRORS / WARNINGS / INFO'";
 
-	/** the annotated {@link GenomeVariant} */
-	private final GenomeVariant change;
+	/** the annotated {@link SmallGenomeVariant} */
+	private final SmallGenomeVariant change;
 
 	/** variant types, sorted by internal pathogenicity score */
 	private final ImmutableSortedSet<VariantEffect> effects;
@@ -93,7 +93,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *
 	 * @param change
-	 *            the annotated {@link GenomeVariant}
+	 *            the annotated {@link SmallGenomeVariant}
 	 * @param transcript
 	 *            transcript for this annotation
 	 * @param effects
@@ -107,7 +107,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	 * @param proteinChange
 	 *            predicted {@link ProteinChange}
 	 */
-	public SmallVariantAnnotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
+	public SmallVariantAnnotation(TranscriptModel transcript, SmallGenomeVariant change, Collection<VariantEffect> varTypes,
 			SmallVariantAnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange) {
 		this(transcript, change, varTypes, annoLoc, genomicNTChange, cdsNTChange, proteinChange, ImmutableSortedSet
@@ -120,7 +120,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *
 	 * @param change
-	 *            the annotated {@link GenomeVariant}
+	 *            the annotated {@link SmallGenomeVariant}
 	 * @param transcript
 	 *            transcript for this annotation
 	 * @param effects
@@ -136,7 +136,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	 * @param messages
 	 *            {@link Collection} of {@link AnnotatioMessage} objects
 	 */
-	public SmallVariantAnnotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
+	public SmallVariantAnnotation(TranscriptModel transcript, SmallGenomeVariant change, Collection<VariantEffect> varTypes,
 			SmallVariantAnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange, Collection<AnnotationMessage> messages) {
 		if (change != null)
@@ -154,8 +154,8 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 		this.messages = ImmutableSortedSet.copyOf(messages);
 	}
 
-	/** @return the annotated {@link GenomeVariant} */
-	public GenomeVariant getGenomeVariant() {
+	/** @return the annotated {@link SmallGenomeVariant} */
+	public SmallGenomeVariant getGenomeVariant() {
 		return change;
 	}
 

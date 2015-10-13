@@ -18,11 +18,11 @@ import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideInversion;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideSubstitution;
 import de.charite.compbio.jannovar.hgvs.nts.variant.SingleAlleleNucleotideVariant;
 import de.charite.compbio.jannovar.htsjdk.GenomeRegionSequenceExtractor;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
 /**
- * Helper for converting a {@link NucleotideChange} to a {@link GenomeVariant}.
+ * Helper for converting a {@link NucleotideChange} to a {@link SmallGenomeVariant}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */
@@ -42,24 +42,24 @@ public class NucleotideChangeToGenomeVariantTranslator {
 	}
 
 	/** Shortcut to {@link #translateNucleotideVariantToGenomeVariant(SingleAlleleNucleotideVariant, true)}. */
-	public GenomeVariant translateNucleotideVariantToGenomeVariant(SingleAlleleNucleotideVariant variant)
+	public SmallGenomeVariant translateNucleotideVariantToGenomeVariant(SingleAlleleNucleotideVariant variant)
 			throws CannotTranslateHGVSVariant {
 		return translateNucleotideVariantToGenomeVariant(variant, true);
 	}
 
 	/**
-	 * Translate single-change {@link SingleAlleleNucleotideVariant} into a {@link GenomeVariant}
+	 * Translate single-change {@link SingleAlleleNucleotideVariant} into a {@link SmallGenomeVariant}
 	 *
 	 * @param variant
 	 *            {@link SingleAlleleNucleotideVariant} to translate
-	 * @return {@link GenomeVariant} resulting from the conversion, possibly annotated with some warning messages
+	 * @return {@link SmallGenomeVariant} resulting from the conversion, possibly annotated with some warning messages
 	 * @return autocorrect try to auto-correct mismatching reference sequence instead of throwing
 	 *         {@link CannotTranslateHGVSVariant}
 	 * @throws CannotTranslateHGVSVariant
 	 *             in the case of problems such as more than one entry in the allele of <code>variant</code> or
 	 *             unsupported {@link NucleotideChange}s
 	 */
-	public GenomeVariant translateNucleotideVariantToGenomeVariant(SingleAlleleNucleotideVariant variant,
+	public SmallGenomeVariant translateNucleotideVariantToGenomeVariant(SingleAlleleNucleotideVariant variant,
 			boolean autocorrect) throws CannotTranslateHGVSVariant {
 		// perform sanity checks and get corresponding TranscriptModel from JannovarData
 		if (variant.getSeqType() != SequenceType.CODING_DNA && variant.getSeqType() != SequenceType.NON_CODING_DNA)
@@ -76,7 +76,7 @@ public class NucleotideChangeToGenomeVariantTranslator {
 		NucleotideChange ntChange = variant.getAllele().get(0);
 
 		// perform the translation
-		ResultWithWarnings<GenomeVariant> result;
+		ResultWithWarnings<SmallGenomeVariant> result;
 		if (ntChange instanceof NucleotideSubstitution) {
 			result = new NucleotideSubstitutionToGenomeVariantTranslationImpl(seqExtractor).run(tm,
 					variant.getSeqType(), (NucleotideSubstitution) ntChange);

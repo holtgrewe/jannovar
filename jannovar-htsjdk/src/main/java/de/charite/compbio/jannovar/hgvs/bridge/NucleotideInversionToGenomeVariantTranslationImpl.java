@@ -7,7 +7,7 @@ import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideInversion;
 import de.charite.compbio.jannovar.htsjdk.GenomeRegionSequenceExtractor;
 import de.charite.compbio.jannovar.impl.util.DNAUtils;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
@@ -31,11 +31,11 @@ class NucleotideInversionToGenomeVariantTranslationImpl extends NucleotideChange
 	 *            {@link SequenceType} that <code>ntSub</code> is for
 	 * @param ntInv
 	 *            {@link NucleotideInversion} to convert
-	 * @return {@link GenomeVariant} with the translation result, possibly annotated with warning messages
+	 * @return {@link SmallGenomeVariant} with the translation result, possibly annotated with warning messages
 	 * @throws CannotTranslateHGVSVariant
 	 *             in case of translation problems
 	 */
-	public ResultWithWarnings<GenomeVariant> run(TranscriptModel tm, SequenceType sequenceType,
+	public ResultWithWarnings<SmallGenomeVariant> run(TranscriptModel tm, SequenceType sequenceType,
 			NucleotideInversion ntInv) throws CannotTranslateHGVSVariant {
 		final NucleotideRange range = ntInv.getRange();
 		final NucleotideSeqDescription invertedNTDesc = ntInv.getSeq();
@@ -57,7 +57,7 @@ class NucleotideInversionToGenomeVariantTranslationImpl extends NucleotideChange
 			invertedNTs = refSeq;
 		}
 
-		final GenomeVariant result = new GenomeVariant(gItv.withStrand(tm.getStrand()).getGenomeBeginPos(),
+		final SmallGenomeVariant result = new SmallGenomeVariant(gItv.withStrand(tm.getStrand()).getGenomeBeginPos(),
 				invertedNTs, DNAUtils.reverseComplement(invertedNTs), tm.getStrand()).withStrand(Strand.FWD);
 		if (warningMsg != null)
 			return ResultWithWarnings.construct(result, warningMsg);

@@ -1,10 +1,10 @@
 package de.charite.compbio.jannovar.hgvs.bridge;
 
 import de.charite.compbio.jannovar.hgvs.HGVSVariant;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 
 /**
- * Helper class thrown on problems with translating {@link HGVSVariant} to {@link GenomeVariant}.
+ * Helper class thrown on problems with translating {@link HGVSVariant} to {@link SmallGenomeVariant}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */

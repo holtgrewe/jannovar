@@ -13,7 +13,7 @@ import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.HG19RefDictBuilder;
 import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.Strand;
@@ -62,7 +62,7 @@ public class DeletionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardUstream() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -75,7 +75,7 @@ public class DeletionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardDownstream() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -89,7 +89,7 @@ public class DeletionAnnotationBuilderTest {
 	@Test
 	public void testForwardIntergenic() throws InvalidGenomeVariant {
 		// intergenic upstream
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639061,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639061,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -99,7 +99,7 @@ public class DeletionAnnotationBuilderTest {
 		Assert.assertEquals(null, annotation1.getProteinChange());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.INTERGENIC_VARIANT), annotation1.getEffects());
 		// intergenic downstream
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -115,7 +115,7 @@ public class DeletionAnnotationBuilderTest {
 		StringBuilder chars200 = new StringBuilder();
 		for (int i = 0; i < 200; ++i)
 			chars200.append("A");
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
 				PositionType.ZERO_BASED), chars200.toString(), "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -128,7 +128,7 @@ public class DeletionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardIntronic() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642106,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642106,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -142,7 +142,7 @@ public class DeletionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFivePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640072,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640072,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -155,7 +155,7 @@ public class DeletionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardThreePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649329,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649329,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -171,7 +171,7 @@ public class DeletionAnnotationBuilderTest {
 		// Testing with some START_LOST scenarios.
 
 		// Delete one base of start codon.
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -182,7 +182,7 @@ public class DeletionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation1.getEffects());
 
 		// Delete chunk out of first exon, spanning start codon from the left.
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640660,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640660,
 				PositionType.ZERO_BASED), "CCCTCCAGACC", "");
 		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -193,7 +193,7 @@ public class DeletionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation2.getEffects());
 
 		// Delete chunk out of first exon, spanning start codon from the right.
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
 				PositionType.ZERO_BASED), "GGACGGCTCCT", "");
 		SmallVariantAnnotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
 				.build();
@@ -204,7 +204,7 @@ public class DeletionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation3.getEffects());
 
 		// Deletion from before transcript, reaching into the start codon.
-		GenomeVariant change4 = new GenomeVariant(
+		SmallGenomeVariant change4 = new SmallGenomeVariant(
 				new GenomePosition(refDict, Strand.FWD, 1, 6640399, PositionType.ZERO_BASED),
 				"TCTCACCAGGCCCTTCTTCACGACCCTGGCCCCCCATCCAGCATCCCCCCTGGCCAATCCAATATGGCCCCCGGCCCCCGGGAGGCTGTCAGTGTGTTCCAGCCCTCCGCGTGCACCCCTCACCCTGACCCAAGCCCTCGTGCTGATAAATATGATTATTTGAGTAGAGGCCAACTTCCCGTTTCTCTCTCTTGACTCCAGGAGCTTTCTCTTGCATACCCTCGCTTAGGCTGGCCGGGGTGTCACTTCTGCCTCCCTGCCCTCCAGACCA",
 				"");
@@ -223,7 +223,7 @@ public class DeletionAnnotationBuilderTest {
 		// below.
 
 		// Delete last base of stop codon, leads to complete loss of stop codon (different from Mutalyzer).
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -235,7 +235,7 @@ public class DeletionAnnotationBuilderTest {
 				annotation1.getEffects());
 
 		// Delete middle base of stop codon, leads to complete loss.
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -247,7 +247,7 @@ public class DeletionAnnotationBuilderTest {
 				annotation2.getEffects());
 
 		// Delete first base of stop codon, leads to extension
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
 				.build();
@@ -259,7 +259,7 @@ public class DeletionAnnotationBuilderTest {
 				annotation3.getEffects());
 
 		// Delete two bases of stop codon.
-		GenomeVariant change4 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
+		SmallGenomeVariant change4 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
 				PositionType.ZERO_BASED), "AT", "");
 		SmallVariantAnnotation annotation4 = new DeletionAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions())
 				.build();
@@ -271,7 +271,7 @@ public class DeletionAnnotationBuilderTest {
 				annotation4.getEffects());
 
 		// Delete from before into the stop codon.
-		GenomeVariant change5 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649267,
+		SmallGenomeVariant change5 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649267,
 				PositionType.ZERO_BASED), "CATAGCCC", "");
 		SmallVariantAnnotation annotation5 = new DeletionAnnotationBuilder(infoForward, change5, new AnnotationBuilderOptions())
 				.build();
@@ -286,7 +286,7 @@ public class DeletionAnnotationBuilderTest {
 	@Test
 	public void testForwardSplicing() throws InvalidGenomeVariant {
 		// intronic splicing
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642116,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642116,
 				PositionType.ZERO_BASED), "G", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -298,7 +298,7 @@ public class DeletionAnnotationBuilderTest {
 				VariantEffect.SPLICE_ACCEPTOR_VARIANT), annotation1.getEffects());
 
 		// exonic splicing
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
 				PositionType.ZERO_BASED), "TGG", "");
 		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -313,7 +313,7 @@ public class DeletionAnnotationBuilderTest {
 	@Test
 	public void testForwardFrameShiftDeletion() throws InvalidGenomeVariant {
 		// The following case contains a shift in the nucleotide sequence.
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6645988,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6645988,
 				PositionType.ZERO_BASED), "TGGGGAGAAA", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -328,7 +328,7 @@ public class DeletionAnnotationBuilderTest {
 	public void testForwardNonFrameShiftDeletion() throws InvalidGenomeVariant {
 		// clean (FS of begin position is 0) deletion of one codon, starting in intron (thus no "exon3" annotation is
 		// generated).
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642114,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642114,
 				PositionType.ZERO_BASED), "GAAACA", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -341,7 +341,7 @@ public class DeletionAnnotationBuilderTest {
 				annotation1.getEffects());
 
 		// deletion of three codons
-		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642126,
+		SmallGenomeVariant change2 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642126,
 				PositionType.ZERO_BASED), "GTGGTTCAA", "");
 		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
@@ -352,7 +352,7 @@ public class DeletionAnnotationBuilderTest {
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.DISRUPTIVE_INFRAME_DELETION), annotation2.getEffects());
 
 		// deletion of three codons, resulting in delins case
-		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642134,
+		SmallGenomeVariant change3 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642134,
 				PositionType.ZERO_BASED), "AGTGGAGGA", "");
 		SmallVariantAnnotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
 				.build();
@@ -376,7 +376,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001271733.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 17087543,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 17087543,
 				PositionType.ZERO_BASED), "GCTGT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -398,7 +398,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001001966.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 247978543,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 247978543,
 				PositionType.ZERO_BASED), "GAG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -422,7 +422,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// no RefSeq
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 44540795,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 44540795,
 				PositionType.ZERO_BASED), "TC", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -444,7 +444,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001005479.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 97983496,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 97983496,
 				PositionType.ZERO_BASED), "TGTAACCAC", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -466,7 +466,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001004737.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 98216798,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 98216798,
 				PositionType.ZERO_BASED), "TTTCCCTCTAT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -490,7 +490,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_018910.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140215470,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140215470,
 				PositionType.ZERO_BASED), "GCGCG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -512,7 +512,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_018910.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140615503,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140615503,
 				PositionType.ZERO_BASED), "GTC", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -534,7 +534,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NR_001281.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 27879112,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 27879112,
 				PositionType.ZERO_BASED), "T", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -565,7 +565,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_031460.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 39278700,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 39278700,
 				PositionType.ZERO_BASED), "AAG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -589,7 +589,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_031460.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 39278700,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 39278700,
 				PositionType.ZERO_BASED), "AAG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -613,7 +613,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001017969.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 5921979,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 5921979,
 				PositionType.ZERO_BASED), "GTT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -637,7 +637,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001077665.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 10, 51768675,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 10, 51768675,
 				PositionType.ZERO_BASED), "AA", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -661,7 +661,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001077665.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 10, 51768774,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 10, 51768774,
 				PositionType.ZERO_BASED), "TGA", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -683,7 +683,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001004740.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 56380553,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 56380553,
 				PositionType.ZERO_BASED), "GACA", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -707,7 +707,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_018088.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 8376100,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 8376100,
 				PositionType.ZERO_BASED), "G", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -731,7 +731,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_020382.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 123880923,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 123880923,
 				PositionType.ZERO_BASED), "TT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -755,7 +755,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_182542.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 13, 46170725,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 13, 46170725,
 				PositionType.ZERO_BASED), "ACTCTTCCTCCTCCAGAT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -779,7 +779,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_025055.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 74536403,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 74536403,
 				PositionType.ZERO_BASED), "AAG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -803,7 +803,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NR_027024.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 78208898,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 78208898,
 				PositionType.ZERO_BASED), "CTC", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -828,7 +828,7 @@ public class DeletionAnnotationBuilderTest {
 		// RefSeq NM_015670.5
 
 		// This deletion leads to position shifting downstream.
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 7470288,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 7470288,
 				PositionType.ZERO_BASED), "G", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -854,7 +854,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_024857.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 29161650,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 29161650,
 				PositionType.ZERO_BASED), "GTCAAT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -878,7 +878,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_024857.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 29161650,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 29161650,
 				PositionType.ZERO_BASED), "GTCAAT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -906,7 +906,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_005828.4
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 61660894,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 61660894,
 				PositionType.ZERO_BASED), "G", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -932,7 +932,7 @@ public class DeletionAnnotationBuilderTest {
 
 		// Note that we here have a deviation from Mutalyzer, in that the UCSC sequence does not have a stop codon after
 		// the deletion.
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 126313,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 126313,
 				PositionType.ZERO_BASED), "CC", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -954,7 +954,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_182832.2
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 21, 42551467,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 21, 42551467,
 				PositionType.ZERO_BASED), "GTGTCAGGGTGAGTGAGGG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -978,7 +978,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_001164530.1
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 58579807,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 58579807,
 				PositionType.ZERO_BASED), "CCAGAG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1002,7 +1002,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_053054.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 65793877,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 65793877,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1026,7 +1026,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 49525088,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 49525088,
 				PositionType.ZERO_BASED), "CT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1050,7 +1050,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 7811233, PositionType.ZERO_BASED), "AGCTGCG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1074,7 +1074,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 44125966,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 44125966,
 				PositionType.ZERO_BASED), "A", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1099,7 +1099,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq NM_207421.3
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 17718673,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 17718673,
 				PositionType.ZERO_BASED), "G", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1125,7 +1125,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 90458647,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 90458647,
 				PositionType.ZERO_BASED), "T", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1147,7 +1147,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 31803064,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 31803064,
 				PositionType.ZERO_BASED), "T", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1172,7 +1172,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("Y"), 23749506, PositionType.ZERO_BASED), "G", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1198,7 +1198,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 135782122,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 135782122,
 				PositionType.ZERO_BASED), "TTCT", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1222,7 +1222,7 @@ public class DeletionAnnotationBuilderTest {
 		this.infoForward = builderForward.build();
 		// RefSeq REFSEQ_ID
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140812775,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140812775,
 				PositionType.ZERO_BASED), "T", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1249,7 +1249,7 @@ public class DeletionAnnotationBuilderTest {
 
 		// The prediction differs from the one by Mutalyzer since the UCSC and RefSeq transcripts for RECQL4 differ.
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 8, 145738767,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 8, 145738767,
 				PositionType.ZERO_BASED), "G", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1276,7 +1276,7 @@ public class DeletionAnnotationBuilderTest {
 
 		// TODO(holtgrew): The end position in the prediction could be more exact since it is in the intron.
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 53452263,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 53452263,
 				PositionType.ZERO_BASED), "CAGGTGGCAGG", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
@@ -1303,7 +1303,7 @@ public class DeletionAnnotationBuilderTest {
 
 		// This transcript is different in UCSC hg19 and RefSeq hg19.
 
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 53952885,
+		SmallGenomeVariant change1 = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 53952885,
 				PositionType.ZERO_BASED), "C", "");
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();

@@ -6,26 +6,26 @@ import org.junit.Test;
 
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
-import de.charite.compbio.jannovar.reference.GenomeVariant;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.HG19RefDictBuilder;
 import de.charite.compbio.jannovar.reference.Strand;
 
 public class GenomicNucleotideChangeBuilderTest {
 
 	static final ReferenceDictionary refDict = HG19RefDictBuilder.build();
-	private GenomeVariant varIns;
-	private GenomeVariant varDel;
-	private GenomeVariant varSNV;
-	private GenomeVariant varSub;
-	private GenomeVariant varInv;
+	private SmallGenomeVariant varIns;
+	private SmallGenomeVariant varDel;
+	private SmallGenomeVariant varSNV;
+	private SmallGenomeVariant varSub;
+	private SmallGenomeVariant varInv;
 
 	@Before
 	public void setUp() throws Exception {
-		varIns = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "", "CGAT");
-		varDel = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "CGAT", "");
-		varSNV = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "C", "T");
-		varSub = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "CGAT", "TTTT");
-		varInv = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "CGAT", "ATCG");
+		varIns = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "", "CGAT");
+		varDel = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "CGAT", "");
+		varSNV = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "C", "T");
+		varSub = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "CGAT", "TTTT");
+		varInv = new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 100), "CGAT", "ATCG");
 	}
 
 	@Test
