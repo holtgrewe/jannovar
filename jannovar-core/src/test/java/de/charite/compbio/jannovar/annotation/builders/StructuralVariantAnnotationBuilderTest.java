@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
@@ -67,7 +67,7 @@ public class StructuralVariantAnnotationBuilderTest {
 				PositionType.ZERO_BASED), "", "CGAT");
 		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
+		Assert.assertEquals(SmallVariantAnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
 		Assert.assertEquals("6640062_6640063insCGAT", anno.getGenomicNTChange().toHGVSString());
 		Assert.assertEquals(null, anno.getProteinChange());
@@ -91,7 +91,7 @@ public class StructuralVariantAnnotationBuilderTest {
 				PositionType.ZERO_BASED), "", "CGAT");
 		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
+		Assert.assertEquals(SmallVariantAnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
 		Assert.assertEquals("6640062_6640063insCGAT", anno.getGenomicNTChange().toHGVSString());
 		Assert.assertEquals(null, anno.getProteinChange());
@@ -115,7 +115,7 @@ public class StructuralVariantAnnotationBuilderTest {
 				PositionType.ZERO_BASED), "CGAT", "ATCG");
 		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
+		Assert.assertEquals(SmallVariantAnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
 		Assert.assertEquals("6640063_6640066inv", anno.getGenomicNTChange().toHGVSString());
 		Assert.assertEquals(null, anno.getProteinChange());
@@ -139,7 +139,7 @@ public class StructuralVariantAnnotationBuilderTest {
 				PositionType.ZERO_BASED), "CGAT", "TTTTA");
 		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
+		Assert.assertEquals(SmallVariantAnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
 		Assert.assertEquals("6640063_6640066delCGATinsTTTTA", anno.getGenomicNTChange().toHGVSString());
 		Assert.assertEquals(null, anno.getProteinChange());

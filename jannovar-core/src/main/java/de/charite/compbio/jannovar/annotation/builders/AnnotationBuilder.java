@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
 import de.charite.compbio.jannovar.annotation.AnnotationLocationBuilder;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -67,7 +67,7 @@ abstract class AnnotationBuilder {
 	protected final TranscriptSequenceDecorator seqDecorator;
 
 	/** location annotation string */
-	protected final AnnotationLocation locAnno;
+	protected final SmallVariantAnnotationLocation locAnno;
 	/** locus of the change, length() == 1 in case of point changes */
 	protected NucleotideRange ntChangeRange;
 	/** warnings and messages occuring during annotation process */
@@ -314,7 +314,7 @@ abstract class AnnotationBuilder {
 	 *            {@link GenomeVariant} to build annotation for
 	 * @return AnnotationLocation with location annotation
 	 */
-	private AnnotationLocation buildLocAnno(TranscriptModel transcript, GenomeVariant change) {
+	private SmallVariantAnnotationLocation buildLocAnno(TranscriptModel transcript, GenomeVariant change) {
 		// System.err.println("ACCESSION\t" + transcript.accession);
 		TranscriptSequenceOntologyDecorator soDecorator = new TranscriptSequenceOntologyDecorator(transcript);
 		TranscriptProjectionDecorator projector = new TranscriptProjectionDecorator(transcript);
@@ -339,7 +339,7 @@ abstract class AnnotationBuilder {
 			final int lExonNum = projector.locateExon(lPos);
 			if (exonNum != TranscriptProjectionDecorator.INVALID_EXON_ID
 					|| lExonNum != TranscriptProjectionDecorator.INVALID_EXON_ID) {
-				locBuilder.setRankType(AnnotationLocation.RankType.EXON);
+				locBuilder.setRankType(SmallVariantAnnotationLocation.RankType.EXON);
 				if (exonNum != TranscriptProjectionDecorator.INVALID_EXON_ID)
 					locBuilder.setRank(exonNum);
 				else
@@ -349,7 +349,7 @@ abstract class AnnotationBuilder {
 
 			final int intronNum = projector.locateIntron(changePos);
 			if (intronNum != TranscriptProjectionDecorator.INVALID_EXON_ID) {
-				locBuilder.setRankType(AnnotationLocation.RankType.INTRON);
+				locBuilder.setRankType(SmallVariantAnnotationLocation.RankType.INTRON);
 				locBuilder.setRank(intronNum);
 				return locBuilder.build();
 			}
@@ -368,7 +368,7 @@ abstract class AnnotationBuilder {
 				return locBuilder.build(); // no exon/intron information if change pos does not lie in exon
 			final int intronNum = projector.locateIntron(firstChangePos);
 			if (intronNum != TranscriptProjectionDecorator.INVALID_EXON_ID) {
-				locBuilder.setRankType(AnnotationLocation.RankType.INTRON);
+				locBuilder.setRankType(SmallVariantAnnotationLocation.RankType.INTRON);
 				locBuilder.setRank(intronNum);
 				return locBuilder.build();
 			}
@@ -378,7 +378,7 @@ abstract class AnnotationBuilder {
 			if (exonNum != projector.locateExon(lastChangePos))
 				return locBuilder.build(); // no exon information if the deletion spans more than one
 
-			locBuilder.setRankType(AnnotationLocation.RankType.EXON);
+			locBuilder.setRankType(SmallVariantAnnotationLocation.RankType.EXON);
 			locBuilder.setRank(exonNum);
 			return locBuilder.build();
 		}

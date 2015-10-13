@@ -3,8 +3,8 @@ package de.charite.compbio.jannovar.annotation.builders;
 import com.google.common.collect.ImmutableList;
 
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation.RankType;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation.RankType;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
 import de.charite.compbio.jannovar.reference.GenomePosition;
@@ -71,8 +71,8 @@ public final class StructuralVariantAnnotationBuilder {
 
 		// TODO(holtgrem): we should care about breakpoints within genes
 
-		final AnnotationLocation annoLoc = new AnnotationLocation(null, RankType.UNDEFINED,
-				AnnotationLocation.INVALID_RANK, AnnotationLocation.INVALID_RANK, null);
+		final SmallVariantAnnotationLocation annoLoc = new SmallVariantAnnotationLocation(null, RankType.UNDEFINED,
+				SmallVariantAnnotationLocation.INVALID_RANK, SmallVariantAnnotationLocation.INVALID_RANK, null);
 
 		if (ref.length() == alt.length() && ref.equals(altRC.toString())) { // SV inversion
 			if (transcript == null) {

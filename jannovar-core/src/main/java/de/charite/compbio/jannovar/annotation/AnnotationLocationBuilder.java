@@ -1,41 +1,41 @@
 package de.charite.compbio.jannovar.annotation;
 
 import de.charite.compbio.jannovar.Immutable;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation.RankType;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation.RankType;
 import de.charite.compbio.jannovar.reference.TranscriptInterval;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
 /**
- * Builder for the immutable {@link AnnotationLocation} class.
+ * Builder for the immutable {@link SmallVariantAnnotationLocation} class.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 @Immutable
 public class AnnotationLocationBuilder {
 
-	/** {@link AnnotationLocation#transcript} of next build {@link AnnotationLocation}. */
+	/** {@link SmallVariantAnnotationLocation#transcript} of next build {@link SmallVariantAnnotationLocation}. */
 	public TranscriptModel transcript = null;
 
-	/** {@link AnnotationLocation#rankType} of next build {@link AnnotationLocation}. */
+	/** {@link SmallVariantAnnotationLocation#rankType} of next build {@link SmallVariantAnnotationLocation}. */
 	public RankType rankType = RankType.UNDEFINED;
 
-	/** {@link AnnotationLocation#rank} of next build {@link AnnotationLocation}. */
-	public int rank = AnnotationLocation.INVALID_RANK;
+	/** {@link SmallVariantAnnotationLocation#rank} of next build {@link SmallVariantAnnotationLocation}. */
+	public int rank = SmallVariantAnnotationLocation.INVALID_RANK;
 
 	// TODO(holtgrem): transcript location probably does not belong here!
-	/** {@link AnnotationLocation#txLocation} of next build {@link AnnotationLocation}. */
+	/** {@link SmallVariantAnnotationLocation#txLocation} of next build {@link SmallVariantAnnotationLocation}. */
 	public TranscriptInterval txLocation = null;
 
 	/**
-	 * @return {@link AnnotationLocation} from the builder's state.
+	 * @return {@link SmallVariantAnnotationLocation} from the builder's state.
 	 */
-	public AnnotationLocation build() {
+	public SmallVariantAnnotationLocation build() {
 		int totalRank = -1;
 		if (rankType == RankType.EXON)
 			totalRank = transcript.getExonRegions().size();
 		else if (rankType == RankType.INTRON)
 			totalRank = transcript.getExonRegions().size() - 1;
-		return new AnnotationLocation(transcript, rankType, rank, totalRank, txLocation);
+		return new SmallVariantAnnotationLocation(transcript, rankType, rank, totalRank, txLocation);
 	}
 
 	public TranscriptModel getTranscript() {

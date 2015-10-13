@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.google.common.collect.ImmutableSortedSet;
 
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
@@ -120,7 +120,7 @@ public class DeletionAnnotationBuilderTest {
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.INVALID_RANK, annotation1.getAnnoLoc().getRank());
+		Assert.assertEquals(SmallVariantAnnotationLocation.INVALID_RANK, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("-204_-70+65del", annotation1.getCDSNTChange().toHGVSString());
 		Assert.assertEquals("0?", annotation1.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.TRANSCRIPT_ABLATION), annotation1.getEffects());
@@ -211,7 +211,7 @@ public class DeletionAnnotationBuilderTest {
 		SmallVariantAnnotation annotation4 = new DeletionAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation4.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.INVALID_RANK, annotation4.getAnnoLoc().getRank());
+		Assert.assertEquals(SmallVariantAnnotationLocation.INVALID_RANK, annotation4.getAnnoLoc().getRank());
 		Assert.assertEquals("-69-201_1del", annotation4.getCDSNTChange().toHGVSString());
 		Assert.assertEquals("0?", annotation4.getProteinChange().toHGVSString());
 		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.START_LOST), annotation4.getEffects());
@@ -333,7 +333,7 @@ public class DeletionAnnotationBuilderTest {
 		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.INVALID_RANK, annotation1.getAnnoLoc().getRank());
+		Assert.assertEquals(SmallVariantAnnotationLocation.INVALID_RANK, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("691-3_693del", annotation1.getCDSNTChange().toHGVSString());
 		Assert.assertEquals("(Trp231del)", annotation1.getProteinChange().toHGVSString());
 		Assert.assertEquals(

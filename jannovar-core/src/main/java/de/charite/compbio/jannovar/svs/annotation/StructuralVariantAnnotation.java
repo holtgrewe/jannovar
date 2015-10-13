@@ -6,7 +6,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSortedSet;
 
 import de.charite.compbio.jannovar.Immutable;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.PutativeImpact;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -48,7 +48,7 @@ public final class StructuralVariantAnnotation implements Comparable<StructuralV
 	private final ImmutableSortedSet<AnnotationMessage> messages;
 
 	/** location of the annotation, <code>null</code> if not even nearby a {@link TranscriptModel} */
-	private final AnnotationLocation annoLoc;
+	private final SmallVariantAnnotationLocation annoLoc;
 
 	/** Chromosome/genome-level change, to be prepended with "g." */
 	private final NucleotideChange genomicNTChange;
@@ -115,7 +115,7 @@ public final class StructuralVariantAnnotation implements Comparable<StructuralV
 	 *            {@link Collection} of {@link AnnotatioMessage} objects
 	 */
 	public StructuralVariantAnnotation(TranscriptModel transcript, StructuralVariant change,
-			Collection<VariantEffect> varTypes, AnnotationLocation annoLoc, NucleotideChange genomicNTChange,
+			Collection<VariantEffect> varTypes, SmallVariantAnnotationLocation annoLoc, NucleotideChange genomicNTChange,
 			NucleotideChange cdsNTChange, ProteinChange proteinChange, Collection<AnnotationMessage> messages) {
 		// TODO(holtgrewe): enforce forward strand
 		this.variant = change;
@@ -147,7 +147,7 @@ public final class StructuralVariantAnnotation implements Comparable<StructuralV
 	}
 
 	/** @return location of the annotation, <code>null</code> if not even nearby a {@link TranscriptModel} */
-	public AnnotationLocation getAnnoLoc() {
+	public SmallVariantAnnotationLocation getAnnoLoc() {
 		return annoLoc;
 	}
 

@@ -60,7 +60,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	private final ImmutableSortedSet<AnnotationMessage> messages;
 
 	/** location of the annotation, <code>null</code> if not even nearby a {@link TranscriptModel} */
-	private final AnnotationLocation annoLoc;
+	private final SmallVariantAnnotationLocation annoLoc;
 
 	/** Chromosome/genome-level change, to be prepended with "g." */
 	private final NucleotideChange genomicNTChange;
@@ -108,7 +108,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	 *            predicted {@link ProteinChange}
 	 */
 	public SmallVariantAnnotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
-			AnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
+			SmallVariantAnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange) {
 		this(transcript, change, varTypes, annoLoc, genomicNTChange, cdsNTChange, proteinChange, ImmutableSortedSet
 				.<AnnotationMessage> of());
@@ -137,7 +137,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	 *            {@link Collection} of {@link AnnotatioMessage} objects
 	 */
 	public SmallVariantAnnotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
-			AnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
+			SmallVariantAnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange, Collection<AnnotationMessage> messages) {
 		if (change != null)
 			change = change.withStrand(Strand.FWD); // enforce forward strand
@@ -170,7 +170,7 @@ public final class SmallVariantAnnotation implements SmallVariantDescription, Co
 	}
 
 	/** @return location of the annotation, <code>null</code> if not even nearby a {@link TranscriptModel} */
-	public AnnotationLocation getAnnoLoc() {
+	public SmallVariantAnnotationLocation getAnnoLoc() {
 		return annoLoc;
 	}
 

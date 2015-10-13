@@ -5,8 +5,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSortedSet;
 
-import de.charite.compbio.jannovar.annotation.AnnotationLocation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation.RankType;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation.RankType;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.PutativeImpact;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -65,7 +65,7 @@ class VCFAnnotationData {
 	/** additional messages for the annotation */
 	public ImmutableSortedSet<AnnotationMessage> messages = ImmutableSortedSet.<AnnotationMessage> of();
 
-	public void setAnnoLoc(AnnotationLocation annoLoc) {
+	public void setAnnoLoc(SmallVariantAnnotationLocation annoLoc) {
 		if (annoLoc == null)
 			return;
 		if (annoLoc.getRankType() != RankType.UNDEFINED) {

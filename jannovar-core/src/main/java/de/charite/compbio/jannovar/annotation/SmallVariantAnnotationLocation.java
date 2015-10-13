@@ -7,12 +7,12 @@ import de.charite.compbio.jannovar.reference.TranscriptModel;
 // TODO(holtgrem): Test me!
 
 /**
- * Describes the location of an annotation.
+ * Describes the location of an {@link SmallVariantAnnotation}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 @Immutable
-public class AnnotationLocation {
+public class SmallVariantAnnotationLocation {
 
 	/** Enumeration for rank types, exon, intron, or neither (i.e. spans more than one feature). */
 	public enum RankType {
@@ -37,7 +37,7 @@ public class AnnotationLocation {
 	/** Location of the change on the transcript, null if outside of transcript */
 	private final TranscriptInterval txLocation;
 
-	public AnnotationLocation(TranscriptModel transcript, RankType rankType, int rank, int totalRank,
+	public SmallVariantAnnotationLocation(TranscriptModel transcript, RankType rankType, int rank, int totalRank,
 			TranscriptInterval txLocation) {
 		this.transcript = transcript;
 		this.rankType = rankType;
@@ -102,7 +102,7 @@ public class AnnotationLocation {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AnnotationLocation other = (AnnotationLocation) obj;
+		SmallVariantAnnotationLocation other = (SmallVariantAnnotationLocation) obj;
 		if (rank != other.rank)
 			return false;
 		if (rankType != other.rankType)

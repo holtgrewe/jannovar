@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.google.common.collect.ImmutableSortedSet;
 
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
-import de.charite.compbio.jannovar.annotation.AnnotationLocation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotationLocation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
@@ -1943,7 +1943,7 @@ public class InsertionAnnotationBuilderTest {
 				.build();
 
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
+		Assert.assertEquals(SmallVariantAnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("126dup", annotation1.getCDSNTChange().toHGVSString());
 		Assert.assertEquals("?", annotation1.getProteinChange().toHGVSString());
@@ -1970,7 +1970,7 @@ public class InsertionAnnotationBuilderTest {
 				.build();
 
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
+		Assert.assertEquals(SmallVariantAnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("73_73+1insG", annotation1.getCDSNTChange().toHGVSString());
 		Assert.assertEquals("?", annotation1.getProteinChange().toHGVSString());
@@ -1997,7 +1997,7 @@ public class InsertionAnnotationBuilderTest {
 				.build();
 
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
+		Assert.assertEquals(SmallVariantAnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
 		Assert.assertEquals(16, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("1429_1431dup", annotation1.getCDSNTChange().toHGVSString());
 		Assert.assertEquals("(Ser477dup)", annotation1.getProteinChange().toHGVSString());
@@ -2025,7 +2025,7 @@ public class InsertionAnnotationBuilderTest {
 				.build();
 
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
-		Assert.assertEquals(AnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
+		Assert.assertEquals(SmallVariantAnnotationLocation.RankType.EXON, annotation1.getAnnoLoc().getRankType());
 		Assert.assertEquals(4, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("1250dup", annotation1.getCDSNTChange().toHGVSString());
 		Assert.assertEquals("(Gly418Argfs*?)", annotation1.getProteinChange().toHGVSString());

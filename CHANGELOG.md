@@ -4,6 +4,7 @@
 
 ## jannovar-core
 
+* renamed `AnnotationLocation` to `SmallVariantAnnotationLocation`
 * renamed `Annotation` to `SmallVariantAnnotation`
 * renamed `VariantDescription` to `SmallVariantDescription`
 * less intrusive escaping in `ANN` field
