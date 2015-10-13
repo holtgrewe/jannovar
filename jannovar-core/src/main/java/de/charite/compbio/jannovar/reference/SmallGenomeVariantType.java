@@ -5,7 +5,7 @@ package de.charite.compbio.jannovar.reference;
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
-public enum GenomeVariantType {
+public enum SmallGenomeVariantType {
 	/** single nucleotide variant */
 	SNV,
 	/** insertion */

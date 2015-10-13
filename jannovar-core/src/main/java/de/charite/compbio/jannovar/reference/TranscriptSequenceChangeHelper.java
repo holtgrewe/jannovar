@@ -61,7 +61,7 @@ public final class TranscriptSequenceChangeHelper {
 
 		// Update base in string using StringBuilder.
 		StringBuilder builder = new StringBuilder(transcript.getSequence());
-		if (change.getType() == GenomeVariantType.SNV)
+		if (change.getType() == SmallGenomeVariantType.SNV)
 			builder.setCharAt(tPos.getPos(), change.getAlt().charAt(0));
 		else
 			builder.insert(tPos.getPos(), change.getAlt());
@@ -160,7 +160,7 @@ public final class TranscriptSequenceChangeHelper {
 		String cdsSeq = projector.getTranscriptStartingAtCDS();
 
 		// Short-circuit in the case of change that does not affect the transcript.
-		if (change.getType() == GenomeVariantType.SNV) {
+		if (change.getType() == SmallGenomeVariantType.SNV) {
 			if (!transcript.getCDSRegion().overlapsWith(change.getGenomeInterval())
 					|| !soDecorator.overlapsWithExon(change.getGenomeInterval()))
 				return cdsSeq;
@@ -177,7 +177,7 @@ public final class TranscriptSequenceChangeHelper {
 
 		// Update base in string using StringBuilder.
 		StringBuilder builder = new StringBuilder(cdsSeq);
-		if (change.getType() == GenomeVariantType.SNV)
+		if (change.getType() == SmallGenomeVariantType.SNV)
 			builder.setCharAt(cdsChangePos.getPos(), change.getAlt().charAt(0));
 		else
 			builder.insert(cdsChangePos.getPos(), change.getAlt());

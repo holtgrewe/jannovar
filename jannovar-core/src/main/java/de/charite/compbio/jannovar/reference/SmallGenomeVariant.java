@@ -8,7 +8,7 @@ import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.impl.util.DNAUtils;
 
 // TODO(holtgrewe): We only want genome changes on the forward strand, make sure this does not lead to problems downstream.
-// 
+
 /**
  * Denote a "small" change with a "REF" and an "ALT" string using genome coordinates.
  * 
@@ -209,17 +209,17 @@ public final class SmallGenomeVariant implements SmallVariantDescription {
 	}
 
 	/**
-	 * @return the {@link GenomeVariantType} of this GenomeChange
+	 * @return the {@link SmallGenomeVariantType} of this GenomeChange
 	 */
-	public GenomeVariantType getType() {
+	public SmallGenomeVariantType getType() {
 		if (ref.length() > 0 && alt.length() == 0)
-			return GenomeVariantType.DELETION;
+			return SmallGenomeVariantType.DELETION;
 		else if (ref.length() == 0 && alt.length() > 0)
-			return GenomeVariantType.INSERTION;
+			return SmallGenomeVariantType.INSERTION;
 		else if (ref.length() == 1 && alt.length() == 1)
-			return GenomeVariantType.SNV;
+			return SmallGenomeVariantType.SNV;
 		else
-			return GenomeVariantType.BLOCK_SUBSTITUTION;
+			return SmallGenomeVariantType.BLOCK_SUBSTITUTION;
 	}
 
 	/**
@@ -228,7 +228,7 @@ public final class SmallGenomeVariant implements SmallVariantDescription {
 	 * @return true if the variant is a SNV and a transition.
 	 */
 	public boolean isTransition() {
-		if (getType() != GenomeVariantType.SNV)
+		if (getType() != SmallGenomeVariantType.SNV)
 			return false;
 		// purine to purine change
 		if (this.ref.equals("A") && this.alt.equals("G"))
@@ -250,7 +250,7 @@ public final class SmallGenomeVariant implements SmallVariantDescription {
 	 * @return true if the variant is a SNV and a transversion.
 	 */
 	public boolean isTransversion() {
-		if (getType() != GenomeVariantType.SNV)
+		if (getType() != SmallGenomeVariantType.SNV)
 			return false;
 		// purine to purine change
 		if (this.ref.equals("A") && this.alt.equals("G"))

@@ -4,6 +4,7 @@
 
 ## jannovar-core
 
+* renaming `GenomeVariantType` to `SmallGenomeVariantType`
 * renaming `GenomeVariant` to `SmallGenomeVariant`
 * adding `InvalidGenomeVariant(String, Throwable)`
 * renamed `AnnotationLocation` to `SmallVariantAnnotationLocationBuilder`
