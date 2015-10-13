@@ -18,4 +18,8 @@ public class InvalidGenomeVariant extends AnnotationException {
 		super(msg);
 	}
 
+	public InvalidGenomeVariant(String msg, Throwable t) {
+		super(msg, t);
+	}
+
 }
