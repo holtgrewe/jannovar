@@ -27,7 +27,7 @@ import de.charite.compbio.jannovar.reference.SmallVariantDescription;
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 @Immutable
-public final class Annotation implements SmallVariantDescription, Comparable<Annotation> {
+public final class SmallVariantAnnotation implements SmallVariantDescription, Comparable<SmallVariantAnnotation> {
 
 	/**
 	 * This line is added to the output of a VCF file annotated by Jannovar and describes the new field for the INFO
@@ -83,12 +83,12 @@ public final class Annotation implements SmallVariantDescription, Comparable<Ann
 	 * @param messages
 	 *            {@link AnnotationMessage}s to use in this annotation
 	 */
-	public Annotation(Collection<AnnotationMessage> messages) {
+	public SmallVariantAnnotation(Collection<AnnotationMessage> messages) {
 		this(null, null, null, null, null, null, null, messages);
 	}
 
 	/**
-	 * Initialize the {@link Annotation} with the given values.
+	 * Initialize the {@link SmallVariantAnnotation} with the given values.
 	 *
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *
@@ -107,7 +107,7 @@ public final class Annotation implements SmallVariantDescription, Comparable<Ann
 	 * @param proteinChange
 	 *            predicted {@link ProteinChange}
 	 */
-	public Annotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
+	public SmallVariantAnnotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
 			AnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange) {
 		this(transcript, change, varTypes, annoLoc, genomicNTChange, cdsNTChange, proteinChange, ImmutableSortedSet
@@ -115,7 +115,7 @@ public final class Annotation implements SmallVariantDescription, Comparable<Ann
 	}
 
 	/**
-	 * Initialize the {@link Annotation} with the given values.
+	 * Initialize the {@link SmallVariantAnnotation} with the given values.
 	 *
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *
@@ -136,7 +136,7 @@ public final class Annotation implements SmallVariantDescription, Comparable<Ann
 	 * @param messages
 	 *            {@link Collection} of {@link AnnotatioMessage} objects
 	 */
-	public Annotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
+	public SmallVariantAnnotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
 			AnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange, Collection<AnnotationMessage> messages) {
 		if (change != null)
@@ -333,7 +333,7 @@ public final class Annotation implements SmallVariantDescription, Comparable<Ann
 	}
 
 	@Override
-	public int compareTo(Annotation other) {
+	public int compareTo(SmallVariantAnnotation other) {
 		if (getMostPathogenicVarType() == null && getMostPathogenicVarType() == other.getMostPathogenicVarType())
 			return 0;
 		else if (other.getMostPathogenicVarType() == null)
@@ -383,7 +383,7 @@ public final class Annotation implements SmallVariantDescription, Comparable<Ann
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Annotation other = (Annotation) obj;
+		SmallVariantAnnotation other = (SmallVariantAnnotation) obj;
 		if (proteinChange == null) {
 			if (other.proteinChange != null)
 				return false;

@@ -1,6 +1,6 @@
 package de.charite.compbio.jannovar.svs;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
 import de.charite.compbio.jannovar.reference.Strand;

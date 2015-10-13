@@ -3,7 +3,7 @@ package de.charite.compbio.jannovar.svs.annotation;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.builders.AnnotationBuilderOptions;
 import de.charite.compbio.jannovar.reference.GenomeVariant;

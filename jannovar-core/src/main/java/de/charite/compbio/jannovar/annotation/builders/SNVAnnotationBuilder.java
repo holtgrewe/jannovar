@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableList;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -25,7 +25,7 @@ import de.charite.compbio.jannovar.reference.TranscriptPosition;
 import de.charite.compbio.jannovar.reference.TranscriptSequenceDecorator;
 
 /**
- * Builds {@link Annotation} objects for the SNV {@link GenomeVariant}s in the given {@link TranscriptInfo}.
+ * Builds {@link SmallVariantAnnotation} objects for the SNV {@link GenomeVariant}s in the given {@link TranscriptInfo}.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
@@ -59,7 +59,7 @@ public final class SNVAnnotationBuilder extends AnnotationBuilder {
 	}
 
 	@Override
-	public Annotation build() {
+	public SmallVariantAnnotation build() {
 		// Go through top-level cases (clustered by how they are handled here) and build annotations for each of them
 		// where applicable.
 
@@ -79,7 +79,7 @@ public final class SNVAnnotationBuilder extends AnnotationBuilder {
 			return buildIntergenicAnnotation();
 	}
 
-	private Annotation buildCDSExonicAnnotation() {
+	private SmallVariantAnnotation buildCDSExonicAnnotation() {
 		// Get 0-based transcript and CDS positions.
 		TranscriptPosition txPos;
 		CDSPosition cdsPos;
@@ -149,7 +149,7 @@ public final class SNVAnnotationBuilder extends AnnotationBuilder {
 			varTypes.addAll(ImmutableList.of(VariantEffect.SPLICE_REGION_VARIANT));
 
 		// Build the resulting Annotation.
-		return new Annotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
+		return new SmallVariantAnnotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
 				proteinChange);
 	}
 

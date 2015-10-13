@@ -11,7 +11,7 @@ import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.SmallVariantDescription;
 
 /**
- * A list of priority-sorted {@link Annotation} objects.
+ * A list of priority-sorted {@link SmallVariantAnnotation} objects.
  *
  * @see AllAnnotationListTextGenerator
  * @see BestAnnotationListTextGenerator
@@ -25,7 +25,7 @@ public final class VariantAnnotations implements SmallVariantDescription {
 	private final GenomeVariant change;
 
 	/** the list of the annotations */
-	private final ImmutableList<Annotation> entries;
+	private final ImmutableList<SmallVariantAnnotation> entries;
 
 	/**
 	 * @param change
@@ -33,20 +33,20 @@ public final class VariantAnnotations implements SmallVariantDescription {
 	 * @return empty <code>AnnotationList</code> with the given {@link GenomeVariant}
 	 */
 	public static VariantAnnotations buildEmptyList(GenomeVariant change) {
-		return new VariantAnnotations(change, ImmutableList.<Annotation> of());
+		return new VariantAnnotations(change, ImmutableList.<SmallVariantAnnotation> of());
 	}
 
 	/**
-	 * Construct ImmutableAnnotationList from a {@link Collection} of {@link Annotation} objects.
+	 * Construct ImmutableAnnotationList from a {@link Collection} of {@link SmallVariantAnnotation} objects.
 	 *
 	 * Note that <code>variant</code> is converted to the forward strand using {@link GenomeVariant#withStrand}.
 	 *
 	 * @param change
 	 *            {@link GenomeVariant} that this anotation list annotates
 	 * @param entries
-	 *            {@link Collection} of {@link Annotation} objects
+	 *            {@link Collection} of {@link SmallVariantAnnotation} objects
 	 */
-	public VariantAnnotations(GenomeVariant variant, Collection<Annotation> entries) {
+	public VariantAnnotations(GenomeVariant variant, Collection<SmallVariantAnnotation> entries) {
 		this.change = variant.withStrand(Strand.FWD);
 		this.entries = ImmutableList.copyOf(ImmutableSortedMultiset.copyOf(entries));
 	}
@@ -66,7 +66,7 @@ public final class VariantAnnotations implements SmallVariantDescription {
 	/**
 	 * @return the list of annotations
 	 */
-	public ImmutableList<Annotation> getAnnotations() {
+	public ImmutableList<SmallVariantAnnotation> getAnnotations() {
 		return entries;
 	}
 
@@ -78,9 +78,9 @@ public final class VariantAnnotations implements SmallVariantDescription {
 	}
 
 	/**
-	 * @return {@link Annotation} with highest predicted impact, or <code>null</code> if there is none.
+	 * @return {@link SmallVariantAnnotation} with highest predicted impact, or <code>null</code> if there is none.
 	 */
-	public Annotation getHighestImpactAnnotation() {
+	public SmallVariantAnnotation getHighestImpactAnnotation() {
 		if (!hasAnnotation())
 			return null;
 		else
@@ -94,7 +94,7 @@ public final class VariantAnnotations implements SmallVariantDescription {
 	 *         {@link VariantEffect.SEQUENCE_VARIANT} if {@link #entries} is empty or has no annotated effects.
 	 */
 	public VariantEffect getHighestImpactEffect() {
-		final Annotation anno = getHighestImpactAnnotation();
+		final SmallVariantAnnotation anno = getHighestImpactAnnotation();
 		if (anno == null || anno.getEffects().isEmpty())
 			return VariantEffect.SEQUENCE_VARIANT;
 		else
@@ -151,7 +151,7 @@ public final class VariantAnnotations implements SmallVariantDescription {
 		return change.getAlt();
 	}
 
-	public int compareTo(Annotation other) {
+	public int compareTo(SmallVariantAnnotation other) {
 		return change.compareTo(other);
 	}
 

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.google.common.collect.ImmutableSortedSet;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationLocation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -64,7 +64,7 @@ public class DeletionAnnotationBuilderTest {
 	public void testForwardUstream() throws InvalidGenomeVariant {
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(null, annotation1.getAnnoLoc());
@@ -77,7 +77,7 @@ public class DeletionAnnotationBuilderTest {
 	public void testForwardDownstream() throws InvalidGenomeVariant {
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649340,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(null, annotation1.getAnnoLoc());
@@ -91,7 +91,7 @@ public class DeletionAnnotationBuilderTest {
 		// intergenic upstream
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6639061,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(null, annotation1.getAnnoLoc());
@@ -101,7 +101,7 @@ public class DeletionAnnotationBuilderTest {
 		// intergenic downstream
 		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6650340,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(null, annotation1.getAnnoLoc());
@@ -117,7 +117,7 @@ public class DeletionAnnotationBuilderTest {
 			chars200.append("A");
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640061,
 				PositionType.ZERO_BASED), chars200.toString(), "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(AnnotationLocation.INVALID_RANK, annotation1.getAnnoLoc().getRank());
@@ -130,7 +130,7 @@ public class DeletionAnnotationBuilderTest {
 	public void testForwardIntronic() throws InvalidGenomeVariant {
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642106,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -144,7 +144,7 @@ public class DeletionAnnotationBuilderTest {
 	public void testForwardFivePrimeUTR() throws InvalidGenomeVariant {
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640072,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -157,7 +157,7 @@ public class DeletionAnnotationBuilderTest {
 	public void testForwardThreePrimeUTR() throws InvalidGenomeVariant {
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649329,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(10, annotation1.getAnnoLoc().getRank());
@@ -173,7 +173,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete one base of start codon.
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640669,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -184,7 +184,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete chunk out of first exon, spanning start codon from the left.
 		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640660,
 				PositionType.ZERO_BASED), "CCCTCCAGACC", "");
-		Annotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation2.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation2.getAnnoLoc().getRank());
@@ -195,7 +195,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete chunk out of first exon, spanning start codon from the right.
 		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640671,
 				PositionType.ZERO_BASED), "GGACGGCTCCT", "");
-		Annotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation3.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation3.getAnnoLoc().getRank());
@@ -208,7 +208,7 @@ public class DeletionAnnotationBuilderTest {
 				new GenomePosition(refDict, Strand.FWD, 1, 6640399, PositionType.ZERO_BASED),
 				"TCTCACCAGGCCCTTCTTCACGACCCTGGCCCCCCATCCAGCATCCCCCCTGGCCAATCCAATATGGCCCCCGGCCCCCGGGAGGCTGTCAGTGTGTTCCAGCCCTCCGCGTGCACCCCTCACCCTGACCCAAGCCCTCGTGCTGATAAATATGATTATTTGAGTAGAGGCCAACTTCCCGTTTCTCTCTCTTGACTCCAGGAGCTTTCTCTTGCATACCCTCGCTTAGGCTGGCCGGGGTGTCACTTCTGCCTCCCTGCCCTCCAGACCA",
 				"");
-		Annotation annotation4 = new DeletionAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation4 = new DeletionAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation4.getTranscript().getAccession());
 		Assert.assertEquals(AnnotationLocation.INVALID_RANK, annotation4.getAnnoLoc().getRank());
@@ -225,7 +225,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete last base of stop codon, leads to complete loss of stop codon (different from Mutalyzer).
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649271,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(10, annotation1.getAnnoLoc().getRank());
@@ -237,7 +237,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete middle base of stop codon, leads to complete loss.
 		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649270,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation2.getTranscript().getAccession());
 		Assert.assertEquals(10, annotation2.getAnnoLoc().getRank());
@@ -249,7 +249,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete first base of stop codon, leads to extension
 		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation3.getTranscript().getAccession());
 		Assert.assertEquals(10, annotation3.getAnnoLoc().getRank());
@@ -261,7 +261,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete two bases of stop codon.
 		GenomeVariant change4 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649269,
 				PositionType.ZERO_BASED), "AT", "");
-		Annotation annotation4 = new DeletionAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation4 = new DeletionAnnotationBuilder(infoForward, change4, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation4.getTranscript().getAccession());
 		Assert.assertEquals(10, annotation4.getAnnoLoc().getRank());
@@ -273,7 +273,7 @@ public class DeletionAnnotationBuilderTest {
 		// Delete from before into the stop codon.
 		GenomeVariant change5 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649267,
 				PositionType.ZERO_BASED), "CATAGCCC", "");
-		Annotation annotation5 = new DeletionAnnotationBuilder(infoForward, change5, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation5 = new DeletionAnnotationBuilder(infoForward, change5, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation5.getTranscript().getAccession());
 		Assert.assertEquals(10, annotation5.getAnnoLoc().getRank());
@@ -288,7 +288,7 @@ public class DeletionAnnotationBuilderTest {
 		// intronic splicing
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642116,
 				PositionType.ZERO_BASED), "G", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -300,7 +300,7 @@ public class DeletionAnnotationBuilderTest {
 		// exonic splicing
 		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642117,
 				PositionType.ZERO_BASED), "TGG", "");
-		Annotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation2.getTranscript().getAccession());
 		Assert.assertEquals(2, annotation2.getAnnoLoc().getRank());
@@ -315,7 +315,7 @@ public class DeletionAnnotationBuilderTest {
 		// The following case contains a shift in the nucleotide sequence.
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6645988,
 				PositionType.ZERO_BASED), "TGGGGAGAAA", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(3, annotation1.getAnnoLoc().getRank());
@@ -330,7 +330,7 @@ public class DeletionAnnotationBuilderTest {
 		// generated).
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642114,
 				PositionType.ZERO_BASED), "GAAACA", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(AnnotationLocation.INVALID_RANK, annotation1.getAnnoLoc().getRank());
@@ -343,7 +343,7 @@ public class DeletionAnnotationBuilderTest {
 		// deletion of three codons
 		GenomeVariant change2 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642126,
 				PositionType.ZERO_BASED), "GTGGTTCAA", "");
-		Annotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation2 = new DeletionAnnotationBuilder(infoForward, change2, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation2.getTranscript().getAccession());
 		Assert.assertEquals(2, annotation2.getAnnoLoc().getRank());
@@ -354,7 +354,7 @@ public class DeletionAnnotationBuilderTest {
 		// deletion of three codons, resulting in delins case
 		GenomeVariant change3 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6642134,
 				PositionType.ZERO_BASED), "AGTGGAGGA", "");
-		Annotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation3 = new DeletionAnnotationBuilder(infoForward, change3, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation3.getTranscript().getAccession());
 		Assert.assertEquals(2, annotation3.getAnnoLoc().getRank());
@@ -378,7 +378,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 17087543,
 				PositionType.ZERO_BASED), "GCTGT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -400,7 +400,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 247978543,
 				PositionType.ZERO_BASED), "GAG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -424,7 +424,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 44540795,
 				PositionType.ZERO_BASED), "TC", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(3, annotation1.getAnnoLoc().getRank());
@@ -446,7 +446,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 97983496,
 				PositionType.ZERO_BASED), "TGTAACCAC", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -468,7 +468,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 3, 98216798,
 				PositionType.ZERO_BASED), "TTTCCCTCTAT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -492,7 +492,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140215470,
 				PositionType.ZERO_BASED), "GCGCG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -514,7 +514,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140615503,
 				PositionType.ZERO_BASED), "GTC", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -536,7 +536,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 27879112,
 				PositionType.ZERO_BASED), "T", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -567,7 +567,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 39278700,
 				PositionType.ZERO_BASED), "AAG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -591,7 +591,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 39278700,
 				PositionType.ZERO_BASED), "AAG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -615,7 +615,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 5921979,
 				PositionType.ZERO_BASED), "GTT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(3, annotation1.getAnnoLoc().getRank());
@@ -639,7 +639,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 10, 51768675,
 				PositionType.ZERO_BASED), "AA", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(7, annotation1.getAnnoLoc().getRank());
@@ -663,7 +663,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 10, 51768774,
 				PositionType.ZERO_BASED), "TGA", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(7, annotation1.getAnnoLoc().getRank());
@@ -685,7 +685,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 56380553,
 				PositionType.ZERO_BASED), "GACA", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -709,7 +709,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 8376100,
 				PositionType.ZERO_BASED), "G", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(5, annotation1.getAnnoLoc().getRank());
@@ -733,7 +733,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 123880923,
 				PositionType.ZERO_BASED), "TT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(4, annotation1.getAnnoLoc().getRank());
@@ -757,7 +757,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 13, 46170725,
 				PositionType.ZERO_BASED), "ACTCTTCCTCCTCCAGAT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(2, annotation1.getAnnoLoc().getRank());
@@ -781,7 +781,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 74536403,
 				PositionType.ZERO_BASED), "AAG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -805,7 +805,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 15, 78208898,
 				PositionType.ZERO_BASED), "CTC", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(13, annotation1.getAnnoLoc().getRank());
@@ -830,7 +830,7 @@ public class DeletionAnnotationBuilderTest {
 		// This deletion leads to position shifting downstream.
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 7470288,
 				PositionType.ZERO_BASED), "G", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(7, annotation1.getAnnoLoc().getRank());
@@ -856,7 +856,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 29161650,
 				PositionType.ZERO_BASED), "GTCAAT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -880,7 +880,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 29161650,
 				PositionType.ZERO_BASED), "GTCAAT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -908,7 +908,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 17, 61660894,
 				PositionType.ZERO_BASED), "G", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(5, annotation1.getAnnoLoc().getRank());
@@ -934,7 +934,7 @@ public class DeletionAnnotationBuilderTest {
 		// the deletion.
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 20, 126313,
 				PositionType.ZERO_BASED), "CC", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -956,7 +956,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 21, 42551467,
 				PositionType.ZERO_BASED), "GTGTCAGGGTGAGTGAGGG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -980,7 +980,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 58579807,
 				PositionType.ZERO_BASED), "CCAGAG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(4, annotation1.getAnnoLoc().getRank());
@@ -1004,7 +1004,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 11, 65793877,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -1028,7 +1028,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 49525088,
 				PositionType.ZERO_BASED), "CT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -1052,7 +1052,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("X"), 7811233, PositionType.ZERO_BASED), "AGCTGCG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(1, annotation1.getAnnoLoc().getRank());
@@ -1076,7 +1076,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 44125966,
 				PositionType.ZERO_BASED), "A", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(2, annotation1.getAnnoLoc().getRank());
@@ -1101,7 +1101,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 17718673,
 				PositionType.ZERO_BASED), "G", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(9, annotation1.getAnnoLoc().getRank());
@@ -1127,7 +1127,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 2, 90458647,
 				PositionType.ZERO_BASED), "T", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(42, annotation1.getAnnoLoc().getRank());
@@ -1149,7 +1149,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 6, 31803064,
 				PositionType.ZERO_BASED), "T", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -1174,7 +1174,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, refDict.getContigNameToID()
 				.get("Y"), 23749506, PositionType.ZERO_BASED), "G", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(3, annotation1.getAnnoLoc().getRank());
@@ -1200,7 +1200,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 9, 135782122,
 				PositionType.ZERO_BASED), "TTCT", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(12, annotation1.getAnnoLoc().getRank());
@@ -1224,7 +1224,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 5, 140812775,
 				PositionType.ZERO_BASED), "T", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
@@ -1251,7 +1251,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 8, 145738767,
 				PositionType.ZERO_BASED), "G", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(14, annotation1.getAnnoLoc().getRank());
@@ -1278,7 +1278,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 12, 53452263,
 				PositionType.ZERO_BASED), "CAGGTGGCAGG", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(-1, annotation1.getAnnoLoc().getRank());
@@ -1305,7 +1305,7 @@ public class DeletionAnnotationBuilderTest {
 
 		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 19, 53952885,
 				PositionType.ZERO_BASED), "C", "");
-		Annotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
+		SmallVariantAnnotation annotation1 = new DeletionAnnotationBuilder(infoForward, change1, new AnnotationBuilderOptions())
 				.build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(4, annotation1.getAnnoLoc().getRank());

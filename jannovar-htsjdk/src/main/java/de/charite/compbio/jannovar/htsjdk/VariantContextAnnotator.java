@@ -15,7 +15,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.VariantAnnotations;
 import de.charite.compbio.jannovar.annotation.VariantAnnotator;
@@ -247,7 +247,7 @@ public final class VariantContextAnnotator {
 		ArrayList<String> annotations = new ArrayList<String>();
 		for (int alleleID = 0; alleleID < vc.getAlternateAlleles().size(); ++alleleID) {
 			if (!annos.get(alleleID).getAnnotations().isEmpty()) {
-				for (Annotation ann : annos.get(alleleID).getAnnotations()) {
+				for (SmallVariantAnnotation ann : annos.get(alleleID).getAnnotations()) {
 					final String alt = vc.getAlternateAllele(alleleID).getBaseString();
 					annotations.add(ann.toVCFAnnoString(alt));
 					if (options.oneAnnotationOnly)
@@ -265,7 +265,7 @@ public final class VariantContextAnnotator {
 		final int altAlleleCount = vc.getAlternateAlleles().size();
 		for (int alleleID = 0; alleleID < altAlleleCount; ++alleleID) {
 			if (!annos.get(alleleID).getAnnotations().isEmpty()) {
-				for (Annotation ann : annos.get(alleleID).getAnnotations()) {
+				for (SmallVariantAnnotation ann : annos.get(alleleID).getAnnotations()) {
 					final String alt = vc.getAlternateAllele(alleleID).getBaseString();
 					effectList.add(ann.getMostPathogenicVarType());
 					if (altAlleleCount == 1)
@@ -290,7 +290,7 @@ public final class VariantContextAnnotator {
 	 * @return VariantAnnotations having the message set to {@link AnnotationMessage#ERROR_PROBLEM_DURING_ANNOTATION}.
 	 */
 	public VariantAnnotations buildErrorAnnotations(GenomeVariant change) {
-		return new VariantAnnotations(change, ImmutableList.of(new Annotation(ImmutableList
+		return new VariantAnnotations(change, ImmutableList.of(new SmallVariantAnnotation(ImmutableList
 				.of(AnnotationMessage.ERROR_PROBLEM_DURING_ANNOTATION))));
 	}
 

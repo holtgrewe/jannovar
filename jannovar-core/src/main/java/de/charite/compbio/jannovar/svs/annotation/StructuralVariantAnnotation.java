@@ -76,7 +76,7 @@ public final class StructuralVariantAnnotation implements Comparable<StructuralV
 	}
 
 	/**
-	 * Initialize the {@link Annotation} with the given values.
+	 * Initialize the {@link SmallVariantAnnotation} with the given values.
 	 *
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *
@@ -93,7 +93,7 @@ public final class StructuralVariantAnnotation implements Comparable<StructuralV
 	}
 
 	/**
-	 * Initialize the {@link Annotation} with the given values.
+	 * Initialize the {@link SmallVariantAnnotation} with the given values.
 	 *
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableList;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.hgvs.nts.NucleotideSeqDescription;
@@ -31,7 +31,7 @@ import de.charite.compbio.jannovar.reference.TranscriptModel;
 // TODO(holtgrem): The block substitution protein annotation generation needs some love in the corner cases.
 
 /**
- * Builds {@link Annotation} objects for the block substitution {@link GenomeVariant} in the given
+ * Builds {@link SmallVariantAnnotation} objects for the block substitution {@link GenomeVariant} in the given
  * {@link TranscriptInfo} .
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
@@ -58,7 +58,7 @@ public final class BlockSubstitutionAnnotationBuilder extends AnnotationBuilder 
 	}
 
 	@Override
-	public Annotation build() {
+	public SmallVariantAnnotation build() {
 		// Go through top-level cases (clustered by how they are handled here) and build annotations for each of them
 		// where applicable.
 
@@ -88,13 +88,13 @@ public final class BlockSubstitutionAnnotationBuilder extends AnnotationBuilder 
 				new NucleotideSeqDescription(change.getAlt()));
 	}
 
-	private Annotation buildFeatureAblationAnnotation() {
-		return new Annotation(transcript, change, ImmutableList.of(VariantEffect.TRANSCRIPT_ABLATION), locAnno,
+	private SmallVariantAnnotation buildFeatureAblationAnnotation() {
+		return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.TRANSCRIPT_ABLATION), locAnno,
 				getGenomicNTChange(), getCDSNTChange(), null);
 	}
 
-	private Annotation buildStartLossAnnotation() {
-		return new Annotation(transcript, change, ImmutableList.of(VariantEffect.START_LOST), locAnno,
+	private SmallVariantAnnotation buildStartLossAnnotation() {
+		return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.START_LOST), locAnno,
 				getGenomicNTChange(), getCDSNTChange(), ProteinMiscChange.build(true, ProteinMiscChangeType.NO_PROTEIN));
 	}
 
@@ -169,13 +169,13 @@ public final class BlockSubstitutionAnnotationBuilder extends AnnotationBuilder 
 			this.varAAStopPos = varAASeq.indexOf('*', refChangeBeginPos.getPos() / 3);
 		}
 
-		public Annotation build() {
+		public SmallVariantAnnotation build() {
 			if (delFrameShift == 0)
 				handleNonFrameShiftCase();
 			else
 				handleFrameShiftCase();
 
-			return new Annotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
+			return new SmallVariantAnnotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
 					proteinChange);
 		}
 

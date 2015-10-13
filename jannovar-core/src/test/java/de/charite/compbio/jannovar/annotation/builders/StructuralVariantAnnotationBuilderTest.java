@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationLocation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
@@ -65,7 +65,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVInsertionOnTranscript() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "", "CGAT");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
 		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
@@ -77,7 +77,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVInsertionIntergenic() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "", "CGAT");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
 		Assert.assertEquals(null, anno.getTranscript());
 		Assert.assertEquals(null, anno.getAnnoLoc());
 		Assert.assertEquals(null, anno.getCDSNTChange());
@@ -89,7 +89,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVDeletionOnTranscript() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "", "CGAT");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
 		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
@@ -101,7 +101,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVDeletionIntergenic() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "CGAT", "");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
 		Assert.assertEquals(null, anno.getTranscript());
 		Assert.assertEquals(null, anno.getAnnoLoc());
 		Assert.assertEquals(null, anno.getCDSNTChange());
@@ -113,7 +113,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVInversionOnTranscript() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "CGAT", "ATCG");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
 		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
@@ -125,7 +125,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVInversionIntergenic() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "CGAT", "ATCG");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
 		Assert.assertEquals(null, anno.getTranscript());
 		Assert.assertEquals(null, anno.getAnnoLoc());
 		Assert.assertEquals(null, anno.getCDSNTChange());
@@ -137,7 +137,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVSubstitutionOnTranscript() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "CGAT", "TTTTA");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(infoForward, change).build();
 		Assert.assertEquals(infoForward.getAccession(), anno.getTranscript().getAccession());
 		Assert.assertEquals(AnnotationLocation.INVALID_RANK, anno.getAnnoLoc().getRank());
 		Assert.assertEquals(null, anno.getCDSNTChange());
@@ -149,7 +149,7 @@ public class StructuralVariantAnnotationBuilderTest {
 	public void testSVSubstitutionIntergenic() throws InvalidGenomeVariant {
 		final GenomeVariant change = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640062,
 				PositionType.ZERO_BASED), "CGAT", "TTTTA");
-		final Annotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
+		final SmallVariantAnnotation anno = new StructuralVariantAnnotationBuilder(null, change).build();
 		Assert.assertEquals(null, anno.getTranscript());
 		Assert.assertEquals(null, anno.getAnnoLoc());
 		Assert.assertEquals(null, anno.getCDSNTChange());

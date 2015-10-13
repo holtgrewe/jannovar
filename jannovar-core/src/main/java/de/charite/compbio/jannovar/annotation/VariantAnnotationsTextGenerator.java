@@ -26,7 +26,7 @@ public abstract class VariantAnnotationsTextGenerator {
 	 * Initialize the decorator.
 	 *
 	 * @param annotations
-	 *            {@link VariantAnnotations} of {@link Annotation} objects
+	 *            {@link VariantAnnotations} of {@link SmallVariantAnnotation} objects
 	 * @param alleleID
 	 *            the 0-based id of the allele
 	 * @param altCount
@@ -53,7 +53,7 @@ public abstract class VariantAnnotationsTextGenerator {
 	 */
 	public String buildEffectText() {
 		StringBuilder builder = new StringBuilder();
-		for (Annotation anno : annotations.getAnnotations()) {
+		for (SmallVariantAnnotation anno : annotations.getAnnotations()) {
 			if (builder.length() != 0)
 				builder.append(',');
 			if (altCount > 1)
@@ -68,7 +68,7 @@ public abstract class VariantAnnotationsTextGenerator {
 	 */
 	public String buildHGVSText() {
 		StringBuilder builder = new StringBuilder();
-		for (Annotation anno : annotations.getAnnotations()) {
+		for (SmallVariantAnnotation anno : annotations.getAnnotations()) {
 			if (builder.length() != 0)
 				builder.append(',');
 			if (altCount > 1)

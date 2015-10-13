@@ -4,6 +4,7 @@
 
 ## jannovar-core
 
+* renamed `Annotation` to `SmallVariantAnnotation`
 * renamed `VariantDescription` to `SmallVariantDescription`
 * less intrusive escaping in `ANN` field
 * adding `coyp_number_change`, `copy_number_increase`, `copy_number_decrease`, and `transcript_amplification`, `feature_amplification`, and others to `VariantEffect`.

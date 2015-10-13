@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ComparisonChain;
 
 import de.charite.compbio.jannovar.Immutable;
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.impl.util.DNAUtils;
 
 // TODO(holtgrewe): We only want genome changes on the forward strand, make sure this does not lead to problems downstream.
@@ -320,7 +320,7 @@ public final class GenomeVariant implements SmallVariantDescription {
 	}
 
 	@Override
-	public int compareTo(Annotation other) {
+	public int compareTo(SmallVariantAnnotation other) {
 		return ComparisonChain.start().compare(pos, other.getPos()).compare(ref, other.getRef())
 				.compare(alt, other.getAlt()).result();
 	}

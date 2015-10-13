@@ -2,7 +2,7 @@ package de.charite.compbio.jannovar.annotation.builders;
 
 import java.util.ArrayList;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.hgvs.nts.NucleotidePointLocation;
@@ -34,7 +34,7 @@ import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptPosition;
 
 /**
- * Builds {@link Annotation} objects for the insertion {@link GenomeVariant} in the given {@link TranscriptInfo}.
+ * Builds {@link SmallVariantAnnotation} objects for the insertion {@link GenomeVariant} in the given {@link TranscriptInfo}.
  *
  * <h2>Duplications</h2>
  *
@@ -70,7 +70,7 @@ public final class InsertionAnnotationBuilder extends AnnotationBuilder {
 	}
 
 	@Override
-	public Annotation build() {
+	public SmallVariantAnnotation build() {
 		// Go through top-level cases (clustered by how they are handled here) and build annotations for each of them
 		// where applicable.
 
@@ -136,7 +136,7 @@ public final class InsertionAnnotationBuilder extends AnnotationBuilder {
 		}
 	}
 
-	private Annotation buildCDSExonicAnnotation() {
+	private SmallVariantAnnotation buildCDSExonicAnnotation() {
 		return new CDSExonicAnnotationBuilder().build();
 	}
 
@@ -207,7 +207,7 @@ public final class InsertionAnnotationBuilder extends AnnotationBuilder {
 			this.varAAInsertPos = this.aaChange.getPos();
 		}
 
-		public Annotation build() {
+		public SmallVariantAnnotation build() {
 			// Guard against the case that aaChange describes a "" -> "" change (synonymous change in stop codon).
 			if (aaChange.getRef().length() == 0 && aaChange.getAlt().length() == 0) {
 				proteinChange = ProteinMiscChange.build(true, ProteinMiscChangeType.NO_CHANGE);
@@ -220,7 +220,7 @@ public final class InsertionAnnotationBuilder extends AnnotationBuilder {
 					handleFrameShiftCase();
 			}
 
-			return new Annotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
+			return new SmallVariantAnnotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
 					proteinChange);
 		}
 

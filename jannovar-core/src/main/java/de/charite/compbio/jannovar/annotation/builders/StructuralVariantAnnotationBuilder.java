@@ -2,7 +2,7 @@ package de.charite.compbio.jannovar.annotation.builders;
 
 import com.google.common.collect.ImmutableList;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationLocation;
 import de.charite.compbio.jannovar.annotation.AnnotationLocation.RankType;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
@@ -14,7 +14,7 @@ import de.charite.compbio.jannovar.reference.TranscriptModel;
 // TODO(holtgrem): Make AnnotationBuilder an interface and rename AnnotationBuilder to AnnotationBuilderBase?
 
 /**
- * Class providing static functions for creating {@link Annotation} objects for SVs.
+ * Class providing static functions for creating {@link SmallVariantAnnotation} objects for SVs.
  *
  * This is currently not inheriting from {@link AnnotationBuilder} since it uses non of its functionality.
  *
@@ -45,9 +45,9 @@ public final class StructuralVariantAnnotationBuilder {
 	/**
 	 * Build annotation for {@link #transcript} and {@link #change}
 	 *
-	 * @return {@link Annotation} for the given {@link #transcript} and {@link #change}.
+	 * @return {@link SmallVariantAnnotation} for the given {@link #transcript} and {@link #change}.
 	 */
-	public Annotation build() {
+	public SmallVariantAnnotation build() {
 		// Obtain shortcuts.
 		GenomePosition position = change.getGenomePos();
 		final int beginPos = position.getPos();
@@ -76,37 +76,37 @@ public final class StructuralVariantAnnotationBuilder {
 
 		if (ref.length() == alt.length() && ref.equals(altRC.toString())) { // SV inversion
 			if (transcript == null) {
-				return new Annotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
+				return new SmallVariantAnnotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
 						VariantEffect.STRUCTURAL_VARIANT), null, ntChange, null, null);
 			} else {
-				return new Annotation(transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT), annoLoc,
+				return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT), annoLoc,
 						ntChange, null, null);
 
 			}
 		} else if (ref.length() == 0) { // SV insertion
 			// if transcript is null it is intergenic
 			if (transcript == null) {
-				return new Annotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
+				return new SmallVariantAnnotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
 						VariantEffect.STRUCTURAL_VARIANT), null, ntChange, null, null);
 			} else {
-				return new Annotation(transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT), annoLoc,
+				return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT), annoLoc,
 						ntChange, null, null);
 			}
 		} else if (alt.length() == 0) { // SV deletion
 			// if tm is null it is intergenic
 			if (transcript == null) {
-				return new Annotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
+				return new SmallVariantAnnotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
 						VariantEffect.STRUCTURAL_VARIANT), null, ntChange, null, null);
 			} else {
-				return new Annotation(this.transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT),
+				return new SmallVariantAnnotation(this.transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT),
 						annoLoc, ntChange, null, null);
 			}
 		} else { // SV substitution
 			if (transcript == null) {
-				return new Annotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
+				return new SmallVariantAnnotation(null, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT,
 						VariantEffect.STRUCTURAL_VARIANT), null, ntChange, null, null);
 			} else {
-				return new Annotation(transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT), annoLoc,
+				return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.STRUCTURAL_VARIANT), annoLoc,
 						ntChange, null, null);
 			}
 		}

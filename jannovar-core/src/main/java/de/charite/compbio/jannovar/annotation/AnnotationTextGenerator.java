@@ -3,7 +3,7 @@ package de.charite.compbio.jannovar.annotation;
 //TODO(holtgrewe): Remove
 
 /**
- * Decorator for {@link Annotation} for generating annotation text.
+ * Decorator for {@link SmallVariantAnnotation} for generating annotation text.
  *
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  * @author Peter N Robinson <peter.robinson@charite.de>
@@ -11,15 +11,15 @@ package de.charite.compbio.jannovar.annotation;
 @Deprecated
 final public class AnnotationTextGenerator {
 
-	/** the decorated {@link Annotation} */
-	private final Annotation annotation;
+	/** the decorated {@link SmallVariantAnnotation} */
+	private final SmallVariantAnnotation annotation;
 
-	AnnotationTextGenerator(Annotation annotation) {
+	AnnotationTextGenerator(SmallVariantAnnotation annotation) {
 		this.annotation = annotation;
 	}
 
-	/** @return the decorated {@link Annotation} */
-	public Annotation getAnnotation() {
+	/** @return the decorated {@link SmallVariantAnnotation} */
+	public SmallVariantAnnotation getAnnotation() {
 		return annotation;
 	}
 

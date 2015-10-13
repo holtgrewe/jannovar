@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.google.common.collect.ImmutableSortedSet;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.annotation.builders.AnnotationBuilderOptions;

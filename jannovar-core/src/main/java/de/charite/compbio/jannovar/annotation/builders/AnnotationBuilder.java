@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
-import de.charite.compbio.jannovar.annotation.Annotation;
+import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.annotation.AnnotationLocation;
 import de.charite.compbio.jannovar.annotation.AnnotationLocationBuilder;
 import de.charite.compbio.jannovar.annotation.AnnotationMessage;
@@ -119,9 +119,9 @@ abstract class AnnotationBuilder {
 	/**
 	 * Build annotation for {@link #transcript} and {@link #change}
 	 *
-	 * @return {@link Annotation} for the given {@link #transcript} and {@link #change}.
+	 * @return {@link SmallVariantAnnotation} for the given {@link #transcript} and {@link #change}.
 	 */
-	public abstract Annotation build();
+	public abstract SmallVariantAnnotation build();
 
 	/**
 	 * @return chromosome/genome-level {@link NucleotideChange}
@@ -143,7 +143,7 @@ abstract class AnnotationBuilder {
 	 *
 	 * @return annotation for ncRNA HGVS annotations
 	 */
-	protected Annotation buildNonCodingAnnotation() {
+	protected SmallVariantAnnotation buildNonCodingAnnotation() {
 		// Handle the upstream/downstream and intergenic case for non-coding transcripts.
 		GenomeInterval changeInterval = change.getGenomeInterval();
 		if (so.overlapsWithUpstreamRegion(changeInterval) || so.overlapsWithDownstreamRegion(changeInterval))
@@ -183,13 +183,13 @@ abstract class AnnotationBuilder {
 			else
 				varTypes.add(VariantEffect.NON_CODING_TRANSCRIPT_INTRON_VARIANT);
 		}
-		return new Annotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(), null);
+		return new SmallVariantAnnotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(), null);
 	}
 
 	/**
 	 * @return intronic anotation, using {@link #ncHGVS} for building the DNA HGVS annotation.
 	 */
-	protected Annotation buildIntronicAnnotation() {
+	protected SmallVariantAnnotation buildIntronicAnnotation() {
 		GenomePosition pos = change.getGenomeInterval().getGenomeBeginPos();
 
 		ArrayList<VariantEffect> varTypes = new ArrayList<VariantEffect>();
@@ -224,14 +224,14 @@ abstract class AnnotationBuilder {
 				ImmutableSet.of(VariantEffect.SPLICE_DONOR_VARIANT, VariantEffect.SPLICE_ACCEPTOR_VARIANT,
 						VariantEffect.SPLICE_REGION_VARIANT)).isEmpty())
 			proteinChange = ProteinMiscChange.build(true, ProteinMiscChangeType.DIFFICULT_TO_PREDICT);
-		return new Annotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
+		return new SmallVariantAnnotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
 				proteinChange);
 	}
 
 	/**
 	 * @return 3'/5' UTR anotation, using {@link #ncHGVS} for building the DNA HGVS annotation.
 	 */
-	protected Annotation buildUTRAnnotation() {
+	protected SmallVariantAnnotation buildUTRAnnotation() {
 		GenomePosition pos = change.getGenomeInterval().getGenomeBeginPos();
 
 		ArrayList<VariantEffect> varTypes = new ArrayList<VariantEffect>();
@@ -266,35 +266,35 @@ abstract class AnnotationBuilder {
 				// so.overlapsWithThreePrimeUTR(change.getGenomeInterval())
 				varTypes.add(VariantEffect.THREE_PRIME_UTR_VARIANT);
 		}
-		return new Annotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
+		return new SmallVariantAnnotation(transcript, change, varTypes, locAnno, getGenomicNTChange(), getCDSNTChange(),
 				ProteinMiscChange.build(true, ProteinMiscChangeType.NO_CHANGE));
 	}
 
 	/**
 	 * @return upstream/downstream annotation, using {@link #ncHGVS} for building the DNA HGVS annotation.
 	 */
-	protected Annotation buildUpOrDownstreamAnnotation() {
+	protected SmallVariantAnnotation buildUpOrDownstreamAnnotation() {
 		GenomePosition pos = change.getGenomeInterval().getGenomeBeginPos();
 
 		if (change.getGenomeInterval().length() == 0) {
 			// Empty interval, is insertion.
 			GenomePosition lPos = pos.shifted(-1);
 			if (so.liesInUpstreamRegion(lPos))
-				return new Annotation(transcript, change, ImmutableList.of(VariantEffect.UPSTREAM_GENE_VARIANT), null,
+				return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.UPSTREAM_GENE_VARIANT), null,
 						null, null, null);
 			else
 				// so.liesInDownstreamRegion(pos))
-				return new Annotation(transcript, change, ImmutableList.of(VariantEffect.DOWNSTREAM_GENE_VARIANT),
+				return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.DOWNSTREAM_GENE_VARIANT),
 						null, null, null, null);
 		} else {
 			// Non-empty interval, at least one reference base changed/deleted.
 			GenomeInterval changeInterval = change.getGenomeInterval();
 			if (so.overlapsWithUpstreamRegion(changeInterval))
-				return new Annotation(transcript, change, ImmutableList.of(VariantEffect.UPSTREAM_GENE_VARIANT), null,
+				return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.UPSTREAM_GENE_VARIANT), null,
 						null, null, null);
 			else
 				// so.overlapsWithDownstreamRegion(changeInterval)
-				return new Annotation(transcript, change, ImmutableList.of(VariantEffect.DOWNSTREAM_GENE_VARIANT),
+				return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.DOWNSTREAM_GENE_VARIANT),
 						null, null, null, null);
 		}
 	}
@@ -302,8 +302,8 @@ abstract class AnnotationBuilder {
 	/**
 	 * @return intergenic anotation, using {@link #ncHGVS} for building the DNA HGVS annotation.
 	 */
-	protected Annotation buildIntergenicAnnotation() {
-		return new Annotation(transcript, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT), null, null, null,
+	protected SmallVariantAnnotation buildIntergenicAnnotation() {
+		return new SmallVariantAnnotation(transcript, change, ImmutableList.of(VariantEffect.INTERGENIC_VARIANT), null, null, null,
 				null);
 	}
 
