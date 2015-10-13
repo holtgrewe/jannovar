@@ -2,6 +2,7 @@ package de.charite.compbio.jannovar.svs;
 
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 
 //TODO(holtgrewe): Test me!

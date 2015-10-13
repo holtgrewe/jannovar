@@ -7,7 +7,7 @@ import de.charite.compbio.jannovar.impl.util.DNAUtils;
  * 
  * @author Manuel Holtgrewe <manuel.holtgrewe@bihealth.de>
  */
-public abstract class GenomeVariant {
+public abstract class GenomeVariant implements VariantDescription {
 
 	/** position of the change */
 	protected final GenomePosition pos;
@@ -105,6 +105,11 @@ public abstract class GenomeVariant {
 	public abstract GenomeInterval getGenomeInterval();
 
 	/**
+	 * @return the {@link GenomeVariant} on the given strand
+	 */
+	public abstract GenomeVariant withStrand(Strand strand);
+
+	/**
 	 * @return <code>true</code> if this is a symbolic allele, as described
 	 */
 	public boolean isSymbolic() {
@@ -141,7 +146,11 @@ public abstract class GenomeVariant {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+
 		GenomeVariant other = (GenomeVariant) obj;
+		if (other.pos.getStrand() != this.pos.getStrand())
+			other = other.withStrand(this.pos.getStrand());
+
 		if (alt == null) {
 			if (other.alt != null)
 				return false;

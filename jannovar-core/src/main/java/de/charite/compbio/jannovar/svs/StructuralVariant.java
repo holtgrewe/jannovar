@@ -1,10 +1,13 @@
 package de.charite.compbio.jannovar.svs;
 
+import com.google.common.collect.ComparisonChain;
+
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomePosition;
 import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
+import de.charite.compbio.jannovar.reference.VariantDescription;
 
 //TODO(holtgrewe): Test me!
 //TODO(holtgrewe): add support for Delly translocations
@@ -109,6 +112,29 @@ public abstract class StructuralVariant extends GenomeVariant implements Compara
 	@Override
 	public int compareTo(StructuralVariant o) {
 		return getGenomePos().compareTo(o.getGenomePos());
+	}
+
+	@Override
+	public String getChrName() {
+		return this.pos.getRefDict().getContigIDToName().get(this.pos.getChr());
+	}
+
+	@Override
+	public int getPos() {
+		return this.pos.getPos();
+	}
+
+	@Override
+	public int compareTo(SmallVariantAnnotation other) {
+		return ComparisonChain.start().compare(pos, other.getPos()).compare(ref, other.getRef())
+				.compare(alt, other.getAlt()).result();
+	}
+
+	@Override
+	public GenomeVariant withStrand(Strand strand) {
+		if (strand != Strand.FWD)
+			throw new RuntimeException("Changing strands is not allowed for structural variants.");
+		return this;
 	}
 
 }

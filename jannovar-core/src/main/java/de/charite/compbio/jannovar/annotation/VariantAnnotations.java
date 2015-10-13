@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedMultiset;
 
 import de.charite.compbio.jannovar.Immutable;
-import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.VariantDescription;
 
@@ -21,8 +21,8 @@ import de.charite.compbio.jannovar.reference.VariantDescription;
 @Immutable
 public final class VariantAnnotations implements VariantDescription {
 
-	/** the {@link SmallGenomeVariant} that this <code>AnnotationList</code> contains entries for. */
-	private final SmallGenomeVariant change;
+	/** the {@link GenomeVariant} that this <code>AnnotationList</code> contains entries for. */
+	private final GenomeVariant variant;
 
 	/** the list of the annotations */
 	private final ImmutableList<SmallVariantAnnotation> entries;
@@ -30,37 +30,37 @@ public final class VariantAnnotations implements VariantDescription {
 	/**
 	 * @param change
 	 *            to use for the empty list
-	 * @return empty <code>AnnotationList</code> with the given {@link SmallGenomeVariant}
+	 * @return empty <code>AnnotationList</code> with the given {@link GenomeVariant}
 	 */
-	public static VariantAnnotations buildEmptyList(SmallGenomeVariant change) {
+	public static VariantAnnotations buildEmptyList(GenomeVariant change) {
 		return new VariantAnnotations(change, ImmutableList.<SmallVariantAnnotation> of());
 	}
 
 	/**
 	 * Construct ImmutableAnnotationList from a {@link Collection} of {@link SmallVariantAnnotation} objects.
 	 *
-	 * Note that <code>variant</code> is converted to the forward strand using {@link SmallGenomeVariant#withStrand}.
+	 * Note that <code>variant</code> is converted to the forward strand using {@link GenomeVariant#withStrand}.
 	 *
-	 * @param change
-	 *            {@link SmallGenomeVariant} that this anotation list annotates
+	 * @param variant
+	 *            {@link GenomeVariant} that this anotation list annotates
 	 * @param entries
 	 *            {@link Collection} of {@link SmallVariantAnnotation} objects
 	 */
-	public VariantAnnotations(SmallGenomeVariant variant, Collection<SmallVariantAnnotation> entries) {
-		this.change = variant.withStrand(Strand.FWD);
+	public VariantAnnotations(GenomeVariant variant, Collection<SmallVariantAnnotation> entries) {
+		this.variant = variant.withStrand(Strand.FWD);
 		this.entries = ImmutableList.copyOf(ImmutableSortedMultiset.copyOf(entries));
 	}
 
 	/**
-	 * Return the {@link SmallGenomeVariant} that this AnnotationList is annotated with.
+	 * Return the {@link GenomeVariant} that this AnnotationList is annotated with.
 	 *
-	 * Note that the {@link SmallGenomeVariant} is converted to be on the forward strand on construction of AnnotationList
+	 * Note that the {@link GenomeVariant} is converted to be on the forward strand on construction of AnnotationList
 	 * objects.
 	 *
-	 * @return {@link SmallGenomeVariant} that this <code>AnnotationList</code> contains entries for.
+	 * @return {@link GenomeVariant} that this <code>AnnotationList</code> contains entries for.
 	 */
-	public SmallGenomeVariant getGenomeVariant() {
-		return change;
+	public GenomeVariant getGenomeVariant() {
+		return variant;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public final class VariantAnnotations implements VariantDescription {
 
 	@Override
 	public String toString() {
-		return "AnnotationList(change=" + change + ", entries=[" + entries + "])";
+		return "AnnotationList(change=" + variant + ", entries=[" + entries + "])";
 	}
 
 	@Override
@@ -132,27 +132,27 @@ public final class VariantAnnotations implements VariantDescription {
 	}
 
 	public String getChrName() {
-		return change.getChrName();
+		return variant.getChrName();
 	}
 
 	public int getChr() {
-		return change.getChr();
+		return variant.getChr();
 	}
 
 	public int getPos() {
-		return change.getPos();
+		return variant.getPos();
 	}
 
 	public String getRef() {
-		return change.getRef();
+		return variant.getRef();
 	}
 
 	public String getAlt() {
-		return change.getAlt();
+		return variant.getAlt();
 	}
 
 	public int compareTo(SmallVariantAnnotation other) {
-		return change.compareTo(other);
+		return variant.compareTo(other);
 	}
 
 }
