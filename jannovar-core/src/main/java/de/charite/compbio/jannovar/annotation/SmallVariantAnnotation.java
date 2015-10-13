@@ -11,14 +11,14 @@ import de.charite.compbio.jannovar.hgvs.protein.change.ProteinChange;
 import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
-import de.charite.compbio.jannovar.reference.SmallVariantDescription;
+import de.charite.compbio.jannovar.reference.VariantDescription;
 
 // TODO(holtgrem): Test me!
 
 /**
  * Collect the information for one variant's annotation.
  *
- * Implements the {@link SmallVariantDescription} interface for quicker access to the variant description information.
+ * Implements the {@link VariantDescription} interface for quicker access to the variant description information.
  *
  * @see AnnotationVariantTypeDecorator
  * @see AnnotationTextGenerator
@@ -27,7 +27,7 @@ import de.charite.compbio.jannovar.reference.SmallVariantDescription;
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 @Immutable
-public final class SmallVariantAnnotation implements SmallVariantDescription, Comparable<SmallVariantAnnotation> {
+public final class SmallVariantAnnotation implements VariantDescription, Comparable<SmallVariantAnnotation> {
 
 	/**
 	 * This line is added to the output of a VCF file annotated by Jannovar and describes the new field for the INFO

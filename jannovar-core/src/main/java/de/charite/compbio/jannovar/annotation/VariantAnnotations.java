@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableSortedMultiset;
 import de.charite.compbio.jannovar.Immutable;
 import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
-import de.charite.compbio.jannovar.reference.SmallVariantDescription;
+import de.charite.compbio.jannovar.reference.VariantDescription;
 
 /**
  * A list of priority-sorted {@link SmallVariantAnnotation} objects.
@@ -19,7 +19,7 @@ import de.charite.compbio.jannovar.reference.SmallVariantDescription;
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  */
 @Immutable
-public final class VariantAnnotations implements SmallVariantDescription {
+public final class VariantAnnotations implements VariantDescription {
 
 	/** the {@link SmallGenomeVariant} that this <code>AnnotationList</code> contains entries for. */
 	private final SmallGenomeVariant change;

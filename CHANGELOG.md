@@ -4,6 +4,7 @@
 
 ## jannovar-core
 
+* renaming back `SmallVariantDescription` to `SmallVariantDescription`
 * adding `GenomeVariant` as super class for `SmallGenomeVariant` and `StructuralGenomeVariant`
 * renaming `GenomeVariantType` to `SmallGenomeVariantType`
 * renaming `GenomeVariant` to `SmallGenomeVariant`

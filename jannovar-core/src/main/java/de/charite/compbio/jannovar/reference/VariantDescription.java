@@ -3,11 +3,10 @@ package de.charite.compbio.jannovar.reference;
 import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
 
 /**
- * Minimal description of a small variant as triple (position, ref, alt).
+ * Minimal description of a variant as triple (position, ref, alt).
  * 
- * "Small" variants are those that are be described by the substitution of a string. Note that there is no restriction
- * on the length of ref and alt. Instead, the name is meant to contrast {@link StructuralVariantDescription} where the
- * change is described in means of only positions and intervals in the genome.
+ * Note that this is used for both small and structural variants. In the case of small variants, common suffixes and
+ * prefixes are removed in REF and ALT.
  *
  * The reference and alternative allele string are returned as trimmed, first stripping common suffixes then common
  * prefixes. Note that this is not the same as normalized variants (see the link below) but allows for easier querying
@@ -16,7 +15,7 @@ import de.charite.compbio.jannovar.annotation.SmallVariantAnnotation;
  * @author Manuel Holtgrewe <manuel.holtgrewe@charite.de>
  * @see {@link http://genome.sph.umich.edu/wiki/Variant_Normalization}
  */
-public interface SmallVariantDescription {
+public interface VariantDescription {
 
 	/**
 	 * @return String with the canonical chromosome name
@@ -34,17 +33,17 @@ public interface SmallVariantDescription {
 	public int getPos();
 
 	/**
-	 * @return String with the reference allele in the variant, without common suffix or prefix to reference allele.
+	 * @return String with the reference allele in the variant
 	 */
 	public String getRef();
 
 	/**
-	 * @return String with the alternative allele in the variant, without common suffix or prefix to reference allele.
+	 * @return String with the alternative allele in the variant
 	 */
 	public String getAlt();
 
 	/**
-	 * @return <code>int</code> describing how <code>this</code> compares with <code>other</code>.
+	 * @return <code>int</code> describing how <code>this</code> compares with <code>other</code>
 	 */
 	int compareTo(SmallVariantAnnotation other);
 

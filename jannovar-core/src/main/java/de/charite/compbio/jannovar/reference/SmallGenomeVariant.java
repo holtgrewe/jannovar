@@ -25,7 +25,7 @@ import de.charite.compbio.jannovar.impl.util.DNAUtils;
  * @author Peter N Robinson <peter.robinson@charite.de>
  */
 @Immutable
-public final class SmallGenomeVariant extends GenomeVariant implements SmallVariantDescription {
+public final class SmallGenomeVariant extends GenomeVariant implements VariantDescription {
 
 	/**
 	 * Construct object given the position, reference, and alternative nucleic acid string.
