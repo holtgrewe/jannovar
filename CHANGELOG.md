@@ -4,6 +4,7 @@
 
 ## jannovar-core
 
+* further refactorization of annotation classes
 * refactorization in `AnnotationBuilderDispatcher` class
 * more refactorization, introducing `VariantAnnotation` class
 * moving around some functions in the `GenomeVariant` class hierarchy

@@ -168,7 +168,7 @@ public final class VariantAnnotator {
 
 	private void buildNonSVAnnotation(SmallGenomeVariant change, TranscriptModel transcript) throws InvalidGenomeVariant {
 		if (transcript != null) // TODO(holtgrew): Is not necessarily an exonic annotation!
-			annovarFactory.addExonicAnnotation(new AnnotationBuilderDispatcher(transcript, change, options).build());
+			annovarFactory.addExonicAnnotation(new AnnotationBuilderDispatcher(chromosomeMap, transcript, change, options).build());
 	}
 
 }

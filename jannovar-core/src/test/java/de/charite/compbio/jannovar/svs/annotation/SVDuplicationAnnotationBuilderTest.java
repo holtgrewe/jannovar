@@ -20,7 +20,7 @@ import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptModelBuilder;
 import de.charite.compbio.jannovar.reference.TranscriptModelFactory;
-import de.charite.compbio.jannovar.svs.SVDeletion;
+import de.charite.compbio.jannovar.svs.SVDuplication;
 import de.charite.compbio.jannovar.svs.annotation.SVDuplicationAnnotationBuilder;
 
 public class SVDuplicationAnnotationBuilderTest {
@@ -63,8 +63,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardTranscriptAmplification() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
-				20000, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>",
+				-10, 10, 20000, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -75,8 +75,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardExonDeletion() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
-				200, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>",
+				-10, 10, 200, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -87,8 +87,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureTruncation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
-				100, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>",
+				-10, 10, 100, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -99,8 +99,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureUpstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>", -10, 10,
-				50, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<DUP>",
+				-10, 10, 50, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -111,8 +111,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureDownstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6649341), "A", "<DUP>", -10, 10,
-				100, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 6649341), "A", "<DUP>",
+				-10, 10, 100, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -123,8 +123,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureIntergenic() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6630340), "A", "<DUP>", -10, 10,
-				100, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 6630340), "A", "<DUP>",
+				-10, 10, 100, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoForward, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -135,8 +135,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseTranscriptAmplification() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DUP>", -10,
-				10, 20000, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DUP>",
+				-10, 10, 20000, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -147,8 +147,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseExonDeletion() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DUP>", -10,
-				10, 5000, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<DUP>",
+				-10, 10, 5000, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -159,8 +159,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureTruncation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685940), "A", "<DUP>", -10,
-				10, 200, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 23685940), "A", "<DUP>",
+				-10, 10, 200, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -171,8 +171,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureUpstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23696457), "A", "<DUP>", -10,
-				10, 50, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 23696457), "A", "<DUP>",
+				-10, 10, 50, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -183,8 +183,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureDownstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685540), "A", "<DUP>", -10,
-				10, 100, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 23685540), "A", "<DUP>",
+				-10, 10, 100, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();
@@ -195,8 +195,8 @@ public class SVDuplicationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureIntergenic() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23680940), "A", "<DUP>", -10,
-				10, 100, -10, 10, "");
+		SVDuplication variant = new SVDuplication(new GenomePosition(refDict, Strand.FWD, 1, 23680940), "A", "<DUP>",
+				-10, 10, 100, -10, 10, "");
 		SVDuplicationAnnotationBuilder builder = new SVDuplicationAnnotationBuilder(infoReverse, variant,
 				new AnnotationBuilderOptions());
 		StructuralVariantAnnotation anno = builder.build();

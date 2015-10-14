@@ -20,7 +20,7 @@ import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptModelBuilder;
 import de.charite.compbio.jannovar.reference.TranscriptModelFactory;
-import de.charite.compbio.jannovar.svs.SVDeletion;
+import de.charite.compbio.jannovar.svs.SVCopyNumberVariation;
 import de.charite.compbio.jannovar.svs.annotation.SVCopyNumberVariationAnnotationBuilder;
 
 public class SVCopyNumberVariationAnnotationBuilderTest {
@@ -63,7 +63,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardTranscriptAmplification() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
 				20000, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoForward,
 				variant, new AnnotationBuilderOptions());
@@ -75,7 +75,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardExonDeletion() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
 				200, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoForward,
 				variant, new AnnotationBuilderOptions());
@@ -87,7 +87,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureTruncation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
 				100, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoForward,
 				variant, new AnnotationBuilderOptions());
@@ -99,7 +99,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureUpstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 6640000), "A", "<CNV>", -10, 10,
 				50, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoForward,
 				variant, new AnnotationBuilderOptions());
@@ -111,7 +111,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureDownstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6649341), "A", "<CNV>", -10, 10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 6649341), "A", "<CNV>", -10, 10,
 				100, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoForward,
 				variant, new AnnotationBuilderOptions());
@@ -123,7 +123,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFeatureIntergenic() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 6630340), "A", "<CNV>", -10, 10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 6630340), "A", "<CNV>", -10, 10,
 				100, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoForward,
 				variant, new AnnotationBuilderOptions());
@@ -135,7 +135,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseTranscriptAmplification() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<CNV>", -10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<CNV>", -10,
 				10, 20000, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoReverse,
 				variant, new AnnotationBuilderOptions());
@@ -147,7 +147,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseExonDeletion() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<CNV>", -10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 23685900), "A", "<CNV>", -10,
 				10, 5000, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoReverse,
 				variant, new AnnotationBuilderOptions());
@@ -159,7 +159,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureTruncation() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685940), "A", "<CNV>", -10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 23685940), "A", "<CNV>", -10,
 				10, 200, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoReverse,
 				variant, new AnnotationBuilderOptions());
@@ -171,7 +171,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureUpstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23696457), "A", "<CNV>", -10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 23696457), "A", "<CNV>", -10,
 				10, 50, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoReverse,
 				variant, new AnnotationBuilderOptions());
@@ -183,7 +183,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureDownstream() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23685540), "A", "<CNV>", -10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 23685540), "A", "<CNV>", -10,
 				10, 100, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoReverse,
 				variant, new AnnotationBuilderOptions());
@@ -195,7 +195,7 @@ public class SVCopyNumberVariationAnnotationBuilderTest {
 
 	@Test
 	public void testReverseFeatureIntergenic() throws InvalidGenomeVariant {
-		SVDeletion variant = new SVDeletion(new GenomePosition(refDict, Strand.FWD, 1, 23680940), "A", "<CNV>", -10,
+		SVCopyNumberVariation variant = new SVCopyNumberVariation(new GenomePosition(refDict, Strand.FWD, 1, 23680940), "A", "<CNV>", -10,
 				10, 100, -10, 10, "");
 		SVCopyNumberVariationAnnotationBuilder builder = new SVCopyNumberVariationAnnotationBuilder(infoReverse,
 				variant, new AnnotationBuilderOptions());

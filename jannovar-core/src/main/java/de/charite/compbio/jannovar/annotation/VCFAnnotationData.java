@@ -19,7 +19,7 @@ import de.charite.compbio.jannovar.reference.TranscriptProjectionDecorator;
  *
  * Simplifies building of <code>Object</code> arrays that can then be joined using {@link Joiner}.
  */
-class VCFAnnotationData {
+public class VCFAnnotationData {
 
 	/** predicted effects */
 	public ImmutableSortedSet<VariantEffect> effects = ImmutableSortedSet.<VariantEffect> of();
@@ -85,7 +85,7 @@ class VCFAnnotationData {
 		}
 	}
 
-	public void setTranscriptAndChange(TranscriptModel tm, GenomeVariant variant) {
+	public void setTranscriptAndVariant(TranscriptModel tm, GenomeVariant variant) {
 		if (tm == null)
 			return;
 		featureType = "transcript";

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.collect.ImmutableSet;
+
+import de.charite.compbio.jannovar.annotation.AnnotationMessage;
 import de.charite.compbio.jannovar.annotation.VariantEffect;
 import de.charite.compbio.jannovar.annotation.builders.AnnotationBuilderOptions;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
+import de.charite.compbio.jannovar.svs.SVCopyNumberVariation;
 import de.charite.compbio.jannovar.svs.StructuralVariant;
 
 /**
@@ -21,14 +25,14 @@ import de.charite.compbio.jannovar.svs.StructuralVariant;
  */
 public class SVCopyNumberVariationAnnotationBuilder extends StructuralVariantAnnotationBuilder {
 
-	SVCopyNumberVariationAnnotationBuilder(TranscriptModel transcript, StructuralVariant variant,
+	SVCopyNumberVariationAnnotationBuilder(TranscriptModel transcript, SVCopyNumberVariation variant,
 			AnnotationBuilderOptions options) {
 		super(transcript, variant, options);
 	}
 
 	@Override
 	public StructuralVariantAnnotation build() {
-		return new StructuralVariantAnnotation(transcript, variant, getEffects());
+		return new StructuralVariantAnnotation(transcript, variant, getEffects(), ImmutableSet.<AnnotationMessage> of());
 	}
 
 	/**

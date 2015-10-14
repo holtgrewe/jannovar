@@ -17,7 +17,7 @@ import de.charite.compbio.jannovar.reference.VariantDescription;
 // TODO(holtgrem): Test me!
 
 /**
- * Collect the information for one variant's annotation.
+ * Collect the information for one {@link SmallGenomeVariant}'s annotation.
  *
  * Implements the {@link VariantDescription} interface for quicker access to the variant description information.
  *
@@ -169,7 +169,7 @@ public final class SmallVariantAnnotation extends VariantAnnotation {
 		VCFAnnotationData data = new VCFAnnotationData();
 		data.effects = effects;
 		data.impact = getPutativeImpact();
-		data.setTranscriptAndChange(transcript, variant);
+		data.setTranscriptAndVariant(transcript, variant);
 		data.setAnnoLoc(annoLoc);
 		data.isCoding = transcript.isCoding();
 		data.cdsNTChange = cdsNTChange;

@@ -11,7 +11,8 @@ import de.charite.compbio.jannovar.svs.StructuralVariant;
  */
 public class SVInversionAnnotationBuilder extends StructuralVariantAnnotationBuilder {
 
-	SVInversionAnnotationBuilder(TranscriptModel transcript, StructuralVariant variant, AnnotationBuilderOptions options) {
+	public SVInversionAnnotationBuilder(TranscriptModel transcript, StructuralVariant variant,
+			AnnotationBuilderOptions options) {
 		super(transcript, variant, options);
 	}
 
