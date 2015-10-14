@@ -119,9 +119,7 @@ public abstract class GenomeVariant implements VariantDescription {
 	/**
 	 * @return <code>true</code> if this is a symbolic allele, as described
 	 */
-	public boolean isSymbolic() {
-		return (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt));
-	}
+	public abstract boolean isSymbolic();
 
 	/**
 	 * @return <code>true</code> if the given <code>allele</code> string describes a symbolic allele (events not

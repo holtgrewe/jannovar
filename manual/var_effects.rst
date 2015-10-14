@@ -28,6 +28,7 @@ HIGH             SO:0001906  feature_truncation
 HIGH             SO:0001743  copy_number_loss
 HIGH             SO:0001742  copy_number_gain
 HIGH             SO:0001019  copy_number_variation
+HIGH             SO:1000036  inversion
 HIGH             SO:0001583  mnv
 HIGH             SO:1000005  complex_substitution
 HIGH             SO:0002012  stop_gained

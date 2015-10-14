@@ -35,7 +35,7 @@ public class JannovarAnnotateVCFSymbolicInversionTest {
 	}
 
 	@Test
-	public void testOnSymbolicDeletionAllele() throws IOException, URISyntaxException, CommandLineParsingException,
+	public void testOnSymbolicInversionAllele() throws IOException, URISyntaxException, CommandLineParsingException,
 			HelpRequestedException, JannovarException {
 		final File outFolder = tmpFolder.newFolder();
 		final String inputFilePath = this.getClass().getResource("/symbolic_inv.vcf").toURI().getPath();

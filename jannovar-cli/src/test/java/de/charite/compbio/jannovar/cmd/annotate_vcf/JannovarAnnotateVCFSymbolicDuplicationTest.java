@@ -35,17 +35,17 @@ public class JannovarAnnotateVCFSymbolicDuplicationTest {
 	}
 
 	@Test
-	public void testOnSymbolicDeletionAllele() throws IOException, URISyntaxException, CommandLineParsingException,
+	public void testOnSymbolicDuplicationAllele() throws IOException, URISyntaxException, CommandLineParsingException,
 			HelpRequestedException, JannovarException {
 		final File outFolder = tmpFolder.newFolder();
-		final String inputFilePath = this.getClass().getResource("/symbolic_ins.vcf").toURI().getPath();
+		final String inputFilePath = this.getClass().getResource("/symbolic_dup.vcf").toURI().getPath();
 		String[] argv = new String[] { "annotate", "-o", outFolder.toString(), pathToSmallSer, inputFilePath };
 		System.err.println(Joiner.on(" ").join(argv));
 		new AnnotateVCFCommand(argv).run();
-		File f = new File(outFolder.getAbsolutePath() + File.separator + "symbolic_ins.jv.vcf");
+		File f = new File(outFolder.getAbsolutePath() + File.separator + "symbolic_dup.jv.vcf");
 		Assert.assertTrue(f.exists());
 
-		final File expectedFile = new File(this.getClass().getResource("/symbolic_ins.jv.vcf").toURI().getPath());
+		final File expectedFile = new File(this.getClass().getResource("/symbolic_dup.jv.vcf").toURI().getPath());
 		final String expected = Files.toString(expectedFile, Charsets.UTF_8);
 		final String actual = Files.toString(f, Charsets.UTF_8).replaceAll("##jannovarCommand.*", "##jannovarCommand");
 		Assert.assertEquals(expected, actual);

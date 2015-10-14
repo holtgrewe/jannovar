@@ -50,6 +50,11 @@ public abstract class StructuralVariant extends GenomeVariant implements Compara
 		this.subType = subType;
 	}
 
+	@Override
+	public boolean isSymbolic() {
+		return true;
+	}
+
 	/**
 	 * @return {@link SVType} with the type of the structural variant
 	 */

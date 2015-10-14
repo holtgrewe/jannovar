@@ -53,6 +53,11 @@ public final class SmallGenomeVariant extends GenomeVariant {
 	}
 
 	@Override
+	public boolean isSymbolic() {
+		return (wouldBeSymbolicAllele(ref) || wouldBeSymbolicAllele(alt));
+	}
+
+	@Override
 	public String getChrName() {
 		return this.pos.getRefDict().getContigIDToName().get(this.pos.getChr());
 	}

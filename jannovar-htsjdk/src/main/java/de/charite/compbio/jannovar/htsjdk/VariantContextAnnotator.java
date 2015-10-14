@@ -27,10 +27,16 @@ import de.charite.compbio.jannovar.data.JannovarData;
 import de.charite.compbio.jannovar.data.ReferenceDictionary;
 import de.charite.compbio.jannovar.reference.GenomePosition;
 import de.charite.compbio.jannovar.reference.GenomeVariant;
-import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
+import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.PositionType;
+import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
+import de.charite.compbio.jannovar.svs.SVCopyNumberVariation;
+import de.charite.compbio.jannovar.svs.SVDeletion;
+import de.charite.compbio.jannovar.svs.SVDuplication;
+import de.charite.compbio.jannovar.svs.SVInsertion;
+import de.charite.compbio.jannovar.svs.SVInversion;
 
 /**
  * Helper class for generating {@link VariantAnnotations} objects from {@link VariantContext}s.
@@ -144,7 +150,7 @@ public final class VariantContextAnnotator {
 	}
 
 	/**
-	 * Build a {@link SmallGenomeVariant} from a {@link VariantContext} object.
+	 * Build a {@link GenomeVariant} from a {@link VariantContext} object.
 	 *
 	 * In the case of exceptions, you can use {@link #buildbuildUnknownRefAnnotationLists} to build an
 	 * {@link VariantAnnotations} with an error message.
@@ -153,11 +159,11 @@ public final class VariantContextAnnotator {
 	 *            {@link VariantContext} describing the variant
 	 * @param alleleID
 	 *            numeric identifier of the allele
-	 * @return {@link SmallGenomeVariant} corresponding to <ocde>vc</code>, guaranteed to be on {@link Strand#FWD}.
+	 * @return {@link GenomeVariant} corresponding to <ocde>vc</code>, guaranteed to be on {@link Strand#FWD}.
 	 * @throws InvalidCoordinatesException
 	 *             in the case that the reference in <code>vc</code> is not known in {@link #refDict}.
 	 */
-	public SmallGenomeVariant buildGenomeVariant(VariantContext vc, int alleleID) throws InvalidCoordinatesException {
+	public GenomeVariant buildGenomeVariant(VariantContext vc, int alleleID) throws InvalidCoordinatesException {
 		// Catch the case that vc.getChr() is not in ChromosomeMap.identifier2chromosom. This is the case
 		// for the "random" and "alternative locus" contigs etc.
 		Integer boxedInt = refDict.getContigNameToID().get(vc.getContig());
@@ -166,15 +172,54 @@ public final class VariantContextAnnotator {
 					AnnotationMessage.ERROR_CHROMOSOME_NOT_FOUND);
 		int chr = boxedInt.intValue();
 
-		// TODO(holtgrewe): This is where to look for symbolic allele integration
+		final int pos = vc.getStart();
+		GenomePosition gPos = new GenomePosition(refDict, Strand.FWD, chr, pos, PositionType.ONE_BASED);
 
-		// Build the GenomeChange object.
+		if (vc.isSymbolicOrSV())
+			return buildStructuralGenomeVariant(vc, alleleID, gPos);
+		else
+			return buildSmallGenomeVariant(vc, alleleID, gPos);
+	}
+
+	private GenomeVariant buildStructuralGenomeVariant(VariantContext vc, int alleleID, GenomePosition gPos) {
+		final String ref = vc.getReference().getBaseString();
+		final Allele altAllele = vc.getAlternateAllele(alleleID);
+		final String alt = altAllele.getDisplayString();
+
+		int ciPosLo = 0;
+		int ciPosHi = 0;
+		int ciPosEndLo = 0;
+		int ciPosEndHi = 0;
+		int length = 0;
+
+		String[] arr = alt.replace("<", "").replace(">", "").split(":", 2);
+		String prefix = arr[0];
+		String suffix = "";
+		if (arr.length > 1)
+			suffix = arr[1];
+
+		switch (prefix) {
+		case "DEL":
+			return new SVDeletion(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi, suffix);
+		case "DUP":
+			return new SVDuplication(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi, suffix);
+		case "INV":
+			return new SVInversion(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi, suffix);
+		case "INS":
+			return new SVInsertion(gPos, ref, prefix, ciPosLo, ciPosHi, suffix);
+		case "CNV":
+			return new SVCopyNumberVariation(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi,
+					suffix);
+		default:
+			throw new RuntimeException("Unknown symbolic allele type: " + alt);
+		}
+	}
+
+	private GenomeVariant buildSmallGenomeVariant(VariantContext vc, int alleleID, GenomePosition gPos) {
 		final String ref = vc.getReference().getBaseString();
 		final Allele altAllele = vc.getAlternateAllele(alleleID);
 		final String alt = altAllele.getBaseString();
-		final int pos = vc.getStart();
-		return new SmallGenomeVariant(new GenomePosition(refDict, Strand.FWD, chr, pos, PositionType.ONE_BASED), ref,
-				alt);
+		return new SmallGenomeVariant(gPos, ref, alt);
 	}
 
 	/**
@@ -205,22 +250,22 @@ public final class VariantContextAnnotator {
 	 *         the alternative alleles in <code>vc</code>
 	 * @throws InvalidCoordinatesException
 	 *             in the case of problems with resolving coordinates internally, namely building the
-	 *             {@link SmallGenomeVariant} object one one of the returned {@link VariantAnnotations}s.
+	 *             {@link GenomeVariant} object one one of the returned {@link VariantAnnotations}s.
 	 */
 	public ImmutableList<VariantAnnotations> buildAnnotations(VariantContext vc) throws InvalidCoordinatesException {
 		LOGGER.trace("building annotation lists for {}", new Object[] { vc });
 
 		ImmutableList.Builder<VariantAnnotations> builder = new ImmutableList.Builder<VariantAnnotations>();
 		for (int alleleID = 0; alleleID < vc.getAlternateAlleles().size(); ++alleleID) {
-			SmallGenomeVariant change = buildGenomeVariant(vc, alleleID);
+			GenomeVariant variant = buildGenomeVariant(vc, alleleID);
 
 			// Build AnnotationList object for this allele.
 			try {
-				final VariantAnnotations lst = annotator.buildAnnotations(change);
+				final VariantAnnotations lst = annotator.buildAnnotations(variant);
 				builder.add(lst);
 				LOGGER.trace("adding annotation list {}", new Object[] { lst });
 			} catch (Exception e) {
-				final VariantAnnotations lst = buildErrorAnnotations(change);
+				final VariantAnnotations lst = buildErrorAnnotations(variant);
 				builder.add(lst);
 				LOGGER.trace("adding error annotation list {}", new Object[] { lst });
 			}
@@ -251,7 +296,7 @@ public final class VariantContextAnnotator {
 		for (int alleleID = 0; alleleID < vc.getAlternateAlleles().size(); ++alleleID) {
 			if (!annos.get(alleleID).getAnnotations().isEmpty()) {
 				for (VariantAnnotation ann : annos.get(alleleID).getAnnotations()) {
-					final String alt = vc.getAlternateAllele(alleleID).getBaseString();
+					final String alt = vc.getAlternateAllele(alleleID).getDisplayString();
 					annotations.add(ann.toVCFAnnoString(alt));
 					if (options.oneAnnotationOnly)
 						break;
@@ -293,7 +338,7 @@ public final class VariantContextAnnotator {
 
 	/**
 	 * @param change
-	 *            {@link SmallGenomeVariant} to build error annotation for
+	 *            {@link GenomeVariant} to build error annotation for
 	 * @return VariantAnnotations having the message set to {@link AnnotationMessage#ERROR_PROBLEM_DURING_ANNOTATION}.
 	 */
 	public VariantAnnotations buildErrorAnnotations(GenomeVariant variant) {

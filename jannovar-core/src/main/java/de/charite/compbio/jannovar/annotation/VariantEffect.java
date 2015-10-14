@@ -97,6 +97,10 @@ public enum VariantEffect {
 	 */
 	COPY_NUMBER_VARIATION,
 	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:1000036">SO:1000036</a> An inversion.
+	 */
+	INVERSION,
+	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002007">SO:0002007</a> An MNV is a multiple
 	 * nucleotide variant (substitution) in which the inserted sequence is the same length as the replaced sequence (is
 	 * a: substitution).
@@ -605,6 +609,7 @@ public enum VariantEffect {
 		case COPY_NUMBER_LOSS:
 		case COPY_NUMBER_GAIN:
 		case COPY_NUMBER_VARIATION:
+		case INVERSION:
 		case TRANSCRIPT_AMPLIFICATION:
 		case FEATURE_AMPLIFICATION:
 		case _SMALLEST_HIGH_IMPACT:
@@ -641,6 +646,8 @@ public enum VariantEffect {
 			return "copy_number_gain";
 		case COPY_NUMBER_VARIATION:
 			return "copy_number_variation";
+		case INVERSION:
+			return "inversion";
 		case COPY_NUMBER_INCREASE:
 			return "copy_number_increase";
 		case COPY_NUMBER_DECREASE:
@@ -783,6 +790,8 @@ public enum VariantEffect {
 			return "SO:0001742";
 		case COPY_NUMBER_VARIATION:
 			return "SO:0001019";
+		case INVERSION:
+			return "SO:1000036";
 		case COPY_NUMBER_INCREASE:
 			return "SO:0001911";
 		case COPY_NUMBER_DECREASE:
@@ -930,6 +939,7 @@ public enum VariantEffect {
 		case COPY_NUMBER_LOSS:
 		case COPY_NUMBER_GAIN:
 		case COPY_NUMBER_VARIATION:
+		case INVERSION:
 		case COPY_NUMBER_INCREASE:
 		case COPY_NUMBER_DECREASE:
 		case COPY_NUMBER_CHANGE:
