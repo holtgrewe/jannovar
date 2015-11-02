@@ -12,7 +12,7 @@ import de.charite.compbio.jannovar.annotation.builders.AnnotationBuilderOptions;
 import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
-import de.charite.compbio.jannovar.svs.StructuralVariant;
+import de.charite.compbio.jannovar.svs.SVInsertion;
 
 /**
  * Build annotations for {@link SVInsertion} objects.
@@ -21,7 +21,7 @@ import de.charite.compbio.jannovar.svs.StructuralVariant;
  */
 public class SVInsertionAnnotationBuilder extends StructuralVariantAnnotationBuilder {
 
-	SVInsertionAnnotationBuilder(TranscriptModel transcript, StructuralVariant variant, AnnotationBuilderOptions options) {
+	SVInsertionAnnotationBuilder(TranscriptModel transcript, SVInsertion variant, AnnotationBuilderOptions options) {
 		super(transcript, variant, options);
 	}
 

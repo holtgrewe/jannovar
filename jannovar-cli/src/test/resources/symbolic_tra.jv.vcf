@@ -1,0 +1,17 @@
+##fileformat=VCFv4.2
+##ALT=<ID=TRA,Description="Translocation">
+##INFO=<ID=ANN,Number=1,Type=String,Description="Functional annotations:'Allele|Annotation|Annotation_Impact|Gene_Name|Gene_ID|Feature_Type|Feature_ID|Transcript_BioType|Rank|HGVS.c|HGVS.p|cDNA.pos / cDNA.length|CDS.pos / CDS.length|AA.pos / AA.length|Distance|ERRORS / WARNINGS / INFO'">
+##INFO=<ID=CHR2,Number=1,Type=String,Description="Chromosome for END coordinate in case of a translocation">
+##INFO=<ID=CIEND,Number=2,Type=Integer,Description="Confidence interval around END for imprecise variants">
+##INFO=<ID=CIPOS,Number=2,Type=Integer,Description="Confidence interval around POS for imprecise variants">
+##INFO=<ID=CT,Number=1,Type=String,Description="Paired-end signature induced connection type">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
+##INFO=<ID=HOMLEN,Number=.,Type=Integer,Description="Length of base pair identical micro-homology at event breakpoints">
+##INFO=<ID=HOMSEQ,Number=.,Type=String,Description="Sequence of base pair identical micro-homology at event breakpoints">
+##INFO=<ID=IMPRECISE,Number=0,Type=Flag,Description="Imprecise structural variation">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Difference between REF and ALT in this record">
+##jannovarCommand
+##jannovarVersion=0.14
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	individual
+NC_000001.10	321052	.	C	<TRA>	.	.	ANN=<TRA>|intergenic_variant&structural_variant&exon_variant&non_coding_transcript_variant|MODIFIER|LOC100132287|gene12|transcript|XR_246673.1|Noncoding|||||||-6120|;CHR2=1;CIEND=-1017,1017;CIPOS=-1017,1017;CT=5to5;END=249239891;MAPQ=14;PE=2;SVTYPE=TRA	GT:AD:DP:GQ:PL	0/1:14,7:21:99:181,0,367
+

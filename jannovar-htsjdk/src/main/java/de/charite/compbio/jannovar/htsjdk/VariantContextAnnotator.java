@@ -32,11 +32,13 @@ import de.charite.compbio.jannovar.reference.PositionType;
 import de.charite.compbio.jannovar.reference.SmallGenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
+import de.charite.compbio.jannovar.svs.SVBreakEnd;
 import de.charite.compbio.jannovar.svs.SVCopyNumberVariation;
 import de.charite.compbio.jannovar.svs.SVDeletion;
 import de.charite.compbio.jannovar.svs.SVDuplication;
 import de.charite.compbio.jannovar.svs.SVInsertion;
 import de.charite.compbio.jannovar.svs.SVInversion;
+import de.charite.compbio.jannovar.svs.SVBreakEnd.Direction;
 
 /**
  * Helper class for generating {@link VariantAnnotations} objects from {@link VariantContext}s.
@@ -181,16 +183,26 @@ public final class VariantContextAnnotator {
 			return buildSmallGenomeVariant(vc, alleleID, gPos);
 	}
 
+	@SuppressWarnings("unchecked")
 	private GenomeVariant buildStructuralGenomeVariant(VariantContext vc, int alleleID, GenomePosition gPos) {
 		final String ref = vc.getReference().getBaseString();
 		final Allele altAllele = vc.getAlternateAllele(alleleID);
 		final String alt = altAllele.getDisplayString();
 
-		int ciPosLo = 0;
-		int ciPosHi = 0;
-		int ciPosEndLo = 0;
-		int ciPosEndHi = 0;
+		List<Integer> zeroes = ImmutableList.of(0, 0);
+
+		List<Integer> ciPos = zeroes;
+		if (vc.getAttribute("CIPOS") != null)
+			ciPos = ImmutableList.of(Integer.parseInt((String) vc.getAttributeAsList("CIPOS").get(0)),
+					Integer.parseInt((String) vc.getAttributeAsList("CIPOS").get(1)));
+		List<Integer> ciEnd = zeroes;
+		if (vc.getAttribute("CIEND") != null)
+			ciEnd = ImmutableList.of(Integer.parseInt((String) vc.getAttributeAsList("CIEND").get(0)),
+					Integer.parseInt((String) vc.getAttributeAsList("CIEND").get(1)));
+
 		int length = 0;
+		if (vc.getAttribute("END") != null)
+			length = vc.getAttributeAsInt("END", vc.getStart() - 1) - vc.getStart() + 1;
 
 		String[] arr = alt.replace("<", "").replace(">", "").split(":", 2);
 		String prefix = arr[0];
@@ -200,16 +212,32 @@ public final class VariantContextAnnotator {
 
 		switch (prefix) {
 		case "DEL":
-			return new SVDeletion(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi, suffix);
-		case "DUP":
-			return new SVDuplication(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi, suffix);
-		case "INV":
-			return new SVInversion(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi, suffix);
-		case "INS":
-			return new SVInsertion(gPos, ref, prefix, ciPosLo, ciPosHi, suffix);
-		case "CNV":
-			return new SVCopyNumberVariation(gPos, ref, prefix, ciPosLo, ciPosHi, length, ciPosEndLo, ciPosEndHi,
+			return new SVDeletion(gPos, ref, prefix, ciPos.get(0), ciPos.get(1), length, ciEnd.get(0), ciEnd.get(1),
 					suffix);
+		case "DUP":
+			return new SVDuplication(gPos, ref, prefix, ciPos.get(0), ciPos.get(1), length, ciEnd.get(0), ciEnd.get(1),
+					suffix);
+		case "INV":
+			return new SVInversion(gPos, ref, prefix, ciPos.get(0), ciPos.get(1), length, ciEnd.get(0), ciEnd.get(1),
+					suffix);
+		case "INS":
+			return new SVInsertion(gPos, ref, prefix, ciPos.get(0), ciPos.get(1), suffix);
+		case "CNV":
+			return new SVCopyNumberVariation(gPos, ref, prefix, ciPos.get(0), ciPos.get(1), length, ciEnd.get(0),
+					ciEnd.get(1), suffix);
+		case "TRA": // Delly-style break-ends
+			// TODO(holtgrewe): be more stringent and complain if insufficient VCF attributes.
+			// protected SVBreakEnd(GenomePosition pos, String ref, String alt, int ciPosLo, GenomePosition posEnd, int
+			// ciPosHi,
+			// int ciPosEndLo, int ciPosEndHi, Direction direction, String subType) {
+			int chr2 = gPos.getChr();
+			ReferenceDictionary refDict = gPos.getRefDict();
+			if (vc.getAttribute("CHR2") != null)
+				chr2 = refDict.getContigNameToID().get((String) vc.getAttribute("CHR2"));
+			int posEnd = vc.getAttributeAsInt("END", gPos.getPos());
+			GenomePosition gPosEnd = new GenomePosition(refDict, Strand.FWD, chr2, posEnd);
+			return new SVBreakEnd(gPos, ref, prefix, ciPos.get(0), ciPos.get(1), gPosEnd, ciEnd.get(0), ciEnd.get(1),
+					SVBreakEnd.Direction.fromDellyConnectionType(vc.getAttributeAsString("CT", null)), suffix);
 		default:
 			throw new RuntimeException("Unknown symbolic allele type: " + alt);
 		}

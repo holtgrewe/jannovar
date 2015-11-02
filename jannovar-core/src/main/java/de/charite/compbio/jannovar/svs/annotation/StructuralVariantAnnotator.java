@@ -4,9 +4,12 @@ import de.charite.compbio.jannovar.annotation.InvalidGenomeVariant;
 import de.charite.compbio.jannovar.annotation.VariantAnnotation;
 import de.charite.compbio.jannovar.annotation.builders.AnnotationBuilderOptions;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
+import de.charite.compbio.jannovar.svs.SVBreakEnd;
 import de.charite.compbio.jannovar.svs.SVCopyNumberVariation;
 import de.charite.compbio.jannovar.svs.SVDeletion;
 import de.charite.compbio.jannovar.svs.SVDuplication;
+import de.charite.compbio.jannovar.svs.SVInsertion;
+import de.charite.compbio.jannovar.svs.SVInversion;
 import de.charite.compbio.jannovar.svs.StructuralVariant;
 
 /**
@@ -52,13 +55,15 @@ public class StructuralVariantAnnotator {
 		case DEL:
 			return new SVDeletionAnnotationBuilder(tx, (SVDeletion) variant, options).build();
 		case INS:
-			return new SVInsertionAnnotationBuilder(tx, variant, options).build();
+			return new SVInsertionAnnotationBuilder(tx, (SVInsertion)variant, options).build();
 		case DUP:
 			return new SVDuplicationAnnotationBuilder(tx, (SVDuplication) variant, options).build();
 		case CNV:
 			return new SVCopyNumberVariationAnnotationBuilder(tx, (SVCopyNumberVariation) variant, options).build();
 		case INV:
-			return new SVInversionAnnotationBuilder(tx, variant, options).build();
+			return new SVInversionAnnotationBuilder(tx, (SVInversion)variant, options).build();
+		case BND:
+			return new SVBreakEndAnnotationBuilder(tx, (SVBreakEnd)variant, options).build();
 		default:
 			throw new InvalidGenomeVariant("Invalid variant type " + variant.getType());
 		}

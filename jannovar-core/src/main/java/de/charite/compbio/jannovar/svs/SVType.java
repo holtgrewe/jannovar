@@ -17,6 +17,8 @@ public enum SVType {
 	CNV,
 	/** inversion */
 	INV,
+	/** break-end */
+	BND,
 	/** other */
 	OTHER;
 

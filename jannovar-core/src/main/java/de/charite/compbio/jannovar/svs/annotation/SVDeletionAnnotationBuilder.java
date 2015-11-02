@@ -13,7 +13,6 @@ import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.svs.SVDeletion;
-import de.charite.compbio.jannovar.svs.StructuralVariant;
 
 /**
  * Build annotations for {@link SVDeletion} objects.
